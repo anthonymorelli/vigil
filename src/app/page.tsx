@@ -1,218 +1,326 @@
 "use client";
 
-import { useState, useMemo, useEffect, Fragment } from "react";
+import { useState, useMemo, useEffect, useRef, Fragment, Suspense } from "react";
+import { useQueryState, parseAsStringLiteral } from "nuqs";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+  Popover, PopoverContent, PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
+  Command, CommandEmpty, CommandGroup, CommandInput, CommandItem,
+  CommandList, CommandSeparator,
 } from "@/components/ui/command";
-import { ChevronDown, ChevronRight, Check } from "lucide-react";
+import { ChevronDown, ChevronRight, Check, Plus, ListPlus, Search, X, ArrowUpDown, ArrowUp, ArrowDown, Command as CommandIcon, Info } from "lucide-react";
 import { BookLogo } from "@/components/book-logo";
+import { SlipBuilder, type SlipLeg } from "@/components/slip-builder";
+import { FiltersPopover } from "@/components/filters-popover";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { hitCellStyle, expandedRowStyle } from "@/lib/hit-cell";
+import { consensusFairProb, evPct, probToAmerican, type WeightMap } from "@/lib/devig";
+import { BOOKS, getBook, isReferenceBook } from "@/lib/books";
+import { useBookWeights } from "@/lib/book-weights";
 import {
-  DEFAULT_SLIP_TYPE,
-  getSlipById,
-  groupedSlipTypes,
-  legBreakEvenProbability,
-  legEvPctVsSlip,
-  legTargetAmerican,
+  getSlipById, getDefaultSlipForPlatform, groupedSlipTypes,
+  legBreakEvenProbability, legEvPctVsSlip, legTargetAmerican,
 } from "@/lib/slip-types";
+import {
+  PLATFORMS, getPlatformById, DEFAULT_PLATFORM_ID, type PlatformId,
+} from "@/lib/platforms";
 
-type Opportunity = {
-  Player: string;
-  Market: string;
-  Line: number;
-  Side: "Over" | "Under";
-  Book: string;
-  Odds: number;
-  "Fair Odds": number;
-  "Fair %": number;
-  "EV %": number;
-  "Kelly %": number;
-  Updated: string;
-  Reference: string;
+// ============================================================================
+// Types
+// ============================================================================
+
+type BookSideOdds = { over: number | null; under: number | null; line?: number };
+type Offerings = Record<string, BookSideOdds>;
+
+type MarketRow = {
+  playerId: string;
+  player: string;
+  team?: string;
+  matchup?: string;
+  gameTime?: string;
+  market: string;
+  line: number;
+  offerings: Offerings;
 };
 
+type PipelinePayload = { updated: string; source: string; markets: MarketRow[] };
+
 type Play = {
+  key: string;
   player: string;
+  team?: string;
+  matchup?: string;
   market: string;
   line: number;
   side: "Over" | "Under";
-  fairOdds: number;
-  fairPct: number;
   fairProb: number;
-  books: {
-    book: string;
-    odds: number;
-    evPct: number;
-    kellyPct: number;
-  }[];
-  bestMarketEv: number;
-  bestBook: string;
+  fairPct: number;
+  fairOdds: number;
+  platformBook: string;
+  platformOdds: number;
+  platformEvPct: number;
+  offerings: Offerings;
+  slipId?: string;
+  slip?: ReturnType<typeof getSlipById>;
+  slipEv?: number;
 };
 
-function groupOpportunities(opps: Opportunity[]): Play[] {
-  const groups = new Map<string, Play>();
+// ============================================================================
+// Core computation
+// ============================================================================
 
-  for (const opp of opps) {
-    const key = `${opp.Player}|${opp.Market}|${opp.Line}|${opp.Side}`;
-    const existing = groups.get(key);
+function processMarkets(
+  markets: MarketRow[],
+  weights: WeightMap,
+  activePlatformBooks: string[],
+): Play[] {
+  const plays: Play[] = [];
 
-    const bookOffering = {
-      book: opp.Book,
-      odds: opp.Odds,
-      evPct: opp["EV %"],
-      kellyPct: opp["Kelly %"],
-    };
+  for (const market of markets) {
+    const { fairOver } = consensusFairProb(market.offerings, weights);
+    if (fairOver == null) continue;
 
-    if (existing) {
-      existing.books.push(bookOffering);
-      if (opp["EV %"] > existing.bestMarketEv) {
-        existing.bestMarketEv = opp["EV %"];
-        existing.bestBook = opp.Book;
+    for (const side of ["Over", "Under"] as const) {
+      const fairProb = side === "Over" ? fairOver : 1 - fairOver;
+
+      let platformBook: string | null = null;
+      let platformOdds: number | null = null;
+
+      for (const book of activePlatformBooks) {
+        const offering = market.offerings[book];
+        const odds = side === "Over" ? offering?.over : offering?.under;
+        if (odds != null) { platformBook = book; platformOdds = odds; break; }
       }
-    } else {
-      groups.set(key, {
-        player: opp.Player,
-        market: opp.Market,
-        line: opp.Line,
-        side: opp.Side,
-        fairOdds: opp["Fair Odds"],
-        fairPct: opp["Fair %"],
-        fairProb: opp["Fair %"] / 100,
-        books: [bookOffering],
-        bestMarketEv: opp["EV %"],
-        bestBook: opp.Book,
+
+      if (!platformBook || platformOdds == null) continue;
+
+      plays.push({
+        key: `${market.playerId}|${market.market}|${market.line}|${side}`,
+        player: market.player,
+        team: market.team,
+        matchup: market.matchup,
+        market: market.market,
+        line: market.line,
+        side,
+        fairProb,
+        fairPct: fairProb * 100,
+        fairOdds: probToAmerican(fairProb),
+        platformBook,
+        platformOdds,
+        platformEvPct: evPct(fairProb, platformOdds),
+        offerings: market.offerings,
       });
     }
   }
 
-  return Array.from(groups.values());
-}
-
-function formatOdds(n: number): string {
-  return n > 0 ? `+${n}` : `${n}`;
-}
-
-function cleanMarket(m: string): string {
-  return m.replace("Player ", "");
+  return plays;
 }
 
 // ============================================================================
-// Inline SlipPicker — Popover + Command pattern
+// Helpers
 // ============================================================================
 
-function SlipPicker({
-  selectedSlipId,
-  onSelect,
-  fairProb,
-}: {
+const MARKET_ABBREV: Record<string, string> = {
+  "Points": "Pts",
+  "Rebounds": "Reb",
+  "Assists": "Ast",
+  "Threes Made": "3PM",
+  "Steals": "Stl",
+  "Blocks": "Blk",
+  "Turnovers": "TO",
+  "Points + Rebounds": "Pts+Reb",
+  "Points + Assists": "Pts+Ast",
+  "Rebounds + Assists": "Reb+Ast",
+  "Points + Rebounds + Assists": "Pts+Reb+Ast",
+  "Pitcher Strikeouts": "K",
+  "Hits": "H",
+  "Home Runs": "HR",
+  "RBIs": "RBI",
+  "Runs": "R",
+  "Walks": "BB",
+  "Saves": "SV",
+  "Goals": "G",
+  "Shots on Goal": "SOG",
+  "Blocked Shots": "BS",
+  "Kills": "Kills",
+  "1st 2 Maps Kills": "K (2M)",
+};
+
+const cleanMarket = (m: string) => {
+  const stripped = m.replace("Player ", "");
+  return MARKET_ABBREV[stripped] ?? stripped;
+};
+const formatOdds = (n: number) => n > 0 ? `+${n}` : `${n}`;
+const evColor = (ev: number) =>
+  ev >= 3 ? "text-blue-400" : ev >= 0 ? "text-yellow-400" : "text-muted-foreground";
+
+const SHORT_LABELS: Record<string, string> = {
+  DraftKings: "DK",   FanDuel: "FD",      BetMGM: "MGM",
+  BetRivers: "Rivers",HardRock: "HR",     BetOnline: "BetOL",
+  Polymarket: "Poly", ProphetX: "PropX",  Fanatics: "Fan",
+  Fliff: "Fliff",     Kalshi: "Kalshi",   Novig: "Novig",
+  Bovada: "Bovada",   Pinnacle: "Pin",    Circa: "Circa",
+  bet365: "365",
+};
+const shortLabel = (label: string) => SHORT_LABELS[label] ?? label.slice(0, 5);
+
+// ============================================================================
+// Helpers
+// ============================================================================
+
+function relativeTime(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  return `${Math.floor(hrs / 24)}d ago`;
+}
+
+// ============================================================================
+// Sport tabs
+// ============================================================================
+
+type Sport = { id: string; label: string; available: boolean };
+const SPORTS: Sport[] = [
+  { id: "nba",     label: "NBA",     available: true  },
+  { id: "mlb",     label: "MLB",     available: false },
+  { id: "nfl",     label: "NFL",     available: false },
+  { id: "nhl",     label: "NHL",     available: false },
+  { id: "esports", label: "Esports", available: false },
+];
+
+function SportTabs({ value, onChange }: { value: string; onChange: (id: string) => void }) {
+  return (
+    <div className="flex items-center gap-0.5 border-b border-border">
+      {SPORTS.map((s) => (
+        <button
+          key={s.id}
+          disabled={!s.available}
+          onClick={() => s.available && onChange(s.id)}
+          className={[
+            "relative px-4 py-2 text-sm font-medium transition-colors -mb-px border-b-2",
+            s.available
+              ? value === s.id
+                ? "border-foreground text-foreground"
+                : "border-transparent text-muted-foreground hover:text-foreground"
+              : "border-transparent text-muted-foreground/30 cursor-not-allowed",
+          ].join(" ")}
+        >
+          {s.label}
+          {!s.available && (
+            <span className="ml-1.5 text-[9px] font-normal opacity-60 uppercase tracking-wider">soon</span>
+          )}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ============================================================================
+// Platform selector
+// ============================================================================
+const PLATFORM_LOGO: Record<string, string> = {
+  prizepicks: "PrizePicks",
+  underdog: "Underdog",
+  pick6: "Pick6",
+  betr: "Betr",
+};
+
+function PlatformSelector({ value, onChange }: { value: PlatformId; onChange: (id: PlatformId) => void }) {
+  return (
+    <div className="flex items-center gap-1.5">
+      {PLATFORMS.map((p) => {
+        const isActive = value === p.id;
+        const bookName = PLATFORM_LOGO[p.id] ?? p.label;
+        return (
+          <button
+            key={p.id}
+            disabled={!p.available}
+            onClick={() => onChange(p.id)}
+            title={p.label}
+            className={[
+              "relative inline-flex items-center justify-center rounded-xl transition-all duration-150",
+              "w-11 h-11",
+              isActive
+                ? "ring-2 ring-blue-400/60 ring-offset-2 ring-offset-background"
+                : "opacity-40 hover:opacity-70",
+              !p.available ? "cursor-not-allowed" : "cursor-pointer",
+            ].join(" ")}
+          >
+            <BookLogo book={bookName} size="header" />
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// ============================================================================
+// SlipPicker — lives in expanded row only
+// ============================================================================
+
+function SlipPicker({ selectedSlipId, onSelect, fairProb, platformFilter }: {
   selectedSlipId: string;
   onSelect: (id: string) => void;
   fairProb: number;
+  platformFilter: ReturnType<typeof getPlatformById>["slipPlatform"];
 }) {
   const [open, setOpen] = useState(false);
   const slip = getSlipById(selectedSlipId);
   const targetProb = legBreakEvenProbability(slip);
-  const evPct = legEvPctVsSlip(slip, fairProb);
-
-  const evColor =
-    evPct >= 3
-      ? "text-emerald-400"
-      : evPct >= 0
-      ? "text-yellow-400"
-      : "text-muted-foreground";
-
-  const grouped = groupedSlipTypes();
+  const ev = legEvPctVsSlip(slip, fairProb);
+  const grouped = groupedSlipTypes(platformFilter);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <button
           onClick={(e) => e.stopPropagation()}
-          className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 hover:bg-accent/40 transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 hover:bg-accent transition-colors"
         >
-          <span className={`font-mono text-sm font-semibold ${evColor}`}>
-            {(targetProb * 100).toFixed(1)}%
-          </span>
+          <span className="font-medium text-sm">{slip.platformLabel} {slip.picks}P {slip.variant}</span>
           <ChevronDown className="h-3 w-3 text-muted-foreground/60" />
         </button>
       </PopoverTrigger>
-      <PopoverContent
-        className="w-72 p-0"
-        align="end"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <PopoverContent className="w-72 p-0" align="start" onClick={(e) => e.stopPropagation()}>
         <Command>
           <CommandInput placeholder="Search slip types..." className="h-9" />
           <CommandList>
             <CommandEmpty>No slip type found.</CommandEmpty>
-            {grouped.map((platform, pIdx) => (
-              <Fragment key={platform.platform}>
+            {grouped.map((pg, pIdx) => (
+              <Fragment key={pg.platform}>
                 {pIdx > 0 && <CommandSeparator />}
-                {platform.variants.map((variantGroup) => (
-                  <CommandGroup
-                    key={`${platform.platform}-${variantGroup.variant}`}
-                    heading={`${platform.platform} ${variantGroup.variant}`}
-                  >
-                    {variantGroup.slips.map((s) => {
+                {pg.variants.map((vg) => (
+                  <CommandGroup key={`${pg.platform}-${vg.variant}`} heading={`${pg.platform} ${vg.variant}`}>
+                    {vg.slips.map((s) => {
                       const sTarget = legBreakEvenProbability(s);
-                      const sTargetOdds = legTargetAmerican(s);
                       const isSelected = s.id === selectedSlipId;
                       return (
                         <CommandItem
                           key={s.id}
                           value={`${s.platformLabel} ${s.variant} ${s.picks}`}
                           disabled={!s.available}
-                          onSelect={() => {
-                            onSelect(s.id);
-                            setOpen(false);
-                          }}
+                          onSelect={() => { onSelect(s.id); setOpen(false); }}
                           className="flex items-center justify-between"
                         >
                           <div className="flex items-center gap-2">
-                            {isSelected ? (
-                              <Check className="h-3.5 w-3.5 text-emerald-400" />
-                            ) : (
-                              <span className="w-3.5" />
-                            )}
-                            <span className="text-sm">
-                              {s.picks} Pick {s.variant}
-                            </span>
+                            {isSelected ? <Check className="h-3.5 w-3.5 text-blue-400" /> : <span className="w-3.5" />}
+                            <span className="text-sm">{s.picks} Pick {s.variant}</span>
                             {s.recommended && (
-                              <Badge
-                                variant="outline"
-                                className="text-[9px] h-4 px-1 border-emerald-400/40 text-emerald-400"
-                              >
-                                BEST
-                              </Badge>
+                              <Badge variant="outline" className="text-[9px] h-4 px-1 border-blue-400/40 text-blue-400">BEST</Badge>
                             )}
                           </div>
                           <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
                             <span>{(sTarget * 100).toFixed(1)}%</span>
-                            <span className="opacity-50">
-                              {sTargetOdds > 0
-                                ? `+${sTargetOdds}`
-                                : sTargetOdds}
-                            </span>
+                            <span className="opacity-50">{legTargetAmerican(s)}</span>
                           </div>
                         </CommandItem>
                       );
@@ -223,18 +331,15 @@ function SlipPicker({
             ))}
           </CommandList>
         </Command>
-        <div className="border-t border-border/60 px-3 py-2 bg-muted/20">
+        <div className="border-t border-border px-3 py-2 bg-muted/30">
           <div className="flex items-center justify-between text-xs">
             <span className="text-muted-foreground">Target / Fair</span>
-            <span className="font-mono">
-              {(targetProb * 100).toFixed(1)}% / {(fairProb * 100).toFixed(1)}%
-            </span>
+            <span className="font-mono">{(targetProb * 100).toFixed(1)}% / {(fairProb * 100).toFixed(1)}%</span>
           </div>
           <div className="flex items-center justify-between text-xs mt-1">
             <span className="text-muted-foreground">Slip EV</span>
-            <span className={`font-mono font-semibold ${evColor}`}>
-              {evPct >= 0 ? "+" : ""}
-              {evPct.toFixed(2)}%
+            <span className={`font-mono font-semibold ${evColor(ev)}`}>
+              {ev >= 0 ? "+" : ""}{ev.toFixed(2)}%
             </span>
           </div>
         </div>
@@ -244,77 +349,212 @@ function SlipPicker({
 }
 
 // ============================================================================
-// Main page
+// Main
 // ============================================================================
 
+const PLATFORM_IDS = PLATFORMS.map((p) => p.id) as [PlatformId, ...PlatformId[]];
+
 export default function Home() {
-  const [allOpps, setAllOpps] = useState<Opportunity[]>([]);
+  return <Suspense><HomeInner /></Suspense>;
+}
+
+function HomeInner() {
+  const [markets, setMarkets] = useState<MarketRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<string | null>(null);
-  const [minEv, setMinEv] = useState(-3);
+  const [minHitPct, setMinHitPct] = useState(52);
   const [showAltLines, setShowAltLines] = useState(false);
-
-  // Per-row slip selections — keyed by play key
   const [rowSlips, setRowSlips] = useState<Record<string, string>>({});
+  const [slipLegKeys, setSlipLegKeys] = useState<string[]>([]);
+  const [slipOpen, setSlipOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedSport, setSelectedSport] = useState("nba");
+  const [sortCol, setSortCol] = useState<"fairPct" | "player" | "market">("fairPct");
+  const [sortDir, setSortDir] = useState<"desc" | "asc">("desc");
+
+  const cycleSort = (col: "fairPct" | "player" | "market") => {
+    if (sortCol === col) {
+      setSortDir((d) => d === "desc" ? "asc" : "desc");
+    } else {
+      setSortCol(col);
+      setSortDir(col === "fairPct" ? "desc" : "asc");
+    }
+  };
+  const [updatedAt, setUpdatedAt] = useState<string | null>(null);
+  const [focusedIdx, setFocusedIdx] = useState<number | null>(null);
+  const [cmdkOpen, setCmdkOpen] = useState(false);
+
+  const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
+
+  const { weights } = useBookWeights();
+
+  const [platform, setPlatformRaw] = useQueryState(
+    "platform",
+    parseAsStringLiteral(PLATFORM_IDS).withDefault(DEFAULT_PLATFORM_ID),
+  );
+
+  const platformConfig = getPlatformById(platform);
+
+  useEffect(() => { setRowSlips({}); setExpanded(null); setSlipLegKeys([]); }, [platform]);
 
   useEffect(() => {
     fetch("/opportunities.json")
       .then((r) => r.json())
-      .then((data: Opportunity[]) => {
-        setAllOpps(data);
+      .then((data: PipelinePayload | unknown[]) => {
+        const rows = Array.isArray(data) ? [] : ((data as PipelinePayload).markets ?? []);
+        const updated = Array.isArray(data) ? null : (data as PipelinePayload).updated ?? null;
+        setMarkets(rows);
+        setUpdatedAt(updated);
         setLoading(false);
-      });
+      })
+      .catch(() => setLoading(false));
   }, []);
 
-  const plays = useMemo(() => groupOpportunities(allOpps), [allOpps]);
+  const referenceBookColumns = useMemo(() => {
+    const seen = new Set<string>();
+    for (const m of markets) {
+      for (const book of Object.keys(m.offerings)) {
+        if (isReferenceBook(book)) seen.add(book);
+      }
+    }
+    const order: Record<string, number> = { sharp: 0, exchange: 1, retail: 2 };
+    return [...seen].sort((a, b) => {
+      const ca = order[BOOKS[a]?.category ?? "retail"] ?? 3;
+      const cb = order[BOOKS[b]?.category ?? "retail"] ?? 3;
+      return ca - cb;
+    });
+  }, [markets]);
 
-  // Filter out alt lines (Discount / Boost — formerly PP Goblins / PP Demons)
-  // by default. Sharps avoid these because PrizePicks bakes extra vig into
-  // the multiplier adjustment vs the standard line. Current EV math doesn't
-  // account for the multiplier weighting either, so showing them produces
-  // misleading numbers. Toggle in filter bar to show.
-  const visiblePlays = useMemo(() => {
-    if (showAltLines) return plays;
-    return plays
-      .map((p) => {
-        const filteredBooks = p.books.filter(
-          (b) => b.book !== "PP Demons" && b.book !== "PP Goblins"
-        );
-        if (filteredBooks.length === 0) return null;
-        const sorted = [...filteredBooks].sort((a, b) => b.evPct - a.evPct);
-        return {
-          ...p,
-          books: filteredBooks,
-          bestMarketEv: sorted[0].evPct,
-          bestBook: sorted[0].book,
-        };
-      })
-      .filter((p): p is Play => p !== null);
-  }, [plays, showAltLines]);
-
-  // Compute per-row slip EV using each row's selected slip type (or default)
-  const playsWithSlipEv = useMemo(() => {
-    return visiblePlays
-      .map((p) => {
-        const key = `${p.player}|${p.market}|${p.line}|${p.side}`;
-        const slipId = rowSlips[key] ?? DEFAULT_SLIP_TYPE.id;
-        const slip = getSlipById(slipId);
-        const slipEv = legEvPctVsSlip(slip, p.fairProb);
-        return { ...p, key, slipId, slip, slipEv };
-      })
-      .sort((a, b) => b.slipEv - a.slipEv);
-  }, [visiblePlays, rowSlips]);
-
-  const displayed = useMemo(
-    () => playsWithSlipEv.filter((p) => p.slipEv >= minEv),
-    [playsWithSlipEv, minEv]
+  const activePlatformBooks = useMemo(
+    () => (showAltLines ? platformConfig.books : platformConfig.primaryBooks),
+    [platformConfig, showAltLines],
   );
 
-  const positiveCount = playsWithSlipEv.filter((p) => p.slipEv > 0).length;
+  const plays = useMemo(
+    () => processMarkets(markets, weights, activePlatformBooks),
+    [markets, weights, activePlatformBooks],
+  );
 
-  const setSlipForRow = (key: string, slipId: string) => {
+  const playsWithSlipEv = useMemo(() => {
+    return plays
+      .map((p) => {
+        const defaultSlip = getDefaultSlipForPlatform(platformConfig.slipPlatform);
+        const slipId = rowSlips[p.key] ?? defaultSlip.id;
+        const slip = getSlipById(slipId);
+        const slipEv = legEvPctVsSlip(slip, p.fairProb);
+        return { ...p, slipId, slip, slipEv };
+      })
+      .sort((a, b) => b.fairPct - a.fairPct);
+  }, [plays, rowSlips, platformConfig]);
+
+  // Unique game dates for tab filtering
+  const gameDates = useMemo(() => {
+    const seen = new Set<string>();
+    for (const m of markets) {
+      if (m.gameTime) {
+        const d = new Date(m.gameTime).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+        seen.add(d);
+      }
+    }
+    return [...seen].sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+  }, [markets]);
+
+  const displayed = useMemo(() => {
+    let result = playsWithSlipEv.filter((p) => p.fairPct >= minHitPct);
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter((p) =>
+        p.player.toLowerCase().includes(q) ||
+        p.market.toLowerCase().includes(q) ||
+        p.team?.toLowerCase().includes(q)
+      );
+    }
+    if (selectedDate) {
+      result = result.filter((p) => {
+        const market = markets.find((m) => m.playerId === p.key.split("|")[0]);
+        if (!market?.gameTime) return false;
+        const d = new Date(market.gameTime).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+        return d === selectedDate;
+      });
+    }
+    const sorted = [...result].sort((a, b) => {
+      if (sortCol === "player") {
+        return sortDir === "asc"
+          ? a.player.localeCompare(b.player)
+          : b.player.localeCompare(a.player);
+      }
+      if (sortCol === "market") {
+        return sortDir === "asc"
+          ? cleanMarket(a.market).localeCompare(cleanMarket(b.market))
+          : cleanMarket(b.market).localeCompare(cleanMarket(a.market));
+      }
+      // fairPct default
+      return sortDir === "asc" ? a.fairPct - b.fairPct : b.fairPct - a.fairPct;
+    });
+    return sorted;
+  }, [playsWithSlipEv, minHitPct, searchQuery, selectedDate, markets, sortDir, sortCol]);
+
+  const positiveCount = playsWithSlipEv.filter((p) => p.slipEv! > 0).length;
+
+  const setSlipForRow = (key: string, slipId: string) =>
     setRowSlips((prev) => ({ ...prev, [key]: slipId }));
+
+  const slipLegs = useMemo((): SlipLeg[] =>
+    slipLegKeys
+      .map((key) => playsWithSlipEv.find((p) => p.key === key))
+      .filter((p): p is NonNullable<typeof p> => p != null)
+      .map((p) => ({ key: p.key, player: p.player, market: p.market, line: p.line, side: p.side, fairProb: p.fairProb })),
+    [slipLegKeys, playsWithSlipEv],
+  );
+
+  const toggleSlipLeg = (key: string) => {
+    setSlipLegKeys((prev) => {
+      if (prev.includes(key)) return prev.filter((k) => k !== key);
+      if (prev.length >= 6) return prev;
+      return [...prev, key];
+    });
+    setSlipOpen(true);
   };
+
+  // Scroll focused row into view
+  useEffect(() => {
+    if (focusedIdx !== null && rowRefs.current[focusedIdx]) {
+      rowRefs.current[focusedIdx]?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  }, [focusedIdx]);
+
+  // Keyboard nav + Cmd+K
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setCmdkOpen(true);
+        return;
+      }
+      if (cmdkOpen) return;
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setFocusedIdx((prev) => prev === null ? 0 : Math.min(prev + 1, displayed.length - 1));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setFocusedIdx((prev) => prev === null ? 0 : Math.max(prev - 1, 0));
+      } else if (e.key === "Enter" && focusedIdx !== null) {
+        e.preventDefault();
+        const play = displayed[focusedIdx];
+        if (play) setExpanded((prev) => prev === play.key ? null : play.key);
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        if (expanded) setExpanded(null);
+        else setFocusedIdx(null);
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [displayed, focusedIdx, expanded, cmdkOpen]);
+
+  const totalCols = 7 + referenceBookColumns.length;
 
   if (loading) {
     return (
@@ -324,238 +564,519 @@ export default function Home() {
     );
   }
 
-  return (
-    <main className="min-h-screen bg-background p-6">
-      <div className="mx-auto max-w-7xl space-y-6">
-        {/* Header */}
-        <header className="space-y-1">
-          <div className="flex items-baseline justify-between">
-            <h1 className="text-3xl font-bold tracking-tight">Prop Screen</h1>
-            <p className="text-sm text-muted-foreground">
-              {positiveCount} +EV / {playsWithSlipEv.length} plays
-            </p>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            +EV NBA props · devigged against Novig + ProphetX · slip-aware EV
-            per row
-          </p>
-        </header>
 
-        {/* Filter bar */}
-        <div className="flex items-center gap-3 flex-wrap">
-          <p className="text-sm text-muted-foreground">Min Slip EV:</p>
-          {[-3, -1, 0, 2].map((val) => (
-            <Button
-              key={val}
-              variant={minEv === val ? "default" : "outline"}
-              size="sm"
-              onClick={() => setMinEv(val)}
-            >
-              {val > 0 ? `+${val}%` : `${val}%`}
-            </Button>
-          ))}
-          <div className="h-4 w-px bg-border/60 mx-1" />
-          <Button
-            variant={showAltLines ? "default" : "outline"}
-            size="sm"
-            onClick={() => setShowAltLines(!showAltLines)}
-          >
-            {showAltLines ? "✓ " : ""}Alt Lines (Discount/Boost)
-          </Button>
-          <p className="ml-auto text-sm text-muted-foreground">
-            Showing {displayed.length}
+  return (
+    <div className="flex h-screen overflow-hidden bg-background">
+
+      {/* ── Left Sidebar ─────────────────────────────────────────── */}
+      <aside className="w-[220px] shrink-0 border-r border-border bg-card flex flex-col overflow-y-auto">
+
+        {/* Branding */}
+        <div className="px-4 pt-5 pb-4 border-b border-border">
+          <h1 className="text-sm font-semibold tracking-tight">Prop Screen</h1>
+          <p className="text-[11px] text-muted-foreground/60 mt-0.5 leading-snug">
+            +EV props · devigged vs exchanges
           </p>
         </div>
 
-        {/* Table */}
-        <div className="rounded-lg border border-border/60 bg-card/30 backdrop-blur overflow-hidden">
+        {/* Sport */}
+        <div className="px-3 pt-4 pb-2">
+          <p className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-widest px-1 mb-1.5">Sport</p>
+          {SPORTS.map((s) => (
+            <button
+              key={s.id}
+              disabled={!s.available}
+              onClick={() => s.available && setSelectedSport(s.id)}
+              className={[
+                "w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm transition-colors",
+                selectedSport === s.id && s.available
+                  ? "bg-accent text-foreground font-medium"
+                  : s.available
+                  ? "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                  : "text-muted-foreground/30 cursor-not-allowed",
+              ].join(" ")}
+            >
+              {s.label}
+              {!s.available && <span className="text-[9px] uppercase tracking-wider opacity-50">soon</span>}
+            </button>
+          ))}
+        </div>
+
+        {/* Platform */}
+        <div className="px-3 pt-3 pb-2 border-t border-border mt-2">
+          <p className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-widest px-1 mb-2">Platform</p>
+          <div className="flex items-center gap-2 px-1 flex-wrap">
+            {PLATFORMS.map((p) => {
+              const isActive = platform === p.id;
+              const bookName = PLATFORM_LOGO[p.id] ?? p.label;
+              return (
+                <button
+                  key={p.id}
+                  disabled={!p.available}
+                  onClick={() => p.available && setPlatformRaw(p.id)}
+                  title={p.label}
+                  className={[
+                    "inline-flex items-center justify-center w-10 h-10 rounded-xl transition-all",
+                    isActive ? "ring-2 ring-blue-400/60 ring-offset-1 ring-offset-card" : "opacity-40 hover:opacity-70",
+                    !p.available ? "cursor-not-allowed" : "cursor-pointer",
+                  ].join(" ")}
+                >
+                  <BookLogo book={bookName} size="header" />
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Search */}
+        <div className="px-3 pt-3 pb-2 border-t border-border mt-2">
+          <p className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-widest px-1 mb-1.5">Search</p>
+          <div className="relative px-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/40 pointer-events-none" />
+            <input
+              type="text"
+              placeholder="Players, markets..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full h-8 rounded-md border border-border bg-background pl-8 pr-7 text-sm placeholder:text-muted-foreground/30 focus:outline-none focus:ring-1 focus:ring-border"
+            />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/40 hover:text-muted-foreground">
+                <X className="h-3 w-3" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Min % Hit */}
+        <div className="px-3 pt-3 pb-2 border-t border-border mt-2">
+          <p className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-widest px-1 mb-2">Min % Hit</p>
+          <div className="flex items-center gap-1 px-1">
+            {[52, 54, 56, 58].map((val) => (
+              <button
+                key={val}
+                onClick={() => setMinHitPct(val)}
+                className={[
+                  "flex-1 py-1 rounded-md text-xs font-medium transition-colors border",
+                  minHitPct === val
+                    ? "bg-foreground text-background border-foreground"
+                    : "border-border text-muted-foreground hover:text-foreground",
+                ].join(" ")}
+              >
+                {val}%
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Alt Lines toggle */}
+        <div className="px-4 pt-3 pb-2 mt-1">
+          <button
+            onClick={() => setShowAltLines(!showAltLines)}
+            className="w-full flex items-center justify-between text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <span>Alt Lines</span>
+            <div className={["w-8 h-4 rounded-full transition-colors relative", showAltLines ? "bg-blue-500" : "bg-muted"].join(" ")}>
+              <div className={["absolute top-0.5 w-3 h-3 rounded-full bg-white shadow transition-transform", showAltLines ? "translate-x-4" : "translate-x-0.5"].join(" ")} />
+            </div>
+          </button>
+        </div>
+
+        {/* Date filter */}
+        {gameDates.length > 0 && (
+          <div className="px-3 pt-3 pb-2 border-t border-border mt-2">
+            <p className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-widest px-1 mb-1.5">Date</p>
+            <div className="px-1 space-y-0.5">
+              <button onClick={() => setSelectedDate(null)} className={["w-full text-left px-2 py-1 rounded-md text-sm transition-colors", selectedDate === null ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground"].join(" ")}>All dates</button>
+              {gameDates.map((d) => (
+                <button key={d} onClick={() => setSelectedDate(d === selectedDate ? null : d)} className={["w-full text-left px-2 py-1 rounded-md text-sm transition-colors", selectedDate === d ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground"].join(" ")}>{d}</button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Bottom — clear filters + updated */}
+        <div className="mt-auto border-t border-border">
+          {(minHitPct !== 52 || showAltLines || searchQuery || selectedDate) && (
+            <div className="px-4 pt-3 pb-1">
+              <button
+                onClick={() => { setMinHitPct(52); setShowAltLines(false); setSearchQuery(""); setSelectedDate(null); }}
+                className="text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors"
+              >
+                Clear all filters
+              </button>
+            </div>
+          )}
+          {updatedAt && (
+            <div className="px-4 py-3">
+              <p className="text-[10px] text-muted-foreground/40">Updated {relativeTime(updatedAt)}</p>
+            </div>
+          )}
+        </div>
+      </aside>
+
+      {/* ── Main content ─────────────────────────────────────────── */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+        {/* Topbar */}
+        <header className="flex items-center justify-between px-5 py-3 border-b border-border shrink-0">
+          <p className="text-sm text-muted-foreground tabular-nums">
+            Showing <span className="text-foreground font-medium">{displayed.length}</span>
+            <span className="mx-1.5 text-muted-foreground/30">·</span>
+            {positiveCount} +EV
+          </p>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCmdkOpen(true)}
+              className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded border border-border text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <CommandIcon className="h-3 w-3" /><span>K</span>
+            </button>
+            <button
+              onClick={() => setSlipOpen(true)}
+              className={["flex items-center gap-2 px-3 py-1.5 rounded-md border text-sm font-medium transition-colors", slipLegKeys.length > 0 ? "border-blue-400/40 text-blue-400 bg-blue-400/5 hover:bg-blue-400/10" : "border-border text-muted-foreground hover:text-foreground"].join(" ")}
+            >
+              <ListPlus className="h-3.5 w-3.5" />
+              {slipLegKeys.length > 0 ? `Slip (${slipLegKeys.length})` : "Slip Builder"}
+            </button>
+          </div>
+        </header>
+
+        {/* Scrollable table area */}
+        <div className="flex-1 overflow-auto">
+          <TooltipProvider delayDuration={300}>
           <Table>
-            <TableHeader>
-              <TableRow className="hover:bg-transparent border-border/60">
-                <TableHead className="w-8"></TableHead>
-                <TableHead>Player</TableHead>
+            <TableHeader className="sticky top-0 z-20 bg-background border-b border-border">
+              <TableRow className="hover:bg-transparent h-14">
+                <TableHead className="w-8" />
+                <TableHead>
+                  <button
+                    onClick={() => cycleSort("player")}
+                    className="inline-flex items-center gap-1 hover:text-foreground transition-colors group"
+                  >
+                    <span>Player</span>
+                    {sortCol === "player"
+                      ? sortDir === "desc"
+                        ? <ArrowDown className="h-3 w-3 text-blue-400" />
+                        : <ArrowUp className="h-3 w-3 text-blue-400" />
+                      : <ArrowUpDown className="h-3 w-3 text-muted-foreground/30 group-hover:text-muted-foreground" />
+                    }
+                  </button>
+                </TableHead>
                 <TableHead>Bet</TableHead>
                 <TableHead>Line</TableHead>
-                <TableHead>Market</TableHead>
-                <TableHead className="text-right">Book</TableHead>
-                <TableHead className="text-right">Odds</TableHead>
-                <TableHead className="text-right">Fair</TableHead>
-                <TableHead className="text-right">% Hit Need</TableHead>
-                <TableHead className="text-right">Slip EV</TableHead>
+                <TableHead>
+                  <button
+                    onClick={() => cycleSort("market")}
+                    className="inline-flex items-center gap-1 hover:text-foreground transition-colors group"
+                  >
+                    <span>Market</span>
+                    {sortCol === "market"
+                      ? sortDir === "desc"
+                        ? <ArrowDown className="h-3 w-3 text-blue-400" />
+                        : <ArrowUp className="h-3 w-3 text-blue-400" />
+                      : <ArrowUpDown className="h-3 w-3 text-muted-foreground/30 group-hover:text-muted-foreground" />
+                    }
+                  </button>
+                </TableHead>
+                <TableHead className="text-right">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex justify-end cursor-help">
+                        <BookLogo book={platformConfig.label} size="header" />
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom" className="max-w-[220px] text-xs">
+                      Per-leg break-even odds for your selected slip type. Your fair % must clear this number to have +EV on the slip.
+                    </TooltipContent>
+                  </Tooltip>
+                </TableHead>
+                <TableHead className="text-right">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        onClick={() => cycleSort("fairPct")}
+                        className="inline-flex items-center gap-1 ml-auto hover:text-foreground transition-colors group"
+                      >
+                        <span>% Hit</span>
+                        {sortCol === "fairPct"
+                          ? sortDir === "desc"
+                            ? <ArrowDown className="h-3 w-3 text-blue-400" />
+                            : <ArrowUp className="h-3 w-3 text-blue-400" />
+                          : <ArrowUpDown className="h-3 w-3 text-muted-foreground/30 group-hover:text-muted-foreground" />
+                        }
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom" className="max-w-[220px] text-xs">
+                      Fair probability this leg hits, devigged from exchange prices (Novig + ProphetX). Higher = more edge vs the slip target.
+                    </TooltipContent>
+                  </Tooltip>
+                </TableHead>
+                {referenceBookColumns.map((book) => (
+                  <TableHead key={book} className="text-right">
+                    <div className="flex justify-end">
+                      <BookLogo book={getBook(book).label} size="header" />
+                    </div>
+                  </TableHead>
+                ))}
+                <TableHead className="w-12 text-center" />
               </TableRow>
             </TableHeader>
             <TableBody>
-              {displayed.map((play) => {
+              {displayed.length === 0 && (
+                <TableRow className="hover:bg-transparent">
+                  <TableCell colSpan={totalCols} className="py-20">
+                    <div className="flex flex-col items-center justify-center gap-3 text-center">
+                      {markets.length === 0 ? (
+                        <>
+                          <div className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center">
+                            <span className="text-2xl">📭</span>
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">No data loaded</p>
+                            <p className="text-xs text-muted-foreground mt-1">Run <code className="font-mono bg-card px-1.5 py-0.5 rounded border border-border">pipeline.py</code> to generate opportunities.json</p>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center">
+                            <Search className="h-5 w-5 text-muted-foreground/50" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">No plays match</p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              Try lowering the min % Hit filter or clearing your search
+                            </p>
+                          </div>
+                          <button
+                            onClick={() => { setMinHitPct(52); setSearchQuery(""); setSelectedDate(null); }}
+                            className="text-xs text-blue-400 hover:text-blue-300 transition-colors mt-1"
+                          >
+                            Clear all filters
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
+              {displayed.map((play, idx) => {
                 const isExpanded = expanded === play.key;
-                const bestBookOffer = play.books.find(
-                  (b) => b.book === play.bestBook
-                )!;
-                const evColor =
-                  play.slipEv >= 3
-                    ? "text-emerald-400"
-                    : play.slipEv >= 0
-                    ? "text-yellow-400"
-                    : "text-muted-foreground";
+                const isFocused = focusedIdx === idx;
+                const targetPct = legBreakEvenProbability(play.slip!) * 100;
+                const { pillStyle, textClass: hitTextClass } = hitCellStyle(play.fairPct, targetPct);
+                const expandedBg = expandedRowStyle(play.fairPct, targetPct);
+                const isAbove = play.fairPct >= targetPct;
+                const accentBorder = isAbove ? "border-blue-400/30" : "border-red-400/30";
+                const accentBg     = isAbove ? "bg-blue-400/5"      : "bg-red-400/5";
+                const accentText   = isAbove ? "text-blue-400"       : "text-red-400";
+
+                const bestRefBook = referenceBookColumns.reduce<{ book: string; odds: number } | null>(
+                  (best, book) => {
+                    const o = play.offerings[book];
+                    const odds = play.side === "Over" ? o?.over : o?.under;
+                    if (odds == null) return best;
+                    if (best === null || odds > best.odds) return { book, odds };
+                    return best;
+                  }, null
+                );
 
                 return (
                   <Fragment key={play.key}>
                     <TableRow
-                      className="cursor-pointer border-border/60 hover:bg-accent/30"
-                      onClick={() =>
-                        setExpanded(isExpanded ? null : play.key)
-                      }
+                      ref={(el) => { rowRefs.current[idx] = el; }}
+                      className={[
+                        "cursor-pointer border-border hover:bg-accent h-24 group",
+                        isFocused ? "bg-accent ring-1 ring-inset ring-blue-400/30" : "",
+                      ].join(" ")}
+                      onClick={() => { setExpanded(isExpanded ? null : play.key); setFocusedIdx(idx); }}
                     >
-                      <TableCell className="py-3">
-                        {isExpanded ? (
-                          <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                        ) : (
-                          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                      <TableCell className="py-0 pl-3">
+                        <span className={`transition-opacity ${isExpanded ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+                          {isExpanded
+                            ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+                            : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />}
+                        </span>
+                      </TableCell>
+
+                      <TableCell className="py-0">
+                        <div className="font-semibold text-base leading-tight tracking-tight">{play.player}</div>
+                        {(play.team || play.matchup) && (
+                          <div className="text-xs text-muted-foreground/40 mt-1 leading-tight">
+                            {[play.team, play.matchup].filter(Boolean).join(" · ")}
+                          </div>
                         )}
                       </TableCell>
-                      <TableCell className="font-medium">
-                        {play.player}
-                      </TableCell>
-                      <TableCell>
-                        <span
-                          className={
-                            play.side === "Over"
-                              ? "text-emerald-400/80"
-                              : "text-red-400/80"
-                          }
-                        >
+
+                      <TableCell className="py-0">
+                        <span className={`text-sm font-medium ${play.side === "Over" ? "text-blue-400/80" : "text-red-400/80"}`}>
                           {play.side}
                         </span>
                       </TableCell>
-                      <TableCell className="font-mono">{play.line}</TableCell>
-                      <TableCell className="text-muted-foreground">
-                        {cleanMarket(play.market)}
+
+                      <TableCell className="font-mono text-sm text-muted-foreground py-0">{play.line}</TableCell>
+
+                      <TableCell className="py-0 max-w-[140px]">
+                        <span className="text-sm text-muted-foreground/60 truncate block" title={cleanMarket(play.market)}>
+                          {cleanMarket(play.market)}
+                        </span>
                       </TableCell>
-                      <TableCell className="text-right">
-                        <div className="inline-flex">
-                          <BookLogo book={play.bestBook} />
+
+                      <TableCell className="text-right font-mono font-semibold text-sm py-0">
+                        <span
+                          title="Per-leg break-even for selected slip type. PrizePicks prices all props at -119 to -137 — what matters is whether your fair % clears this threshold."
+                          className="cursor-help"
+                        >
+                          {formatOdds(legTargetAmerican(play.slip!))}
+                        </span>
+                      </TableCell>
+
+                      <TableCell className="text-right py-0">
+                        <div className="flex justify-end pr-1">
+                          <span
+                            className={`inline-flex items-center justify-center rounded-md font-mono text-sm px-3 py-2 min-w-[72px] ${hitTextClass}`}
+                            style={pillStyle}
+                          >
+                            {play.fairPct.toFixed(1)}%
+                          </span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-right font-mono font-semibold">
-                        {formatOdds(bestBookOffer.odds)}
-                      </TableCell>
-                      <TableCell className="text-right font-mono text-muted-foreground">
-                        {formatOdds(play.fairOdds)}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <SlipPicker
-                          selectedSlipId={play.slipId}
-                          onSelect={(id) => setSlipForRow(play.key, id)}
-                          fairProb={play.fairProb}
-                        />
-                      </TableCell>
-                      <TableCell
-                        className={`text-right font-mono font-bold ${evColor}`}
-                      >
-                        {play.slipEv > 0 ? "+" : ""}
-                        {play.slipEv.toFixed(2)}%
+
+                      {referenceBookColumns.map((book) => {
+                        const offering = play.offerings[book];
+                        const odds = play.side === "Over" ? offering?.over : offering?.under;
+                        const isBest = bestRefBook?.book === book && odds != null;
+                        // Alt line: reference book priced this at a different line
+                        const altLine = offering?.line != null && offering.line !== play.line
+                          ? offering.line
+                          : null;
+                        return (
+                          <TableCell
+                            key={book}
+                            className={`text-right font-mono text-sm py-0 ${isBest ? "bg-blue-500/15" : ""}`}
+                          >
+                            {odds != null ? (
+                              <div className="flex flex-col items-end leading-tight">
+                                {isBest && (
+                                  <span className="text-[8px] text-blue-400 font-bold uppercase tracking-wide mb-0.5">
+                                    BEST
+                                  </span>
+                                )}
+                                <span className={isBest ? "text-blue-100 font-bold" : "text-muted-foreground"}>
+                                  {formatOdds(odds)}
+                                </span>
+                                {altLine != null && (
+                                  <span className="text-[10px] text-muted-foreground/50">
+                                    {altLine}
+                                  </span>
+                                )}
+                              </div>
+                            ) : (
+                              <span className="text-muted-foreground/20">—</span>
+                            )}
+                          </TableCell>
+                        );
+                      })}
+
+                      <TableCell className="text-center py-0">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); toggleSlipLeg(play.key); }}
+                          disabled={!slipLegKeys.includes(play.key) && slipLegKeys.length >= 6}
+                          className={[
+                            "inline-flex items-center justify-center h-7 w-7 rounded-md border transition-all",
+                            slipLegKeys.includes(play.key)
+                              ? "border-blue-400/50 text-blue-400 bg-blue-400/10 hover:bg-blue-400/20 opacity-100"
+                              : slipLegKeys.length >= 6
+                              ? "border-border/30 text-muted-foreground/20 cursor-not-allowed opacity-0 group-hover:opacity-100"
+                              : "border-border text-muted-foreground hover:text-foreground hover:border-border/80 hover:bg-accent opacity-0 group-hover:opacity-100",
+                          ].join(" ")}
+                        >
+                          {slipLegKeys.includes(play.key)
+                            ? <Check className="h-3.5 w-3.5" />
+                            : <Plus className="h-3.5 w-3.5" />}
+                        </button>
                       </TableCell>
                     </TableRow>
 
                     {isExpanded && (
-                      <TableRow className="border-border/60 bg-accent/10 hover:bg-accent/10">
-                        <TableCell colSpan={10} className="p-0">
-                          <div className="p-4 space-y-4">
-                            {/* Slip context */}
-                            <div className="flex items-center gap-6 text-xs">
+                      <TableRow className="border-border hover:bg-transparent" style={expandedBg}>
+                        <TableCell colSpan={totalCols} className="p-0">
+                          <div className="p-5 space-y-5">
+                            <div className="flex items-start gap-8 text-xs flex-wrap">
                               <div>
-                                <p className="text-muted-foreground uppercase tracking-wider mb-0.5">
-                                  Selected Slip
-                                </p>
-                                <p className="font-medium">
-                                  {play.slip.platformLabel} {play.slip.picks}{" "}
-                                  Pick {play.slip.variant}
+                                <p className="text-muted-foreground uppercase tracking-wider mb-1">Slip</p>
+                                <SlipPicker
+                                  selectedSlipId={play.slipId!}
+                                  onSelect={(id) => setSlipForRow(play.key, id)}
+                                  fairProb={play.fairProb}
+                                  platformFilter={platformConfig.slipPlatform}
+                                />
+                              </div>
+                              <div>
+                                <p className="text-muted-foreground uppercase tracking-wider mb-1">Target</p>
+                                <p className="font-mono">{targetPct.toFixed(1)}% / {formatOdds(legTargetAmerican(play.slip!))}</p>
+                              </div>
+                              <div>
+                                <p className="text-muted-foreground uppercase tracking-wider mb-1">Fair</p>
+                                <p className="font-mono">{play.fairPct.toFixed(1)}% / {formatOdds(play.fairOdds)}</p>
+                              </div>
+                              <div>
+                                <p className="text-muted-foreground uppercase tracking-wider mb-1">Slip EV</p>
+                                <p className={`font-mono font-semibold ${evColor(play.slipEv!)}`}>
+                                  {play.slipEv! > 0 ? "+" : ""}{play.slipEv!.toFixed(2)}%
                                 </p>
                               </div>
                               <div>
-                                <p className="text-muted-foreground uppercase tracking-wider mb-0.5">
-                                  Target
-                                </p>
+                                <p className="text-muted-foreground uppercase tracking-wider mb-1">Platform EV</p>
                                 <p className="font-mono">
-                                  {(
-                                    legBreakEvenProbability(play.slip) * 100
-                                  ).toFixed(1)}
-                                  % /{" "}
-                                  {formatOdds(legTargetAmerican(play.slip))}
-                                </p>
-                              </div>
-                              <div>
-                                <p className="text-muted-foreground uppercase tracking-wider mb-0.5">
-                                  Fair
-                                </p>
-                                <p className="font-mono">
-                                  {play.fairPct.toFixed(1)}% /{" "}
-                                  {formatOdds(play.fairOdds)}
-                                </p>
-                              </div>
-                              <div>
-                                <p className="text-muted-foreground uppercase tracking-wider mb-0.5">
-                                  Best Market EV
-                                </p>
-                                <p className="font-mono">
-                                  {play.bestMarketEv > 0 ? "+" : ""}
-                                  {play.bestMarketEv.toFixed(2)}%
+                                  {play.platformEvPct > 0 ? "+" : ""}{play.platformEvPct.toFixed(2)}%
                                 </p>
                               </div>
                             </div>
 
-                            {/* Book comparison grid */}
-                            <div>
-                              <p className="text-xs uppercase tracking-wider text-muted-foreground mb-3">
-                                Book Comparison · {play.books.length} book
-                                {play.books.length !== 1 ? "s" : ""}
-                              </p>
-                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                                {[...play.books]
-                                  .sort((a, b) => b.evPct - a.evPct)
-                                  .map((b) => {
-                                    const bEvColor =
-                                      b.evPct >= 3
-                                        ? "text-emerald-400"
-                                        : b.evPct >= 0
-                                        ? "text-yellow-400"
-                                        : "text-muted-foreground";
-                                    const isBest = b.book === play.bestBook;
-                                    return (
-                                      <div
-                                        key={b.book}
-                                        className={`flex items-center justify-between rounded-md border px-3 py-2 ${
-                                          isBest
-                                            ? "border-emerald-400/40 bg-emerald-400/5"
-                                            : "border-border/60 bg-background/40"
-                                        }`}
-                                      >
-                                        <div className="flex items-center gap-2">
-                                          <BookLogo book={b.book} size="md" />
-                                          {isBest && (
-                                            <Badge
-                                              variant="outline"
-                                              className="text-[10px] h-4 px-1.5 border-emerald-400/40 text-emerald-400"
-                                            >
-                                              BEST
-                                            </Badge>
-                                          )}
-                                        </div>
-                                        <div className="flex items-center gap-3 text-right">
-                                          <span className="font-mono text-sm font-semibold">
-                                            {formatOdds(b.odds)}
-                                          </span>
-                                          <span
-                                            className={`font-mono text-sm font-bold ${bEvColor}`}
-                                          >
-                                            {b.evPct > 0 ? "+" : ""}
-                                            {b.evPct.toFixed(1)}%
+                            {/* Reference book comparison — compact inline strip */}
+                            {(() => {
+                              const priced = referenceBookColumns
+                                .map((book) => {
+                                  const o = play.offerings[book];
+                                  const odds = play.side === "Over" ? o?.over : o?.under;
+                                  return odds != null ? { book, odds } : null;
+                                })
+                                .filter((x): x is { book: string; odds: number } => x != null);
+
+                              if (priced.length === 0) return null;
+
+                              return (
+                                <div>
+                                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground/50 mb-2">
+                                    Reference Books · {priced.length} priced
+                                  </p>
+                                  <div className="flex items-center flex-wrap gap-x-0 gap-y-1 rounded-lg border border-border bg-card/40 divide-x divide-border overflow-hidden">
+                                    {/* Platform row — playing */}
+                                    <div className={`flex items-center gap-2.5 px-3 py-2 ${accentBg}`}>
+                                      <BookLogo book={play.platformBook} size="sm" />
+                                      <span className={`text-[9px] font-semibold uppercase tracking-wide ${accentText}`}>playing</span>
+                                      <span className="font-mono text-sm font-semibold text-foreground">{formatOdds(play.platformOdds)}</span>
+                                      <span className={`font-mono text-xs font-bold ${evColor(play.platformEvPct)}`}>
+                                        {play.platformEvPct > 0 ? "+" : ""}{play.platformEvPct.toFixed(1)}%
+                                      </span>
+                                    </div>
+                                    {priced.map(({ book, odds: refOdds }) => {
+                                      const refEv = evPct(play.fairProb, refOdds);
+                                      return (
+                                        <div key={book} className="flex items-center gap-2.5 px-3 py-2">
+                                          <BookLogo book={getBook(book).label} size="sm" />
+                                          <span className="font-mono text-sm text-muted-foreground">{formatOdds(refOdds)}</span>
+                                          <span className={`font-mono text-xs font-semibold ${evColor(refEv)}`}>
+                                            {refEv > 0 ? "+" : ""}{refEv.toFixed(1)}%
                                           </span>
                                         </div>
-                                      </div>
-                                    );
-                                  })}
-                              </div>
-                            </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              );
+                            })()}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -565,8 +1086,82 @@ export default function Home() {
               })}
             </TableBody>
           </Table>
+          </TooltipProvider>
         </div>
       </div>
-    </main>
+
+      <SlipBuilder
+        open={slipOpen}
+        onCloseAction={() => setSlipOpen(false)}
+        legs={slipLegs}
+        onRemoveLegAction={(key) => setSlipLegKeys((prev) => prev.filter((k) => k !== key))}
+        onClearAllAction={() => setSlipLegKeys([])}
+        platform={platformConfig}
+      />
+
+      {/* Cmd+K Command Palette */}
+      <Dialog open={cmdkOpen} onOpenChange={setCmdkOpen}>
+        <DialogContent className="p-0 max-w-lg overflow-hidden">
+          <DialogTitle className="sr-only">Command Palette</DialogTitle>
+          <Command className="rounded-lg">
+            <CommandInput
+              placeholder="Search players, switch platform..."
+              className="h-11"
+            />
+            <CommandList className="max-h-80">
+              <CommandEmpty>No results.</CommandEmpty>
+              <CommandGroup heading="Players">
+                {[...new Set(displayed.map((p) => p.player))].slice(0, 8).map((player) => (
+                  <CommandItem
+                    key={player}
+                    onSelect={() => {
+                      setSearchQuery(player);
+                      setCmdkOpen(false);
+                    }}
+                  >
+                    <Search className="h-3.5 w-3.5 mr-2 text-muted-foreground" />
+                    {player}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+              <CommandSeparator />
+              <CommandGroup heading="Platform">
+                {PLATFORMS.filter((p) => p.available).map((p) => (
+                  <CommandItem
+                    key={p.id}
+                    onSelect={() => {
+                      setPlatformRaw(p.id);
+                      setCmdkOpen(false);
+                    }}
+                  >
+                    <Check className={`h-3.5 w-3.5 mr-2 ${platform === p.id ? "text-blue-400" : "opacity-0"}`} />
+                    {p.label}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+              <CommandSeparator />
+              <CommandGroup heading="Actions">
+                <CommandItem onSelect={() => { cycleSort("fairPct"); setCmdkOpen(false); }}>
+                  <ArrowUpDown className="h-3.5 w-3.5 mr-2 text-muted-foreground" />
+                  Sort by % Hit — {sortDir === "desc" ? "highest first" : "lowest first"}
+                </CommandItem>
+                <CommandItem onSelect={() => { cycleSort("player"); setCmdkOpen(false); }}>
+                  <ArrowUpDown className="h-3.5 w-3.5 mr-2 text-muted-foreground" />
+                  Sort by player name
+                </CommandItem>
+                <CommandItem onSelect={() => { setSearchQuery(""); setMinHitPct(52); setSelectedDate(null); setCmdkOpen(false); }}>
+                  <X className="h-3.5 w-3.5 mr-2 text-muted-foreground" />
+                  Clear all filters
+                </CommandItem>
+                <CommandItem onSelect={() => { setSlipOpen(true); setCmdkOpen(false); }}>
+                  <ListPlus className="h-3.5 w-3.5 mr-2 text-muted-foreground" />
+                  Open slip builder
+                </CommandItem>
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }

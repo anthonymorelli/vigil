@@ -31,6 +31,8 @@ const BOOK_DOMAIN: Record<string, string> = {
   "ProphetX": "prophetx.co",
   "Kalshi": "kalshi.com",
   "Polymarket": "polymarket.com",
+  "Underdog": "underdogfantasy.com",
+  "Betr": "betr.app",
 };
 
 // Display name remap (for accessibility labels and fallback badges)
@@ -76,6 +78,9 @@ const FALLBACK_STYLES: Record<string, BadgeStyle> = {
   "ProphetX":    { label: "ProphetX",    bg: "#FF6B00", text: "#ffffff" },
   "Kalshi":      { label: "Kalshi",      bg: "#00B4D8", text: "#000000" },
   "Polymarket":  { label: "Polymarket",  bg: "#0072F5", text: "#ffffff" },
+  "Underdog":    { label: "Underdog",    bg: "#E85D2B", text: "#ffffff" },
+  "Pick6":       { label: "Pick6",       bg: "#00D4AA", text: "#000000" },
+  "Betr":        { label: "Betr",        bg: "#7C3AED", text: "#ffffff" },
 };
 
 const DEFAULT_FALLBACK: BadgeStyle = {
@@ -93,7 +98,7 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_BRANDFETCH_CLIENT_ID;
 
 type BookLogoProps = {
   book: string;
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "header";
 };
 
 export function BookLogo({ book, size = "sm" }: BookLogoProps) {
@@ -103,15 +108,38 @@ export function BookLogo({ book, size = "sm" }: BookLogoProps) {
   const showLogo = domain && CLIENT_ID && !imageError;
   const suffix = altLineSuffix(book);
 
-  // ---- Brandfetch CDN render path ----
+  // ---- Header tile — ~32px icon, no extra wrapper ----
+  if (size === "header") {
+    const style = FALLBACK_STYLES[book] ?? { ...DEFAULT_FALLBACK, label: book };
+    if (showLogo) {
+      const logoUrl = `https://cdn.brandfetch.io/${domain}/icon?c=${CLIENT_ID}`;
+      return (
+        <img
+          src={logoUrl}
+          alt={displayName(book)}
+          title={displayName(book)}
+          className="w-9 h-9 rounded-lg object-contain"
+          onError={() => setImageError(true)}
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      );
+    }
+    // Fallback — colored square with initials
+    return (
+      <span
+        className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-[11px] font-bold"
+        style={{ backgroundColor: style.bg, color: style.text }}
+        title={displayName(book)}
+      >
+        {(style.label || book).slice(0, 2).toUpperCase()}
+      </span>
+    );
+  }
+
+  // ---- Brandfetch CDN render path (sm / md) ----
   if (showLogo) {
     const logoHeight = size === "md" ? "h-5" : "h-4";
     const suffixSize = size === "md" ? "text-xs" : "text-[10px]";
-
-    // Brandfetch CDN URL format:
-    // https://cdn.brandfetch.io/{domain}?c={clientId}
-    // The CDN auto-selects the right logo variant for the request.
-    // We can append theme=dark to prefer dark-mode variants.
     const logoUrl = `https://cdn.brandfetch.io/${domain}?c=${CLIENT_ID}&theme=dark`;
 
     return (
@@ -125,9 +153,7 @@ export function BookLogo({ book, size = "sm" }: BookLogoProps) {
           referrerPolicy="no-referrer-when-downgrade"
         />
         {suffix && (
-          <span
-            className={`${suffixSize} text-muted-foreground font-medium uppercase tracking-wide`}
-          >
+          <span className={`${suffixSize} text-muted-foreground font-medium uppercase tracking-wide`}>
             {suffix}
           </span>
         )}
@@ -135,7 +161,7 @@ export function BookLogo({ book, size = "sm" }: BookLogoProps) {
     );
   }
 
-  // ---- Fallback colored pill ----
+  // ---- Fallback colored pill (sm / md) ----
   const style = FALLBACK_STYLES[book] ?? { ...DEFAULT_FALLBACK, label: book };
   const paddingClass = size === "md" ? "px-2.5 py-1" : "px-2 py-0.5";
   const textClass = size === "md" ? "text-xs" : "text-[11px]";

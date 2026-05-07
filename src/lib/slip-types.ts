@@ -5,25 +5,20 @@
 
 export type SlipPlatform = "prizepicks" | "underdog" | "betr" | "sleeper" | "pick6" | "parlayplay";
 
-/**
- * payoutGrid[k] = multiplier paid when k of N legs hit
- * Index 0 means "0 legs hit", index N means "all legs hit"
- * Anything that doesn't pay should be 0 (e.g. PP Power on any miss)
- */
 export type SlipType = {
   id: string;
   platform: SlipPlatform;
   platformLabel: string;
-  variant: string;          // "Power", "Flex"
-  picks: number;            // N — total legs in the slip
+  variant: string;
+  picks: number;
   payoutGrid: number[];     // length N+1, multipliers indexed by hits
-  available: boolean;       // do we have data for this platform's book?
+  available: boolean;       // false = stub, grids unverified
   recommended?: boolean;
   notes?: string;
 };
 
 // ============================================================================
-// PrizePicks payout grids (Anthony's confirmed data, April 2026)
+// PrizePicks (Anthony's confirmed data, April 2026)
 // ============================================================================
 
 const PP_POWER = (picks: number, allHitMult: number): number[] => {
@@ -32,25 +27,88 @@ const PP_POWER = (picks: number, allHitMult: number): number[] => {
   return grid;
 };
 
-// Flex grids — index = hits, value = multiplier
 const PP_FLEX_3: number[] = [0, 0, 1, 3];
 const PP_FLEX_4: number[] = [0, 0, 0, 1.5, 6];
 const PP_FLEX_5: number[] = [0, 0, 0, 0.4, 2, 10];
 const PP_FLEX_6: number[] = [0, 0, 0, 0, 0.4, 2, 12.5];
 
 export const SLIP_TYPES: SlipType[] = [
+  // --------------------------------------------------------------------------
   // PrizePicks Power
+  // --------------------------------------------------------------------------
   { id: "pp_power_2", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Power", picks: 2, payoutGrid: PP_POWER(2, 3),  available: true },
   { id: "pp_power_3", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Power", picks: 3, payoutGrid: PP_POWER(3, 6),  available: true },
   { id: "pp_power_4", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Power", picks: 4, payoutGrid: PP_POWER(4, 10), available: true },
   { id: "pp_power_5", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Power", picks: 5, payoutGrid: PP_POWER(5, 20), available: true },
   { id: "pp_power_6", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Power", picks: 6, payoutGrid: PP_POWER(6, 25), available: true },
 
+  // --------------------------------------------------------------------------
   // PrizePicks Flex
+  // --------------------------------------------------------------------------
   { id: "pp_flex_3", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Flex", picks: 3, payoutGrid: PP_FLEX_3, available: true },
   { id: "pp_flex_4", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Flex", picks: 4, payoutGrid: PP_FLEX_4, available: true },
-  { id: "pp_flex_5", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Flex", picks: 5, payoutGrid: PP_FLEX_5, available: true, recommended: true, notes: "Best PP slip — insurance softens per-leg target" },
+  {
+    id: "pp_flex_5",
+    platform: "prizepicks",
+    platformLabel: "PrizePicks",
+    variant: "Flex",
+    picks: 5,
+    payoutGrid: PP_FLEX_5,
+    available: true,
+    recommended: true,
+    notes: "Best PP slip — insurance softens per-leg target",
+  },
   { id: "pp_flex_6", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Flex", picks: 6, payoutGrid: PP_FLEX_6, available: true },
+
+  // --------------------------------------------------------------------------
+  // Underdog Fantasy — verified March 2026 (payouts include entry fee)
+  // Standard = all-or-nothing. Flex = partial payouts on 1-2 losses.
+  // Note: base multipliers assume 1.0x difficulty per pick.
+  // Picks with difficulty ≠ 1.0x (e.g. 0.7x, 1.5x) scale payouts accordingly.
+  // --------------------------------------------------------------------------
+
+  // Underdog Standard (all-or-nothing)
+  { id: "ud_std_2", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 2, payoutGrid: [0, 0, 3.5],              available: true },
+  { id: "ud_std_3", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 3, payoutGrid: [0, 0, 0, 6.5],           available: true },
+  { id: "ud_std_4", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 4, payoutGrid: [0, 0, 0, 0, 10],         available: true },
+  { id: "ud_std_5", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 5, payoutGrid: [0, 0, 0, 0, 0, 20],      available: true },
+  { id: "ud_std_6", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 6, payoutGrid: [0, 0, 0, 0, 0, 0, 35],   available: true },
+
+  // Underdog Flex (partial payouts on misses)
+  // 3-pick: 3/3→3.25x, 2/3→1.09x
+  { id: "ud_flex_3", platform: "underdog", platformLabel: "Underdog", variant: "Flex", picks: 3, payoutGrid: [0, 0, 1.09, 3.25],                   available: true },
+  // 4-pick: 4/4→6x, 3/4→1.5x
+  { id: "ud_flex_4", platform: "underdog", platformLabel: "Underdog", variant: "Flex", picks: 4, payoutGrid: [0, 0, 0, 1.5, 6],                     available: true },
+  // 5-pick: 5/5→10x, 4/5→2.5x
+  {
+    id: "ud_flex_5",
+    platform: "underdog",
+    platformLabel: "Underdog",
+    variant: "Flex",
+    picks: 5,
+    payoutGrid: [0, 0, 0, 0, 2.5, 10],
+    available: true,
+    recommended: true,
+    notes: "Best UD slip — 2.5x insurance on 4/5, same 10x all-hit as PP Flex 5",
+  },
+  // 6-pick: 6/6→25x, 5/6→2.6x, 4/6→0.25x
+  { id: "ud_flex_6", platform: "underdog", platformLabel: "Underdog", variant: "Flex", picks: 6, payoutGrid: [0, 0, 0, 0, 0.25, 2.6, 25],            available: true },
+
+  // --------------------------------------------------------------------------
+  // DraftKings Pick6 — stubs, available: false until grids confirmed
+  // --------------------------------------------------------------------------
+  { id: "pick6_power_2", platform: "pick6", platformLabel: "Pick6", variant: "Power", picks: 2, payoutGrid: [0, 0, 3],       available: false, notes: "TODO: verify" },
+  { id: "pick6_power_3", platform: "pick6", platformLabel: "Pick6", variant: "Power", picks: 3, payoutGrid: [0, 0, 0, 6],    available: false, notes: "TODO: verify" },
+  { id: "pick6_power_4", platform: "pick6", platformLabel: "Pick6", variant: "Power", picks: 4, payoutGrid: [0, 0, 0, 0, 10], available: false, notes: "TODO: verify" },
+  { id: "pick6_power_5", platform: "pick6", platformLabel: "Pick6", variant: "Power", picks: 5, payoutGrid: [0, 0, 0, 0, 0, 20], available: false, notes: "TODO: verify" },
+
+  // --------------------------------------------------------------------------
+  // Betr — stubs, available: false until grids confirmed
+  // --------------------------------------------------------------------------
+  { id: "betr_power_2", platform: "betr", platformLabel: "Betr", variant: "Power", picks: 2, payoutGrid: [0, 0, 3],       available: false, notes: "TODO: verify" },
+  { id: "betr_power_3", platform: "betr", platformLabel: "Betr", variant: "Power", picks: 3, payoutGrid: [0, 0, 0, 6],    available: false, notes: "TODO: verify" },
+  { id: "betr_power_4", platform: "betr", platformLabel: "Betr", variant: "Power", picks: 4, payoutGrid: [0, 0, 0, 0, 10], available: false, notes: "TODO: verify" },
+  { id: "betr_power_5", platform: "betr", platformLabel: "Betr", variant: "Power", picks: 5, payoutGrid: [0, 0, 0, 0, 0, 20], available: false, notes: "TODO: verify" },
 ];
 
 // ============================================================================
@@ -121,9 +179,21 @@ export function getSlipById(id: string): SlipType {
   return SLIP_TYPES.find(s => s.id === id) ?? DEFAULT_SLIP_TYPE;
 }
 
-export function groupedSlipTypes() {
+export function getDefaultSlipForPlatform(platform: SlipPlatform): SlipType {
+  return (
+    SLIP_TYPES.find((s) => s.platform === platform && s.recommended && s.available) ??
+    SLIP_TYPES.find((s) => s.platform === platform && s.available) ??
+    DEFAULT_SLIP_TYPE
+  );
+}
+
+export function groupedSlipTypes(platformFilter?: SlipPlatform) {
+  const slips = platformFilter
+    ? SLIP_TYPES.filter((s) => s.platform === platformFilter)
+    : SLIP_TYPES;
+
   const groups = new Map<string, Map<string, SlipType[]>>();
-  for (const slip of SLIP_TYPES) {
+  for (const slip of slips) {
     if (!groups.has(slip.platformLabel)) {
       groups.set(slip.platformLabel, new Map());
     }
