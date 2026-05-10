@@ -581,7 +581,7 @@ function HomeInner() {
 
         {/* Branding */}
         <div className="px-4 pt-5 pb-4 border-b border-border">
-          <h1 className="text-sm font-semibold tracking-tight">Prop Screen</h1>
+          <h1 className="text-sm font-semibold tracking-tight">Vigil</h1>
           <p className="text-[11px] text-muted-foreground/60 mt-0.5 leading-snug">
             +EV props · devigged vs exchanges
           </p>

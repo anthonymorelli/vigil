@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Prop Screen",
-  description: "Personal +EV NBA prop scanner",
+  title: "Vigil",
+  description: "Sharp prop betting intelligence",
 };
 
 export default function RootLayout({
