@@ -5,11 +5,21 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─── Elan ITC Black ─────────────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Elan ITC';
+  src: url('./fonts/Elan_ITC_W04_Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans); 
+  --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-elan);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -49,6 +59,7 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ─── Light mode (unchanged) ─────────────────────────────────────────────── */
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -84,41 +95,38 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* ─── Dark mode — neutral UI, Vigil blue only for brand/accent ───────────────
+   Backgrounds and surfaces back to neutral near-black (Vercel-style).
+   Blue is reserved for: logo mark, primary CTA, ring, EV highlights only.
+────────────────────────────────────────────────────────────────────────────── */
 .dark {
-  /* ── Background layers ──────────────────────────────────────────────────
-     Vercel-style: not pure black. #0a0a0a bg, #111 card surfaces.        */
-  --background:        oklch(0.07 0 0);   /* #0a0a0a */
-  --foreground:        oklch(0.985 0 0);
+  --background:          oklch(0.07 0 0);
+  --foreground:          oklch(0.985 0 0);
 
-  --card:              oklch(0.11 0 0);   /* #111111 */
-  --card-foreground:   oklch(0.985 0 0);
+  --card:                oklch(0.11 0 0);
+  --card-foreground:     oklch(0.985 0 0);
 
-  --popover:           oklch(0.11 0 0);
-  --popover-foreground: oklch(0.985 0 0);
+  --popover:             oklch(0.11 0 0);
+  --popover-foreground:  oklch(0.985 0 0);
 
-  /* ── Interactive ────────────────────────────────────────────────────── */
-  --primary:           oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
+  /* Vigil signal blue — only for primary actions/focus */
+  --primary:             #2A5D9C;
+  --primary-foreground:  oklch(0.985 0 0);
 
-  --secondary:         oklch(0.16 0 0);   /* #1a1a1a — button/chip bg */
+  --secondary:           oklch(0.16 0 0);
   --secondary-foreground: oklch(0.985 0 0);
 
-  /* ── Muted / accent ─────────────────────────────────────────────────── */
-  --muted:             oklch(0.14 0 0);   /* #161616 — subtle fills */
-  --muted-foreground:  oklch(0.53 0 0);   /* #888888 — Vercel's secondary text */
+  --muted:               oklch(0.14 0 0);
+  --muted-foreground:    oklch(0.53 0 0);
 
-  --accent:            oklch(0.15 0 0);   /* #181818 — hover surfaces */
-  --accent-foreground: oklch(0.985 0 0);
+  --accent:              oklch(0.15 0 0);
+  --accent-foreground:   oklch(0.985 0 0);
 
-  /* ── Semantic ───────────────────────────────────────────────────────── */
-  --destructive:       oklch(0.704 0.191 22.216);
+  --destructive:         oklch(0.704 0.191 22.216);
 
-  /* ── Borders ────────────────────────────────────────────────────────── 
-     oklch(1 0 0 / 13%) = white at 13% opacity on #0a0a0a ≈ #1c1c1c.
-     Vercel uses very subtle but clearly visible borders.                  */
-  --border:            oklch(1 0 0 / 13%);
-  --input:             oklch(1 0 0 / 16%);
-  --ring:              oklch(0.45 0 0);
+  --border:              oklch(1 0 0 / 13%);
+  --input:               oklch(1 0 0 / 16%);
+  --ring:                #2A5D9C;
 
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
@@ -126,14 +134,26 @@
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
 
-  --sidebar:           oklch(0.11 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary:   oklch(0.488 0.243 264.376);
+  --sidebar:             oklch(0.11 0 0);
+  --sidebar-foreground:  oklch(0.985 0 0);
+  --sidebar-primary:     #2A5D9C;
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent:    oklch(0.15 0 0);
+  --sidebar-accent:      oklch(0.15 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border:    oklch(1 0 0 / 13%);
-  --sidebar-ring:      oklch(0.45 0 0);
+  --sidebar-border:      oklch(1 0 0 / 13%);
+  --sidebar-ring:        #2A5D9C;
+}
+
+/* ─── Vigil brand tokens — explicit use only ─────────────────────────────── */
+:root {
+  --vigil-void:    #070C15;
+  --vigil-surface: #1C385A;
+  --vigil-lift:    #2D456B;
+  --vigil-sky:     #39639D;
+  --vigil-accent:  #2A5D9C;
+  --vigil-text:    #7AA0C8;
+  --vigil-light:   #B0C8E0;
+  --vigil-white:   #E0EAF5;
 }
 
 @layer base {
@@ -146,4 +166,9 @@
   html {
     @apply font-sans;
   }
+
+  ::-webkit-scrollbar       { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: oklch(1 0 0 / 15%); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: oklch(1 0 0 / 25%); }
 }

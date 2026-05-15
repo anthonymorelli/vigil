@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90" fill="none">
+  <!-- VIGIL mark — spike only (no baseline, reads clean at 16px) -->
+  <path
+    d="M 4,80 L 45,6 L 86,80"
+    stroke="#E0EAF5"
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="miter"
+  />
+  <!-- Signal dot — accent blue, hardcoded -->
+  <circle cx="45" cy="6" r="11" fill="#2A5D9C"/>
+</svg>

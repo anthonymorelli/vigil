@@ -4,6 +4,10 @@
 // Three distinct tiers instead of continuous alpha — adjacent rows should
 // look visually different, not just fractionally brighter. Each tier has
 // its own fill, border, and glow so the jump is obvious.
+//
+// Blue = Vancouver signal blue (#2A5D9C) extracted from the bridge photo.
+// Border = Vancouver sky blue (#39639D) — slightly lighter.
+// Red tiers unchanged.
 
 import type { CSSProperties } from "react";
 
@@ -12,21 +16,16 @@ export type HitCellStyle = {
   textClass: string;
 };
 
-// ── Blue tiers (above target) ─────────────────────────────────────────────
+// ── Above target — Vancouver blues ───────────────────────────────────────
+//  #2A5D9C → rgb(42, 93, 156)   fill
+//  #39639D → rgb(57, 99, 157)   border
 //
-//  Tier 3 (+4pp or more)  — bright, glowing — great leg
-//  Tier 2 (+2–4pp)        — solid blue — good leg
-//  Tier 1 (0–2pp)         — dim blue — marginal edge
-//
-// ── Red tiers (below target) ─────────────────────────────────────────────
-//
-//  Tier 2 (-2pp or worse) — clearly red — avoid
-//  Tier 1 (0 to -2pp)     — barely red — borderline
+// ── Below target — red (unchanged) ──────────────────────────────────────
 
-const BLUE = "59, 130, 246";
-const BLUE_BORDER = "147, 197, 253";
-const RED = "239, 68, 68";
-const RED_BORDER = "252, 165, 165";
+const BLUE        = "58, 120, 200";  // boosted — perceivable blue on dark bg
+const BLUE_BORDER = "90, 154, 224";  // lighter rim to match
+const RED         = "239, 68, 68";
+const RED_BORDER  = "252, 165, 165";
 
 function pill(
   rgb: string,
@@ -48,17 +47,17 @@ export function hitCellStyle(fairPct: number, targetPct: number): HitCellStyle {
   if (delta >= 0) {
     // Tier 3 — strong edge (≥4pp)
     if (delta >= 4) return {
-      pillStyle: pill(BLUE, BLUE_BORDER, 0.55, 0.75, 0.30),
+      pillStyle: pill(BLUE, BLUE_BORDER, 0.70, 0.90, 0.35),
       textClass: "text-white font-bold",
     };
     // Tier 2 — solid edge (2–4pp)
     if (delta >= 2) return {
-      pillStyle: pill(BLUE, BLUE_BORDER, 0.32, 0.55),
+      pillStyle: pill(BLUE, BLUE_BORDER, 0.50, 0.70),
       textClass: "text-blue-100 font-semibold",
     };
-    // Tier 1 — marginal (0–2pp)
+    // Tier 1 — marginal (0–2pp): ghost pill
     return {
-      pillStyle: pill(BLUE, BLUE_BORDER, 0.16, 0.30),
+      pillStyle: pill(BLUE, BLUE_BORDER, 0.22, 0.40),
       textClass: "text-blue-200 font-medium",
     };
   }
@@ -76,13 +75,12 @@ export function hitCellStyle(fairPct: number, targetPct: number): HitCellStyle {
 }
 
 /**
- * Expanded row tint — mirrors pill tier so the open row still reads as
- * part of the same play rather than a generic gray block.
+ * Expanded row tint — mirrors pill tier.
  */
 export function expandedRowStyle(fairPct: number, targetPct: number): CSSProperties {
   const delta = fairPct - targetPct;
-  if (delta >= 4)  return { backgroundColor: "rgba(59, 130, 246, 0.10)" };
-  if (delta >= 0)  return { backgroundColor: "rgba(59, 130, 246, 0.06)" };
+  if (delta >= 4)  return { backgroundColor: "rgba(42, 93, 156, 0.12)" };
+  if (delta >= 0)  return { backgroundColor: "rgba(42, 93, 156, 0.07)" };
   if (delta <= -2) return { backgroundColor: "rgba(239, 68, 68, 0.09)" };
   return           { backgroundColor: "rgba(239, 68, 68, 0.05)" };
 }
