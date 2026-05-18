@@ -33,7 +33,7 @@ import {
 } from "@/lib/platforms";
 import { Logo } from "@/components/Logo";
 
-type BookSideOdds = { over: number | null; under: number | null; line?: number };
+type BookSideOdds = { over: number | null; under: number | null; line?: number; type?: string };
 type Offerings = Record<string, BookSideOdds>;
 type MarketRow = {
   playerId: string; player: string; team?: string; matchup?: string;
@@ -44,12 +44,12 @@ type Play = {
   key: string; player: string; team?: string; matchup?: string;
   market: string; line: number; side: "Over" | "Under";
   fairProb: number; fairPct: number; fairOdds: number;
-  platformBook: string; platformOdds: number; platformEvPct: number;
+  platformBook: string; platformOdds: number;
   offerings: Offerings; slipId?: string;
   slip?: ReturnType<typeof getSlipById>; slipEv?: number;
 };
 
-function processMarkets(markets: MarketRow[], weights: WeightMap, activePlatformBooks: string[]): Play[] {
+function processMarkets(markets: MarketRow[], weights: WeightMap, activePlatformBooks: string[], showAltLines: boolean): Play[] {
   const plays: Play[] = [];
   for (const market of markets) {
     const { fairOver } = consensusFairProb(market.offerings, weights);
@@ -64,12 +64,15 @@ function processMarkets(markets: MarketRow[], weights: WeightMap, activePlatform
         if (odds != null) { platformBook = book; platformOdds = odds; break; }
       }
       if (!platformBook || platformOdds == null) continue;
+      const offeringType = market.offerings[platformBook]?.type;
+      if (!showAltLines && offeringType === "goblin") continue;
+      if (!showAltLines && offeringType === "demon") continue;
       plays.push({
         key: `${market.playerId}|${market.market}|${market.line}|${side}`,
         player: market.player, team: market.team, matchup: market.matchup,
         market: market.market, line: market.line, side, fairProb,
         fairPct: fairProb * 100, fairOdds: probToAmerican(fairProb),
-        platformBook, platformOdds, platformEvPct: evPct(fairProb, platformOdds),
+        platformBook, platformOdds,
         offerings: market.offerings,
       });
     }
@@ -264,9 +267,9 @@ function HomeInner() {
   const plays = useMemo(
     () => processMarkets(
       markets.filter((m) => !m.sport || m.sport === selectedSport),
-      weights, activePlatformBooks,
+      weights, activePlatformBooks, showAltLines,
     ),
-    [markets, weights, activePlatformBooks, selectedSport],
+    [markets, weights, activePlatformBooks, selectedSport, showAltLines],
   );
 
   const playsWithSlipEv = useMemo(() => {
@@ -665,7 +668,6 @@ function HomeInner() {
                           </div>
                         </TableCell>
 
-                        {/* ── Reference book columns ── */}
                         {referenceBookColumns.map((book) => {
                           const offering = play.offerings[book];
                           const odds = play.side === "Over" ? offering?.over : offering?.under;
@@ -746,10 +748,6 @@ function HomeInner() {
                                     {play.slipEv! > 0 ? "+" : ""}{play.slipEv!.toFixed(2)}%
                                   </p>
                                 </div>
-                                <div>
-                                  <p className="text-muted-foreground uppercase tracking-wider mb-1">Platform EV</p>
-                                  <p className="font-mono">{play.platformEvPct > 0 ? "+" : ""}{play.platformEvPct.toFixed(2)}%</p>
-                                </div>
                               </div>
 
                               {(() => {
@@ -771,8 +769,8 @@ function HomeInner() {
                                         <BookLogo book={play.platformBook} size="sm" />
                                         <span className={`text-[9px] font-semibold uppercase tracking-wide ${accentText}`}>playing</span>
                                         <span className="font-mono text-sm font-semibold text-foreground">{formatOdds(play.platformOdds)}</span>
-                                        <span className={`font-mono text-xs font-bold ${evColor(play.platformEvPct)}`}>
-                                          {play.platformEvPct > 0 ? "+" : ""}{play.platformEvPct.toFixed(1)}%
+                                        <span className={`font-mono text-xs font-bold ${evColor(play.slipEv!)}`}>
+                                          {play.slipEv! > 0 ? "+" : ""}{play.slipEv!.toFixed(1)}%
                                         </span>
                                       </div>
                                       {priced.map(({ book, odds: refOdds }) => {

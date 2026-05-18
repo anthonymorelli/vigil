@@ -35,9 +35,9 @@ export const PLATFORMS: Platform[] = [
   {
     id: "pick6",
     label: "Pick6",
-    books: ["DK Pick6"],
-    primaryBooks: ["DK Pick6"],
-    altBooks: [],
+    books: ["Pick6"],
+    primaryBooks: ["Pick6"],
+    altBooks: ["Pick6"],  // all Pick6 lines are alt lines
     slipPlatform: "pick6",
     available: true,
   },

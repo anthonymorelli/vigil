@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect, Suspense } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useQueryState, parseAsStringLiteral } from "nuqs";
 import { usePathname } from "next/navigation";
 import { Check, Plus, ListPlus, Search, X, Command as CommandIcon, ArrowDown, ArrowUp, ArrowUpDown, ChevronDown, ChevronRight } from "lucide-react";
@@ -15,10 +16,10 @@ import { consensusFairProb, probToAmerican, evPct, type WeightMap } from "@/lib/
 import { isReferenceBook, getBook } from "@/lib/books";
 import { useBookWeights } from "@/lib/book-weights";
 import { PLATFORMS, getPlatformById, DEFAULT_PLATFORM_ID, type PlatformId } from "@/lib/platforms";
-import { legBreakEvenProbability, getDefaultSlipForPlatform, groupedSlipTypes } from "@/lib/slip-types";
+import { legBreakEvenProbability, legEvPctVsSlip, legTargetAmerican, getDefaultSlipForPlatform, groupedSlipTypes } from "@/lib/slip-types";
 import { Logo } from "@/components/Logo";
 
-type BookSideOdds = { over: number | null; under: number | null; line?: number };
+type BookSideOdds = { over: number | null; under: number | null; line?: number; type?: string };
 type Offerings = Record<string, BookSideOdds>;
 type MarketRow = {
   playerId: string; player: string; team?: string; matchup?: string;
@@ -28,20 +29,53 @@ type PipelinePayload = { updated: string; source: string; markets: MarketRow[] }
 type FlatProp = {
   key: string; player: string; team?: string; matchup: string; sport: string;
   market: string; line: number; side: "Over" | "Under";
-  fairProb: number; fairPct: number; platformOdds: number | null; offerings: Offerings;
+  fairProb: number; fairPct: number; offerings: Offerings;
 };
 
 const MARKET_ABBREV: Record<string, string> = {
-  "Points": "Pts", "Rebounds": "Reb", "Assists": "Ast", "Threes Made": "3PM",
-  "Steals": "Stl", "Blocks": "Blk", "Turnovers": "TO",
-  "Points + Rebounds": "Pts+Reb", "Points + Assists": "Pts+Ast",
-  "Rebounds + Assists": "Reb+Ast", "Points + Rebounds + Assists": "Pts+Reb+Ast",
-  "Pitcher Strikeouts": "K", "Hits": "H", "Home Runs": "HR", "RBIs": "RBI",
-  "Runs": "R", "Walks": "BB", "Goals": "G", "Shots on Goal": "SOG",
-  "Passing Yards": "Pass Yds", "Rushing Yards": "Rush Yds",
-  "Receiving Yards": "Rec Yds", "Receptions": "Rec", "Passing TDs": "Pass TDs",
-  "Map 1 Kills": "M1 Kills", "Map 1 Headshots": "M1 HS",
-  "Maps 1-3 Kills": "Kills", "Maps 1-3 Assists": "Assists",
+  "Points": "Pts",
+  "Rebounds": "Reb",
+  "Assists": "Ast",
+  "Threes Made": "3PM",
+  "Steals": "Stl",
+  "Blocks": "Blk",
+  "Turnovers": "TO",
+  "Points + Rebounds": "Pts+Reb",
+  "Points + Assists": "Pts+Ast",
+  "Rebounds + Assists": "Reb+Ast",
+  "Points + Rebounds + Assists": "Pts+Reb+Ast",
+  "Steals + Blocks": "Stl+Blk",
+  "Pitcher Strikeouts": "Ks",
+  "Hitter Strikeouts": "K",
+  "Hits": "H",
+  "Home Runs": "HR",
+  "RBIs": "RBI",
+  "Runs": "R",
+  "Walks": "BB",
+  "Hits + Runs + RBIs": "H+R+RBI",
+  "Earned Runs": "ER",
+  "Pitching Outs": "Outs",
+  "Total Bases": "TB",
+  "Goals": "G",
+  "Shots on Goal": "SOG",
+  "Saves": "SV",
+  "Goals + Assists": "G+A",
+  "Passing Yards": "Pass Yds",
+  "Rushing Yards": "Rush Yds",
+  "Receiving Yards": "Rec Yds",
+  "Receptions": "Rec",
+  "Passing TDs": "Pass TDs",
+  "Rushing TDs": "Rush TDs",
+  "Receiving TDs": "Rec TDs",
+  "Interceptions": "INT",
+  "Sacks": "Sacks",
+  "Pass Completions": "Comp",
+  "Pass Attempts": "Att",
+  "Map 1 Kills": "M1 Kills",
+  "Map 1 Headshots": "M1 HS",
+  "Maps 1-3 Kills": "Kills",
+  "Maps 1-3 Assists": "Assists",
+  "Maps 1-3 Deaths": "Deaths",
 };
 
 const SPORT_BADGE: Record<string, { label: string; color: string }> = {
@@ -50,6 +84,11 @@ const SPORT_BADGE: Record<string, { label: string; color: string }> = {
   nfl: { label: "NFL", color: "text-green-400/70" },
   nhl: { label: "NHL", color: "text-cyan-400/70" },
   esports: { label: "Esports", color: "text-purple-400/70" },
+};
+
+const SPORT_ORDER = ["nba", "mlb", "nhl", "nfl", "esports"];
+const SPORT_LABELS: Record<string, string> = {
+  nba: "NBA", mlb: "MLB", nhl: "NHL", nfl: "NFL", esports: "Esports",
 };
 
 const PLATFORM_LOGO: Record<string, string> = {
@@ -77,7 +116,7 @@ function relativeTime(iso: string): string {
   return `${Math.floor(hrs / 24)}d ago`;
 }
 
-function processToFlat(markets: MarketRow[], weights: WeightMap, platformBooks: string[]): FlatProp[] {
+function processToFlat(markets: MarketRow[], weights: WeightMap, platformBooks: string[], showAltLines: boolean): FlatProp[] {
   const props: FlatProp[] = [];
   for (const market of markets) {
     const hasProp = platformBooks.some(
@@ -89,18 +128,21 @@ function processToFlat(markets: MarketRow[], weights: WeightMap, platformBooks: 
     const sport = market.sport ?? "nba";
     for (const side of ["Over", "Under"] as const) {
       const fairProb = side === "Over" ? fairOver : 1 - fairOver;
-      let platformOdds: number | null = null;
+      let platformBook: string | null = null;
       for (const book of platformBooks) {
         const odds = side === "Over" ? market.offerings[book]?.over : market.offerings[book]?.under;
-        if (odds != null) { platformOdds = odds; break; }
+        if (odds != null) { platformBook = book; break; }
       }
-      if (platformOdds == null) continue;
+      if (platformBook == null) continue;
+      const offeringType = market.offerings[platformBook]?.type;
+      if (!showAltLines && offeringType === "goblin") continue;
+      if (!showAltLines && offeringType === "demon") continue;
       props.push({
         key: `${market.playerId}|${market.market}|${market.line}|${side}`,
         player: market.player, team: market.team,
         matchup: market.matchup ?? "", sport, market: market.market,
         line: market.line, side, fairProb, fairPct: fairProb * 100,
-        platformOdds, offerings: market.offerings,
+        offerings: market.offerings,
       });
     }
   }
@@ -109,10 +151,98 @@ function processToFlat(markets: MarketRow[], weights: WeightMap, platformBooks: 
 
 const PLATFORM_IDS = PLATFORMS.map((p) => p.id) as [PlatformId, ...PlatformId[]];
 
-// ============================================================================
-// Slip Breakdown — shows all slip types with ✓/✗ vs fair %
-// Mirrors Upside's "% Needed" dropdown
-// ============================================================================
+type MarketOption = { rawMarket: string; abbrev: string; sport: string };
+
+function MarketFilterDropdown({
+  options,
+  selectedMarket,
+  selectedSport,
+  onSelect,
+}: {
+  options: MarketOption[];
+  selectedMarket: string | null;
+  selectedSport: string | null;
+  onSelect: (market: string | null) => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  const selectedAbbrev = selectedMarket
+    ? options.find((o) => o.rawMarket === selectedMarket)?.abbrev ?? selectedMarket
+    : null;
+
+  const grouped = useMemo(() => {
+    if (selectedSport) {
+      return [{ sport: selectedSport, label: SPORT_LABELS[selectedSport] ?? selectedSport, markets: options }];
+    }
+    const map = new Map<string, MarketOption[]>();
+    for (const opt of options) {
+      if (!map.has(opt.sport)) map.set(opt.sport, []);
+      map.get(opt.sport)!.push(opt);
+    }
+    return SPORT_ORDER
+      .filter((s) => map.has(s))
+      .map((s) => ({ sport: s, label: SPORT_LABELS[s] ?? s, markets: map.get(s)! }));
+  }, [options, selectedSport]);
+
+  if (options.length < 2) return null;
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button
+          className={[
+            "flex items-center gap-1.5 h-7 px-2.5 rounded-md border text-xs font-medium transition-colors",
+            selectedMarket
+              ? "border-blue-400/40 text-blue-400 bg-blue-400/5"
+              : "border-border text-muted-foreground hover:text-foreground hover:bg-accent/50",
+          ].join(" ")}
+        >
+          {selectedAbbrev ?? "Market"}
+          <ChevronDown className="h-3 w-3 opacity-50" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent className="w-44 p-1" align="start">
+        <button
+          onClick={() => { onSelect(null); setOpen(false); }}
+          className={[
+            "w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm transition-colors",
+            selectedMarket === null
+              ? "text-foreground bg-accent"
+              : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
+          ].join(" ")}
+        >
+          <span>All markets</span>
+          {selectedMarket === null && <Check className="h-3.5 w-3.5 text-blue-400" />}
+        </button>
+
+        {grouped.map((group) => (
+          <div key={group.sport}>
+            {!selectedSport && (
+              <p className="px-2 pt-2 pb-0.5 text-[10px] font-medium uppercase tracking-widest text-muted-foreground/40">
+                {group.label}
+              </p>
+            )}
+            {group.markets.map((opt) => (
+              <button
+                key={opt.rawMarket}
+                onClick={() => { onSelect(opt.rawMarket); setOpen(false); }}
+                className={[
+                  "w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm transition-colors",
+                  selectedMarket === opt.rawMarket
+                    ? "text-foreground bg-accent"
+                    : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
+                ].join(" ")}
+              >
+                <span>{opt.abbrev}</span>
+                {selectedMarket === opt.rawMarket && <Check className="h-3.5 w-3.5 text-blue-400" />}
+              </button>
+            ))}
+          </div>
+        ))}
+      </PopoverContent>
+    </Popover>
+  );
+}
 
 function SlipBreakdown({
   fairProb,
@@ -124,7 +254,6 @@ function SlipBreakdown({
   platformLabel: string;
 }) {
   const fairPct = fairProb * 100;
-
   const slips = groupedSlipTypes(platformSlipPlatform)
     .flatMap((g) => g.variants.flatMap((v) => v.slips))
     .filter((s) => s.available)
@@ -138,7 +267,6 @@ function SlipBreakdown({
 
   return (
     <div className="min-w-[200px]">
-      {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/50">
           {platformLabel} % Needed
@@ -147,15 +275,13 @@ function SlipBreakdown({
           {fairPct.toFixed(1)}%
         </span>
       </div>
-
-      {/* Slip type rows */}
       <div className="space-y-1.5">
         {slips.map(({ id, label, breakEven, qualifies }) => (
           <div key={id} className="flex items-center justify-between gap-6">
             <div className="flex items-center gap-2">
               {qualifies
                 ? <Check className="h-3 w-3 text-emerald-400 shrink-0" />
-                : <X     className="h-3 w-3 text-muted-foreground/25 shrink-0" />}
+                : <X className="h-3 w-3 text-muted-foreground/25 shrink-0" />}
               <span className={`text-sm ${qualifies ? "text-emerald-400" : "text-muted-foreground/35"}`}>
                 {label}
               </span>
@@ -181,6 +307,7 @@ function BoardInner() {
   const [updatedAt, setUpdatedAt] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSport, setSelectedSport] = useState<string | null>(null);
+  const [selectedMarket, setSelectedMarket] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [slipLegKeys, setSlipLegKeys] = useState<string[]>([]);
   const [slipOpen, setSlipOpen] = useState(false);
@@ -197,6 +324,7 @@ function BoardInner() {
   const platformConfig = getPlatformById(platform);
 
   useEffect(() => { setShowAltLines(false); }, [platform]);
+  useEffect(() => { setSelectedMarket(null); }, [selectedSport, platform]);
 
   useEffect(() => {
     fetch("/opportunities.json")
@@ -217,8 +345,8 @@ function BoardInner() {
   const targetPct = legBreakEvenProbability(defaultSlip) * 100;
 
   const allProps = useMemo(
-    () => processToFlat(markets, weights, activePlatformBooks),
-    [markets, weights, activePlatformBooks],
+    () => processToFlat(markets, weights, activePlatformBooks, showAltLines),
+    [markets, weights, activePlatformBooks, showAltLines],
   );
 
   const referenceBookColumns = useMemo(() => {
@@ -236,9 +364,22 @@ function BoardInner() {
     });
   }, [markets]);
 
+  const marketOptions = useMemo((): MarketOption[] => {
+    let base = allProps.filter((p) => p.fairPct >= minHitPct);
+    if (selectedSport) base = base.filter((p) => p.sport === selectedSport);
+    const seen = new Map<string, MarketOption>();
+    for (const p of base) {
+      if (!seen.has(p.market)) {
+        seen.set(p.market, { rawMarket: p.market, abbrev: cleanMarket(p.market), sport: p.sport });
+      }
+    }
+    return [...seen.values()].sort((a, b) => a.abbrev.localeCompare(b.abbrev));
+  }, [allProps, selectedSport, minHitPct]);
+
   const displayed = useMemo(() => {
     let result = allProps.filter((p) => p.fairPct >= minHitPct);
     if (selectedSport) result = result.filter((p) => p.sport === selectedSport);
+    if (selectedMarket) result = result.filter((p) => p.market === selectedMarket);
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       result = result.filter((p) =>
@@ -249,7 +390,7 @@ function BoardInner() {
       );
     }
     return sortDir === "asc" ? [...result].reverse() : result;
-  }, [allProps, searchQuery, sortDir, selectedSport, minHitPct]);
+  }, [allProps, searchQuery, sortDir, selectedSport, selectedMarket, minHitPct]);
 
   const slipKeys = useMemo(() => new Set(slipLegKeys), [slipLegKeys]);
   const slipFull = slipLegKeys.length >= 6;
@@ -282,7 +423,7 @@ function BoardInner() {
     return () => document.removeEventListener("keydown", handler);
   }, []);
 
-  const hasActiveFilters = minHitPct !== 52 || showAltLines || !!searchQuery || !!selectedSport;
+  const hasActiveFilters = minHitPct !== 52 || showAltLines || !!searchQuery || !!selectedSport || !!selectedMarket;
 
   if (loading) {
     return (
@@ -295,9 +436,7 @@ function BoardInner() {
   return (
     <div className="flex h-screen overflow-hidden bg-background">
 
-      {/* ── Sidebar ── */}
       <aside className="w-[220px] shrink-0 border-r border-border bg-card flex flex-col overflow-y-auto">
-
         <div className="px-4 pt-5 pb-4 border-b border-border">
           <Logo size="md" />
         </div>
@@ -381,7 +520,7 @@ function BoardInner() {
           {hasActiveFilters && (
             <div className="px-4 pt-3 pb-1">
               <button
-                onClick={() => { setMinHitPct(52); setShowAltLines(false); setSearchQuery(""); setSelectedSport(null); }}
+                onClick={() => { setMinHitPct(52); setShowAltLines(false); setSearchQuery(""); setSelectedSport(null); setSelectedMarket(null); }}
                 className="text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors"
               >Clear all filters</button>
             </div>
@@ -394,11 +533,10 @@ function BoardInner() {
         </div>
       </aside>
 
-      {/* ── Main ── */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
         <header className="flex items-center justify-between px-5 py-3 border-b border-border shrink-0">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <div className="flex items-center gap-0.5 rounded-lg bg-card border border-border p-0.5">
               <Link href="/scanner"
                 className={["px-3 py-1 rounded-md text-sm transition-colors",
@@ -409,6 +547,14 @@ function BoardInner() {
                   pathname === "/board" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}
               >Board</Link>
             </div>
+
+            <MarketFilterDropdown
+              options={marketOptions}
+              selectedMarket={selectedMarket}
+              selectedSport={selectedSport}
+              onSelect={setSelectedMarket}
+            />
+
             <p className="text-sm text-muted-foreground tabular-nums">
               <span className="text-foreground font-medium">{displayed.length}</span> props
             </p>
@@ -481,7 +627,7 @@ function BoardInner() {
                         </div>
                         {hasActiveFilters && (
                           <button
-                            onClick={() => { setMinHitPct(52); setSearchQuery(""); setSelectedSport(null); setShowAltLines(false); }}
+                            onClick={() => { setMinHitPct(52); setSearchQuery(""); setSelectedSport(null); setSelectedMarket(null); setShowAltLines(false); }}
                             className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
                           >Clear all filters</button>
                         )}
@@ -501,6 +647,7 @@ function BoardInner() {
                       return best;
                     }, null
                   );
+                  const slipEv = legEvPctVsSlip(defaultSlip, prop.fairProb);
 
                   return (
                     <React.Fragment key={prop.key}>
@@ -534,7 +681,7 @@ function BoardInner() {
                           </span>
                         </TableCell>
                         <TableCell className="text-right font-mono font-semibold text-sm py-0">
-                          {prop.platformOdds != null ? formatOdds(prop.platformOdds) : "—"}
+                          {formatOdds(legTargetAmerican(defaultSlip))}
                         </TableCell>
                         <TableCell className="text-right py-0">
                           <div className="flex justify-end pr-1">
@@ -547,7 +694,6 @@ function BoardInner() {
                           </div>
                         </TableCell>
 
-                        {/* ── Reference book columns ── */}
                         {referenceBookColumns.map((book) => {
                           const odds = prop.side === "Over" ? prop.offerings[book]?.over : prop.offerings[book]?.under;
                           const isBest = bestBook?.book === book && odds != null;
@@ -597,21 +743,13 @@ function BoardInner() {
                         <TableRow className="border-border bg-accent/10 hover:bg-accent/10">
                           <TableCell colSpan={8 + referenceBookColumns.length} className="px-8 py-5">
                             <div className="flex items-start gap-10 flex-wrap">
-
-                              {/* ── Left: Slip breakdown ── */}
                               <SlipBreakdown
                                 fairProb={prop.fairProb}
                                 platformSlipPlatform={platformConfig.slipPlatform}
                                 platformLabel={platformConfig.label}
                               />
-
-                              {/* ── Divider ── */}
                               <div className="w-px self-stretch bg-border hidden sm:block" />
-
-                              {/* ── Right: Stats + reference books ── */}
                               <div className="flex-1 min-w-0 space-y-4">
-
-                                {/* Stats row */}
                                 <div className="flex items-center gap-8 text-xs">
                                   <div>
                                     <p className="text-muted-foreground/50 uppercase tracking-wider mb-0.5">Fair</p>
@@ -621,18 +759,13 @@ function BoardInner() {
                                     <p className="text-muted-foreground/50 uppercase tracking-wider mb-0.5">Matchup</p>
                                     <p className="font-mono">{prop.matchup || "—"}</p>
                                   </div>
-                                  {prop.platformOdds != null && (
-                                    <div>
-                                      <p className="text-muted-foreground/50 uppercase tracking-wider mb-0.5">Platform EV</p>
-                                      <p className={`font-mono font-semibold ${evPct(prop.fairProb, prop.platformOdds) >= 0 ? "text-blue-400" : "text-muted-foreground"}`}>
-                                        {evPct(prop.fairProb, prop.platformOdds) > 0 ? "+" : ""}
-                                        {evPct(prop.fairProb, prop.platformOdds).toFixed(2)}%
-                                      </p>
-                                    </div>
-                                  )}
+                                  <div>
+                                    <p className="text-muted-foreground/50 uppercase tracking-wider mb-0.5">Slip EV</p>
+                                    <p className={`font-mono font-semibold ${slipEv >= 0 ? "text-blue-400" : "text-muted-foreground"}`}>
+                                      {slipEv > 0 ? "+" : ""}{slipEv.toFixed(2)}%
+                                    </p>
+                                  </div>
                                 </div>
-
-                                {/* Reference books */}
                                 <div>
                                   <p className="text-[10px] text-muted-foreground/50 uppercase tracking-widest mb-2">
                                     Reference Books
@@ -642,14 +775,11 @@ function BoardInner() {
                                       <BookLogo book={platformConfig.label} size="sm" />
                                       <span className="text-[9px] font-semibold uppercase text-blue-400">playing</span>
                                       <span className="font-mono text-sm font-semibold">
-                                        {prop.platformOdds != null ? formatOdds(prop.platformOdds) : "—"}
+                                        {formatOdds(legTargetAmerican(defaultSlip))}
                                       </span>
-                                      {prop.platformOdds != null && (
-                                        <span className="font-mono text-xs text-muted-foreground">
-                                          {evPct(prop.fairProb, prop.platformOdds) > 0 ? "+" : ""}
-                                          {evPct(prop.fairProb, prop.platformOdds).toFixed(1)}%
-                                        </span>
-                                      )}
+                                      <span className="font-mono text-xs text-muted-foreground">
+                                        {slipEv > 0 ? "+" : ""}{slipEv.toFixed(1)}%
+                                      </span>
                                     </div>
                                     {referenceBookColumns.map((book) => {
                                       const odds = prop.side === "Over" ? prop.offerings[book]?.over : prop.offerings[book]?.under;
@@ -667,7 +797,6 @@ function BoardInner() {
                                     })}
                                   </div>
                                 </div>
-
                               </div>
                             </div>
                           </TableCell>
