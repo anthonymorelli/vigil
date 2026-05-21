@@ -15,6 +15,8 @@ import { useState } from "react";
 
 const BOOK_DOMAIN: Record<string, string> = {
   "DraftKings": "draftkings.com",
+  "FanDuel":    "fanduel.com",
+  "Pick6":      "draftkings.com",
   "BetMGM": "betmgm.com",
   "Caesars": "caesars.com",
   "Fanatics": "fanaticsbetting.com",
@@ -65,6 +67,8 @@ const FALLBACK_STYLES: Record<string, BadgeStyle> = {
   "PP Demons":   { label: "PP Boost",    bg: "#9D3FE8", text: "#ffffff" },
   "PP Goblins":  { label: "PP Discount", bg: "#5C1F9A", text: "#ffffff" },
   "DraftKings":  { label: "DraftKings",  bg: "#1A9C3E", text: "#ffffff" },
+  "FanDuel":     { label: "FanDuel",     bg: "#1493FF", text: "#ffffff" },
+  "Pick6":       { label: "Pick6",       bg: "#00D4AA", text: "#000000" },
   "BetMGM":      { label: "BetMGM",      bg: "#C9A84C", text: "#000000" },
   "Caesars":     { label: "Caesars",     bg: "#003087", text: "#ffffff" },
   "Fanatics":    { label: "Fanatics",    bg: "#E31837", text: "#ffffff" },
@@ -79,7 +83,6 @@ const FALLBACK_STYLES: Record<string, BadgeStyle> = {
   "Kalshi":      { label: "Kalshi",      bg: "#00B4D8", text: "#000000" },
   "Polymarket":  { label: "Polymarket",  bg: "#0072F5", text: "#ffffff" },
   "Underdog":    { label: "Underdog",    bg: "#E85D2B", text: "#ffffff" },
-  "Pick6":       { label: "Pick6",       bg: "#00D4AA", text: "#000000" },
   "Betr":        { label: "Betr",        bg: "#7C3AED", text: "#ffffff" },
 };
 

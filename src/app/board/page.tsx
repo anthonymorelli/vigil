@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useEffect, Suspense } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useQueryState, parseAsStringLiteral } from "nuqs";
 import { usePathname } from "next/navigation";
 import { Check, Plus, ListPlus, Search, X, Command as CommandIcon, ArrowDown, ArrowUp, ArrowUpDown, ChevronDown, ChevronRight } from "lucide-react";
@@ -30,52 +31,24 @@ type FlatProp = {
   key: string; player: string; team?: string; matchup: string; sport: string;
   market: string; line: number; side: "Over" | "Under";
   fairProb: number; fairPct: number; offerings: Offerings;
+  gameTime?: string;
 };
 
 const MARKET_ABBREV: Record<string, string> = {
-  "Points": "Pts",
-  "Rebounds": "Reb",
-  "Assists": "Ast",
-  "Threes Made": "3PM",
-  "Steals": "Stl",
-  "Blocks": "Blk",
-  "Turnovers": "TO",
-  "Points + Rebounds": "Pts+Reb",
-  "Points + Assists": "Pts+Ast",
-  "Rebounds + Assists": "Reb+Ast",
-  "Points + Rebounds + Assists": "Pts+Reb+Ast",
-  "Steals + Blocks": "Stl+Blk",
-  "Pitcher Strikeouts": "Ks",
-  "Hitter Strikeouts": "K",
-  "Hits": "H",
-  "Home Runs": "HR",
-  "RBIs": "RBI",
-  "Runs": "R",
-  "Walks": "BB",
-  "Hits + Runs + RBIs": "H+R+RBI",
-  "Earned Runs": "ER",
-  "Pitching Outs": "Outs",
-  "Total Bases": "TB",
-  "Goals": "G",
-  "Shots on Goal": "SOG",
-  "Saves": "SV",
-  "Goals + Assists": "G+A",
-  "Passing Yards": "Pass Yds",
-  "Rushing Yards": "Rush Yds",
-  "Receiving Yards": "Rec Yds",
-  "Receptions": "Rec",
-  "Passing TDs": "Pass TDs",
-  "Rushing TDs": "Rush TDs",
-  "Receiving TDs": "Rec TDs",
-  "Interceptions": "INT",
-  "Sacks": "Sacks",
-  "Pass Completions": "Comp",
-  "Pass Attempts": "Att",
-  "Map 1 Kills": "M1 Kills",
-  "Map 1 Headshots": "M1 HS",
-  "Maps 1-3 Kills": "Kills",
-  "Maps 1-3 Assists": "Assists",
-  "Maps 1-3 Deaths": "Deaths",
+  "Points": "Pts", "Rebounds": "Reb", "Assists": "Ast", "Threes Made": "3PM",
+  "Steals": "Stl", "Blocks": "Blk", "Turnovers": "TO",
+  "Points + Rebounds": "Pts+Reb", "Points + Assists": "Pts+Ast",
+  "Rebounds + Assists": "Reb+Ast", "Points + Rebounds + Assists": "Pts+Reb+Ast",
+  "Steals + Blocks": "Stl+Blk", "Pitcher Strikeouts": "Ks", "Hitter Strikeouts": "K",
+  "Hits": "H", "H": "Hits", "Home Runs": "HR", "RBIs": "RBI", "Runs": "R",
+  "Walks": "BB", "Hits + Runs + RBIs": "H+R+RBI", "Earned Runs": "ER",
+  "Pitching Outs": "Outs", "Total Bases": "TB", "Goals": "G", "Shots on Goal": "SOG",
+  "Saves": "SV", "Goals + Assists": "G+A", "Passing Yards": "Pass Yds",
+  "Rushing Yards": "Rush Yds", "Receiving Yards": "Rec Yds", "Receptions": "Rec",
+  "Passing TDs": "Pass TDs", "Rushing TDs": "Rush TDs", "Receiving TDs": "Rec TDs",
+  "Interceptions": "INT", "Sacks": "Sacks", "Pass Completions": "Comp",
+  "Pass Attempts": "Att", "Map 1 Kills": "M1 Kills", "Map 1 Headshots": "M1 HS",
+  "Maps 1-3 Kills": "Kills", "Maps 1-3 Assists": "Assists", "Maps 1-3 Deaths": "Deaths",
 };
 
 const SPORT_BADGE: Record<string, { label: string; color: string }> = {
@@ -90,11 +63,9 @@ const SPORT_ORDER = ["nba", "mlb", "nhl", "nfl", "esports"];
 const SPORT_LABELS: Record<string, string> = {
   nba: "NBA", mlb: "MLB", nhl: "NHL", nfl: "NFL", esports: "Esports",
 };
-
 const PLATFORM_LOGO: Record<string, string> = {
   prizepicks: "PrizePicks", underdog: "Underdog", pick6: "Pick6", betr: "Betr",
 };
-
 const SPORTS = [
   { id: "nba", label: "NBA" }, { id: "mlb", label: "MLB" },
   { id: "nfl", label: "NFL" }, { id: "nhl", label: "NHL" },
@@ -114,6 +85,18 @@ function relativeTime(iso: string): string {
   const hrs = Math.floor(mins / 60);
   if (hrs < 24) return `${hrs}h ago`;
   return `${Math.floor(hrs / 24)}d ago`;
+}
+function formatGameTime(iso: string): string {
+  const d = new Date(iso);
+  const now = new Date();
+  const isToday = d.toDateString() === now.toDateString();
+  const tomorrow = new Date(now);
+  tomorrow.setDate(now.getDate() + 1);
+  const isTomorrow = d.toDateString() === tomorrow.toDateString();
+  const timeStr = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZoneName: "short" });
+  if (isToday) return `Today · ${timeStr}`;
+  if (isTomorrow) return `Tomorrow · ${timeStr}`;
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + ` · ${timeStr}`;
 }
 
 function processToFlat(markets: MarketRow[], weights: WeightMap, platformBooks: string[], showAltLines: boolean): FlatProp[] {
@@ -143,6 +126,7 @@ function processToFlat(markets: MarketRow[], weights: WeightMap, platformBooks: 
         matchup: market.matchup ?? "", sport, market: market.market,
         line: market.line, side, fairProb, fairPct: fairProb * 100,
         offerings: market.offerings,
+        gameTime: market.gameTime,
       });
     }
   }
@@ -150,89 +134,50 @@ function processToFlat(markets: MarketRow[], weights: WeightMap, platformBooks: 
 }
 
 const PLATFORM_IDS = PLATFORMS.map((p) => p.id) as [PlatformId, ...PlatformId[]];
-
 type MarketOption = { rawMarket: string; abbrev: string; sport: string };
 
-function MarketFilterDropdown({
-  options,
-  selectedMarket,
-  selectedSport,
-  onSelect,
-}: {
+function MarketFilterDropdown({ options, selectedMarket, selectedSport, onSelect }: {
   options: MarketOption[];
   selectedMarket: string | null;
   selectedSport: string | null;
   onSelect: (market: string | null) => void;
 }) {
   const [open, setOpen] = useState(false);
-
   const selectedAbbrev = selectedMarket
     ? options.find((o) => o.rawMarket === selectedMarket)?.abbrev ?? selectedMarket
     : null;
-
   const grouped = useMemo(() => {
-    if (selectedSport) {
-      return [{ sport: selectedSport, label: SPORT_LABELS[selectedSport] ?? selectedSport, markets: options }];
-    }
+    if (selectedSport) return [{ sport: selectedSport, label: SPORT_LABELS[selectedSport] ?? selectedSport, markets: options }];
     const map = new Map<string, MarketOption[]>();
     for (const opt of options) {
       if (!map.has(opt.sport)) map.set(opt.sport, []);
       map.get(opt.sport)!.push(opt);
     }
-    return SPORT_ORDER
-      .filter((s) => map.has(s))
-      .map((s) => ({ sport: s, label: SPORT_LABELS[s] ?? s, markets: map.get(s)! }));
+    return SPORT_ORDER.filter((s) => map.has(s)).map((s) => ({ sport: s, label: SPORT_LABELS[s] ?? s, markets: map.get(s)! }));
   }, [options, selectedSport]);
-
   if (options.length < 2) return null;
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <button
-          className={[
-            "flex items-center gap-1.5 h-7 px-2.5 rounded-md border text-xs font-medium transition-colors",
-            selectedMarket
-              ? "border-blue-400/40 text-blue-400 bg-blue-400/5"
-              : "border-border text-muted-foreground hover:text-foreground hover:bg-accent/50",
-          ].join(" ")}
-        >
-          {selectedAbbrev ?? "Market"}
-          <ChevronDown className="h-3 w-3 opacity-50" />
+        <button className={["flex items-center gap-1.5 h-7 px-2.5 rounded-md border text-xs font-medium transition-colors",
+          selectedMarket ? "border-blue-400/40 text-blue-400 bg-blue-400/5" : "border-border text-muted-foreground hover:text-foreground hover:bg-accent/50"].join(" ")}>
+          {selectedAbbrev ?? "Market"}<ChevronDown className="h-3 w-3 opacity-50" />
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-44 p-1" align="start">
-        <button
-          onClick={() => { onSelect(null); setOpen(false); }}
-          className={[
-            "w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm transition-colors",
-            selectedMarket === null
-              ? "text-foreground bg-accent"
-              : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
-          ].join(" ")}
-        >
+        <button onClick={() => { onSelect(null); setOpen(false); }}
+          className={["w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm transition-colors",
+            selectedMarket === null ? "text-foreground bg-accent" : "text-muted-foreground hover:text-foreground hover:bg-accent/50"].join(" ")}>
           <span>All markets</span>
           {selectedMarket === null && <Check className="h-3.5 w-3.5 text-blue-400" />}
         </button>
-
         {grouped.map((group) => (
           <div key={group.sport}>
-            {!selectedSport && (
-              <p className="px-2 pt-2 pb-0.5 text-[10px] font-medium uppercase tracking-widest text-muted-foreground/40">
-                {group.label}
-              </p>
-            )}
+            {!selectedSport && <p className="px-2 pt-2 pb-0.5 text-[10px] font-medium uppercase tracking-widest text-muted-foreground/40">{group.label}</p>}
             {group.markets.map((opt) => (
-              <button
-                key={opt.rawMarket}
-                onClick={() => { onSelect(opt.rawMarket); setOpen(false); }}
-                className={[
-                  "w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm transition-colors",
-                  selectedMarket === opt.rawMarket
-                    ? "text-foreground bg-accent"
-                    : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
-                ].join(" ")}
-              >
+              <button key={opt.rawMarket} onClick={() => { onSelect(opt.rawMarket); setOpen(false); }}
+                className={["w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm transition-colors",
+                  selectedMarket === opt.rawMarket ? "text-foreground bg-accent" : "text-muted-foreground hover:text-foreground hover:bg-accent/50"].join(" ")}>
                 <span>{opt.abbrev}</span>
                 {selectedMarket === opt.rawMarket && <Check className="h-3.5 w-3.5 text-blue-400" />}
               </button>
@@ -244,17 +189,17 @@ function MarketFilterDropdown({
   );
 }
 
-function SlipBreakdown({
-  fairProb,
-  platformSlipPlatform,
-  platformLabel,
-}: {
+const SLIP_VISIBLE_DEFAULT = 3;
+
+function SlipBreakdown({ fairProb, platformSlipPlatform, platformLabel }: {
   fairProb: number;
   platformSlipPlatform: ReturnType<typeof getPlatformById>["slipPlatform"];
   platformLabel: string;
 }) {
+  const [showAll, setShowAll] = useState(false);
   const fairPct = fairProb * 100;
-  const slips = groupedSlipTypes(platformSlipPlatform)
+
+  const allSlips = groupedSlipTypes(platformSlipPlatform)
     .flatMap((g) => g.variants.flatMap((v) => v.slips))
     .filter((s) => s.available)
     .map((s) => ({
@@ -264,6 +209,14 @@ function SlipBreakdown({
       qualifies: fairPct >= legBreakEvenProbability(s) * 100,
     }))
     .sort((a, b) => a.breakEven - b.breakEven);
+
+  const qualifying = allSlips.filter((s) => s.qualifies);
+  const nonQualifying = allSlips.filter((s) => !s.qualifies);
+  const visibleQualifying = showAll ? qualifying : qualifying.slice(0, SLIP_VISIBLE_DEFAULT);
+  const visibleNonQualifying = showAll ? nonQualifying : [];
+  const visible = [...visibleQualifying, ...visibleNonQualifying];
+  const hiddenQualifyingCount = Math.max(0, qualifying.length - SLIP_VISIBLE_DEFAULT);
+  const totalHidden = showAll ? 0 : hiddenQualifyingCount + nonQualifying.length;
 
   return (
     <div className="min-w-[200px]">
@@ -275,23 +228,31 @@ function SlipBreakdown({
           {fairPct.toFixed(1)}%
         </span>
       </div>
-      <div className="space-y-1.5">
-        {slips.map(({ id, label, breakEven, qualifies }) => (
-          <div key={id} className="flex items-center justify-between gap-6">
-            <div className="flex items-center gap-2">
-              {qualifies
-                ? <Check className="h-3 w-3 text-emerald-400 shrink-0" />
-                : <X className="h-3 w-3 text-muted-foreground/25 shrink-0" />}
-              <span className={`text-sm ${qualifies ? "text-emerald-400" : "text-muted-foreground/35"}`}>
-                {label}
+      {qualifying.length === 0 ? (
+        <p className="text-xs text-muted-foreground/40 italic mb-2">No qualifying slips</p>
+      ) : (
+        <div className="space-y-1.5">
+          {visible.map(({ id, label, breakEven, qualifies }) => (
+            <div key={id} className="flex items-center justify-between gap-6">
+              <div className="flex items-center gap-2">
+                {qualifies
+                  ? <Check className="h-3 w-3 text-emerald-400 shrink-0" />
+                  : <X className="h-3 w-3 text-muted-foreground/25 shrink-0" />}
+                <span className={`text-sm ${qualifies ? "text-emerald-400" : "text-muted-foreground/35"}`}>{label}</span>
+              </div>
+              <span className={`font-mono text-sm tabular-nums ${qualifies ? "text-foreground font-medium" : "text-muted-foreground/35"}`}>
+                {breakEven.toFixed(1)}%
               </span>
             </div>
-            <span className={`font-mono text-sm tabular-nums ${qualifies ? "text-foreground font-medium" : "text-muted-foreground/35"}`}>
-              {breakEven.toFixed(1)}%
-            </span>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+      {(totalHidden > 0 || showAll) && (
+        <button onClick={() => setShowAll((v) => !v)}
+          className="mt-2.5 text-[11px] text-muted-foreground/40 hover:text-muted-foreground/70 transition-colors">
+          {showAll ? "Show less" : `+${totalHidden} more`}
+        </button>
+      )}
     </div>
   );
 }
@@ -309,6 +270,7 @@ function BoardInner() {
   const [selectedSport, setSelectedSport] = useState<string | null>(null);
   const [selectedMarket, setSelectedMarket] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
   const [slipLegKeys, setSlipLegKeys] = useState<string[]>([]);
   const [slipOpen, setSlipOpen] = useState(false);
   const [cmdkOpen, setCmdkOpen] = useState(false);
@@ -369,9 +331,7 @@ function BoardInner() {
     if (selectedSport) base = base.filter((p) => p.sport === selectedSport);
     const seen = new Map<string, MarketOption>();
     for (const p of base) {
-      if (!seen.has(p.market)) {
-        seen.set(p.market, { rawMarket: p.market, abbrev: cleanMarket(p.market), sport: p.sport });
-      }
+      if (!seen.has(p.market)) seen.set(p.market, { rawMarket: p.market, abbrev: cleanMarket(p.market), sport: p.sport });
     }
     return [...seen.values()].sort((a, b) => a.abbrev.localeCompare(b.abbrev));
   }, [allProps, selectedSport, minHitPct]);
@@ -383,10 +343,8 @@ function BoardInner() {
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       result = result.filter((p) =>
-        p.player.toLowerCase().includes(q) ||
-        p.market.toLowerCase().includes(q) ||
-        p.team?.toLowerCase().includes(q) ||
-        p.matchup.toLowerCase().includes(q)
+        p.player.toLowerCase().includes(q) || p.market.toLowerCase().includes(q) ||
+        p.team?.toLowerCase().includes(q) || p.matchup.toLowerCase().includes(q)
       );
     }
     return sortDir === "asc" ? [...result].reverse() : result;
@@ -423,6 +381,25 @@ function BoardInner() {
     return () => document.removeEventListener("keydown", handler);
   }, []);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (cmdkOpen) return;
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === "ArrowDown") { e.preventDefault(); setFocusedIndex((i) => Math.min(i + 1, displayed.length - 1)); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); setFocusedIndex((i) => Math.max(i - 1, 0)); }
+      else if (e.key === "Enter" && focusedIndex >= 0) {
+        e.preventDefault();
+        const prop = displayed[focusedIndex];
+        if (prop) setExpanded((exp) => (exp === prop.key ? null : prop.key));
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        if (expanded) setExpanded(null); else setFocusedIndex(-1);
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [cmdkOpen, displayed, focusedIndex, expanded]);
+
   const hasActiveFilters = minHitPct !== 52 || showAltLines || !!searchQuery || !!selectedSport || !!selectedMarket;
 
   if (loading) {
@@ -437,20 +414,15 @@ function BoardInner() {
     <div className="flex h-screen overflow-hidden bg-background">
 
       <aside className="w-[220px] shrink-0 border-r border-border bg-card flex flex-col overflow-y-auto">
-        <div className="px-4 pt-5 pb-4 border-b border-border">
-          <Logo size="md" />
-        </div>
-
+        <div className="px-4 pt-5 pb-4 border-b border-border"><Logo size="md" /></div>
         <div className="px-3 pt-4 pb-2">
           <p className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-widest px-1 mb-1.5">Sport</p>
-          <button
-            onClick={() => setSelectedSport(null)}
+          <button onClick={() => setSelectedSport(null)}
             className={["w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm transition-colors",
               selectedSport === null ? "bg-accent text-foreground font-medium" : "text-muted-foreground hover:text-foreground hover:bg-accent/50"].join(" ")}
           >All Sports</button>
           {SPORTS.map((s) => (
-            <button key={s.id}
-              onClick={() => setSelectedSport(selectedSport === s.id ? null : s.id)}
+            <button key={s.id} onClick={() => setSelectedSport(selectedSport === s.id ? null : s.id)}
               className={["w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm transition-colors",
                 selectedSport === s.id ? "bg-accent text-foreground font-medium" : "text-muted-foreground hover:text-foreground hover:bg-accent/50"].join(" ")}
             >{s.label}</button>
@@ -463,12 +435,10 @@ function BoardInner() {
             {PLATFORMS.map((p) => {
               const isActive = platform === p.id;
               return (
-                <button key={p.id} disabled={!p.available}
-                  onClick={() => p.available && setPlatformRaw(p.id)}
-                  title={p.label}
+                <button key={p.id} disabled={!p.available} onClick={() => p.available && setPlatformRaw(p.id)} title={p.label}
                   className={["inline-flex items-center justify-center w-10 h-10 rounded-xl transition-all",
-                    isActive ? "ring-2 ring-blue-400/60 ring-offset-1 ring-offset-card" : "opacity-40 hover:opacity-70",
-                    !p.available ? "cursor-not-allowed" : "cursor-pointer"].join(" ")}
+                    isActive ? "ring-2 ring-blue-400/60 ring-offset-1 ring-offset-card opacity-100" : "opacity-60 hover:opacity-85",
+                    !p.available ? "cursor-not-allowed opacity-30 hover:opacity-30" : "cursor-pointer"].join(" ")}
                 >
                   <BookLogo book={PLATFORM_LOGO[p.id] ?? p.label} size="header" />
                 </button>
@@ -519,10 +489,8 @@ function BoardInner() {
         <div className="mt-auto border-t border-border">
           {hasActiveFilters && (
             <div className="px-4 pt-3 pb-1">
-              <button
-                onClick={() => { setMinHitPct(52); setShowAltLines(false); setSearchQuery(""); setSelectedSport(null); setSelectedMarket(null); }}
-                className="text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors"
-              >Clear all filters</button>
+              <button onClick={() => { setMinHitPct(52); setShowAltLines(false); setSearchQuery(""); setSelectedSport(null); setSelectedMarket(null); }}
+                className="text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors">Clear all filters</button>
             </div>
           )}
           {updatedAt && (
@@ -534,35 +502,22 @@ function BoardInner() {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-
         <header className="flex items-center justify-between px-5 py-3 border-b border-border shrink-0">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-0.5 rounded-lg bg-card border border-border p-0.5">
-              <Link href="/scanner"
-                className={["px-3 py-1 rounded-md text-sm transition-colors",
-                  pathname === "/scanner" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}
-              >Scanner</Link>
-              <Link href="/board"
-                className={["px-3 py-1 rounded-md text-sm transition-colors",
-                  pathname === "/board" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}
-              >Board</Link>
+              <Link href="/scanner" className={["px-3 py-1 rounded-md text-sm transition-colors",
+                pathname === "/scanner" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}>Scanner</Link>
+              <Link href="/board" className={["px-3 py-1 rounded-md text-sm transition-colors",
+                pathname === "/board" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}>Board</Link>
             </div>
-
-            <MarketFilterDropdown
-              options={marketOptions}
-              selectedMarket={selectedMarket}
-              selectedSport={selectedSport}
-              onSelect={setSelectedMarket}
-            />
-
+            <MarketFilterDropdown options={marketOptions} selectedMarket={selectedMarket} selectedSport={selectedSport} onSelect={setSelectedMarket} />
             <p className="text-sm text-muted-foreground tabular-nums">
               <span className="text-foreground font-medium">{displayed.length}</span> props
             </p>
           </div>
           <div className="flex items-center gap-2">
             <button onClick={() => setCmdkOpen(true)}
-              className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded border border-border text-xs text-muted-foreground hover:text-foreground transition-colors"
-            >
+              className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded border border-border text-xs text-muted-foreground hover:text-foreground transition-colors">
               <CommandIcon className="h-3 w-3" /><span>K</span>
             </button>
             <button onClick={() => setSlipOpen(true)}
@@ -586,24 +541,27 @@ function BoardInner() {
                   <TableHead>Line</TableHead>
                   <TableHead>Market</TableHead>
                   <TableHead className="text-right">
-                    <div className="flex justify-end">
-                      <BookLogo book={platformConfig.label} size="header" />
-                    </div>
+                    <div className="flex justify-end"><BookLogo book={platformConfig.label} size="header" /></div>
                   </TableHead>
                   <TableHead className="text-right">
-                    <button
-                      onClick={() => setSortDir(d => d === "desc" ? "asc" : "desc")}
-                      className="inline-flex items-center gap-1 ml-auto hover:text-foreground transition-colors"
-                    >
-                      % Hit
-                      {sortDir === "desc" ? <ArrowDown className="h-3 w-3" /> : <ArrowUp className="h-3 w-3" />}
-                    </button>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button onClick={() => setSortDir(d => d === "desc" ? "asc" : "desc")}
+                            className="inline-flex items-center gap-1 ml-auto hover:text-foreground transition-colors">
+                            % Hit
+                            {sortDir === "desc" ? <ArrowDown className="h-3 w-3" /> : <ArrowUp className="h-3 w-3" />}
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent side="bottom" className="max-w-[200px] text-xs">
+                          Fair hit probability devigged from exchange consensus. Blue = above slip break-even.
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </TableHead>
                   {referenceBookColumns.map((book) => (
                     <TableHead key={book} className="text-right">
-                      <div className="flex justify-end">
-                        <BookLogo book={getBook(book).label} size="header" />
-                      </div>
+                      <div className="flex justify-end"><BookLogo book={getBook(book).label} size="header" /></div>
                     </TableHead>
                   ))}
                   <TableHead className="w-12 text-center" />
@@ -620,24 +578,21 @@ function BoardInner() {
                         <div>
                           <p className="text-sm font-medium">No props found</p>
                           <p className="text-xs text-muted-foreground mt-1">
-                            {markets.length === 0
-                              ? "Run pipeline.py to generate opportunities.json"
-                              : "Try lowering the min % Hit or clearing your search"}
+                            {markets.length === 0 ? "Run pipeline.py to generate opportunities.json" : "Try lowering the min % Hit or clearing your search"}
                           </p>
                         </div>
                         {hasActiveFilters && (
-                          <button
-                            onClick={() => { setMinHitPct(52); setSearchQuery(""); setSelectedSport(null); setSelectedMarket(null); setShowAltLines(false); }}
-                            className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
-                          >Clear all filters</button>
+                          <button onClick={() => { setMinHitPct(52); setSearchQuery(""); setSelectedSport(null); setSelectedMarket(null); setShowAltLines(false); }}
+                            className="text-xs text-blue-400 hover:text-blue-300 transition-colors">Clear all filters</button>
                         )}
                       </div>
                     </TableCell>
                   </TableRow>
-                ) : displayed.map((prop) => {
+                ) : displayed.map((prop, idx) => {
                   const { pillStyle, textClass } = hitCellStyle(prop.fairPct, targetPct);
                   const inSlip = slipKeys.has(prop.key);
                   const isExpanded = expanded === prop.key;
+                  const isFocused = idx === focusedIndex;
                   const sportMeta = SPORT_BADGE[prop.sport] ?? { label: prop.sport.toUpperCase(), color: "text-muted-foreground/50" };
                   const bestBook = referenceBookColumns.reduce<{ book: string; odds: number } | null>(
                     (best, book) => {
@@ -652,43 +607,35 @@ function BoardInner() {
                   return (
                     <React.Fragment key={prop.key}>
                       <TableRow
-                        className="cursor-pointer border-border hover:bg-accent h-24 group"
-                        onClick={() => setExpanded(isExpanded ? null : prop.key)}
+                        className={["cursor-pointer border-border hover:bg-accent h-24 group",
+                          isFocused ? "ring-1 ring-inset ring-blue-400/40 bg-accent/20" : ""].join(" ")}
+                        onClick={() => { setFocusedIndex(idx); setExpanded(isExpanded ? null : prop.key); }}
                       >
                         <TableCell className="py-0 pl-3">
                           <span className={`transition-opacity ${isExpanded ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
-                            {isExpanded
-                              ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-                              : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />}
+                            {isExpanded ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" /> : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />}
                           </span>
                         </TableCell>
                         <TableCell className="py-0">
                           <div className="font-semibold text-base leading-tight tracking-tight">{prop.player}</div>
-                          <div className="text-[11px] text-muted-foreground/40 mt-1 leading-tight">
+                          <div className="text-[11px] text-muted-foreground/60 mt-1 leading-tight">
                             {[prop.team, prop.matchup].filter(Boolean).join(" · ")}
                             {prop.sport && <span className={`ml-1.5 ${sportMeta.color}`}>· {sportMeta.label}</span>}
                           </div>
                         </TableCell>
                         <TableCell className="py-0">
-                          <span className={`text-sm font-medium ${prop.side === "Over" ? "text-blue-400/80" : "text-red-400/80"}`}>
-                            {prop.side}
-                          </span>
+                          <span className={`text-sm font-medium ${prop.side === "Over" ? "text-blue-400/80" : "text-red-400/80"}`}>{prop.side}</span>
                         </TableCell>
                         <TableCell className="font-mono text-sm py-0 text-muted-foreground">{prop.line}</TableCell>
                         <TableCell className="py-0 max-w-[140px]">
-                          <span className="text-sm text-muted-foreground/60 truncate block" title={cleanMarket(prop.market)}>
-                            {cleanMarket(prop.market)}
-                          </span>
+                          <span className="text-sm text-muted-foreground/60 truncate block" title={cleanMarket(prop.market)}>{cleanMarket(prop.market)}</span>
                         </TableCell>
                         <TableCell className="text-right font-mono font-semibold text-sm py-0">
                           {formatOdds(legTargetAmerican(defaultSlip))}
                         </TableCell>
                         <TableCell className="text-right py-0">
                           <div className="flex justify-end pr-1">
-                            <span
-                              className={`inline-flex items-center justify-center rounded-md font-mono text-sm px-3 py-2 min-w-[72px] ${textClass}`}
-                              style={pillStyle}
-                            >
+                            <span className={`inline-flex items-center justify-center rounded-md font-mono text-sm px-3 py-2 min-w-[72px] ${textClass}`} style={pillStyle}>
                               {prop.fairPct.toFixed(1)}%
                             </span>
                           </div>
@@ -698,25 +645,17 @@ function BoardInner() {
                           const odds = prop.side === "Over" ? prop.offerings[book]?.over : prop.offerings[book]?.under;
                           const isBest = bestBook?.book === book && odds != null;
                           return (
-                            <TableCell
-                              key={book}
-                              className="text-right font-mono text-sm py-0 transition-colors"
+                            <TableCell key={book} className="text-right font-mono text-sm py-0 transition-colors"
                               style={isBest ? {
-                                backgroundColor: "rgba(42, 93, 156, 0.55)",
-                                borderLeft: "3px solid rgba(90, 154, 224, 0.95)",
-                                boxShadow: "inset 0 0 24px rgba(42, 93, 156, 0.25)",
+                                backgroundColor: "rgba(42, 93, 156, 0.75)",
+                                borderLeft: "3px solid rgba(90, 154, 224, 1)",
+                                boxShadow: "inset 0 0 28px rgba(42, 93, 156, 0.5)",
                               } : undefined}
                             >
                               {odds != null ? (
                                 <div className="flex flex-col items-end leading-tight pr-1">
-                                  {isBest && (
-                                    <span className="text-[8px] font-bold uppercase tracking-wide mb-0.5 text-[#B0C8E0]">
-                                      BEST
-                                    </span>
-                                  )}
-                                  <span className={isBest ? "text-white font-bold text-base" : "text-muted-foreground"}>
-                                    {formatOdds(odds)}
-                                  </span>
+                                  {isBest && <span className="text-[8px] font-bold uppercase tracking-wide mb-0.5 text-[#B0C8E0]">BEST</span>}
+                                  <span className={isBest ? "text-white font-bold text-base" : "text-muted-foreground"}>{formatOdds(odds)}</span>
                                 </div>
                               ) : (
                                 <span className="text-muted-foreground/20">—</span>
@@ -726,9 +665,7 @@ function BoardInner() {
                         })}
 
                         <TableCell className="text-center py-0" onClick={(e) => e.stopPropagation()}>
-                          <button
-                            onClick={() => toggleSlipLeg(prop.key)}
-                            disabled={!inSlip && slipFull}
+                          <button onClick={() => toggleSlipLeg(prop.key)} disabled={!inSlip && slipFull}
                             className={["inline-flex items-center justify-center h-7 w-7 rounded-md border transition-all opacity-0 group-hover:opacity-100",
                               inSlip ? "border-blue-400/50 text-blue-400 bg-blue-400/10 opacity-100"
                                 : slipFull ? "border-border/30 text-muted-foreground/20 cursor-not-allowed"
@@ -741,7 +678,7 @@ function BoardInner() {
 
                       {isExpanded && (
                         <TableRow className="border-border bg-accent/10 hover:bg-accent/10">
-                          <TableCell colSpan={8 + referenceBookColumns.length} className="px-8 py-5">
+                          <TableCell colSpan={8 + referenceBookColumns.length} className="px-8 py-6">
                             <div className="flex items-start gap-10 flex-wrap">
                               <SlipBreakdown
                                 fairProb={prop.fairProb}
@@ -749,47 +686,72 @@ function BoardInner() {
                                 platformLabel={platformConfig.label}
                               />
                               <div className="w-px self-stretch bg-border hidden sm:block" />
-                              <div className="flex-1 min-w-0 space-y-4">
-                                <div className="flex items-center gap-8 text-xs">
+                              <div className="flex-1 min-w-0 space-y-5">
+
+                                <div className="flex items-center gap-10 flex-wrap">
                                   <div>
-                                    <p className="text-muted-foreground/50 uppercase tracking-wider mb-0.5">Fair</p>
-                                    <p className="font-mono">{prop.fairPct.toFixed(1)}% / {formatOdds(probToAmerican(prop.fairProb))}</p>
+                                    <p className="text-[10px] text-muted-foreground/50 uppercase tracking-wider mb-1">Fair</p>
+                                    <p className="font-mono text-sm font-medium">{prop.fairPct.toFixed(1)}% / {formatOdds(probToAmerican(prop.fairProb))}</p>
                                   </div>
                                   <div>
-                                    <p className="text-muted-foreground/50 uppercase tracking-wider mb-0.5">Matchup</p>
-                                    <p className="font-mono">{prop.matchup || "—"}</p>
+                                    <p className="text-[10px] text-muted-foreground/50 uppercase tracking-wider mb-1">Matchup</p>
+                                    <p className="font-mono text-sm">{prop.matchup || "—"}</p>
                                   </div>
+                                  {prop.gameTime && (
+                                    <div>
+                                      <p className="text-[10px] text-muted-foreground/50 uppercase tracking-wider mb-1">Game Time</p>
+                                      <p className="font-mono text-sm">{formatGameTime(prop.gameTime)}</p>
+                                    </div>
+                                  )}
                                   <div>
-                                    <p className="text-muted-foreground/50 uppercase tracking-wider mb-0.5">Slip EV</p>
-                                    <p className={`font-mono font-semibold ${slipEv >= 0 ? "text-blue-400" : "text-muted-foreground"}`}>
+                                    <TooltipProvider>
+                                      <Tooltip>
+                                        <TooltipTrigger asChild>
+                                          <p className="text-[10px] text-muted-foreground/50 uppercase tracking-wider mb-1 cursor-default">Slip EV</p>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="top" className="max-w-[240px] text-xs">
+                                          Edge vs. {defaultSlip.picks}-pick {defaultSlip.variant} break-even ({(legBreakEvenProbability(defaultSlip) * 100).toFixed(1)}%). Positive = profitable leg.
+                                        </TooltipContent>
+                                      </Tooltip>
+                                    </TooltipProvider>
+                                    <p className={`font-mono text-sm font-semibold ${slipEv >= 0 ? "text-blue-400" : "text-muted-foreground"}`}>
                                       {slipEv > 0 ? "+" : ""}{slipEv.toFixed(2)}%
                                     </p>
                                   </div>
                                 </div>
+
                                 <div>
-                                  <p className="text-[10px] text-muted-foreground/50 uppercase tracking-widest mb-2">
-                                    Reference Books
-                                  </p>
-                                  <div className="flex items-center flex-wrap gap-x-0 divide-x divide-border rounded-lg border border-border bg-card/40 overflow-hidden w-fit">
-                                    <div className="flex items-center gap-2.5 px-3 py-2 bg-blue-400/5">
+                                  <p className="text-[10px] text-muted-foreground/50 uppercase tracking-widest mb-2">Reference Books</p>
+                                  <div className="flex items-stretch rounded-lg border border-border bg-card/40 overflow-hidden w-full">
+                                    {/* Playing cell */}
+                                    <div className="flex items-center gap-2.5 px-4 py-3 bg-blue-400/5 flex-shrink-0">
                                       <BookLogo book={platformConfig.label} size="sm" />
                                       <span className="text-[9px] font-semibold uppercase text-blue-400">playing</span>
-                                      <span className="font-mono text-sm font-semibold">
-                                        {formatOdds(legTargetAmerican(defaultSlip))}
-                                      </span>
-                                      <span className="font-mono text-xs text-muted-foreground">
+                                      <span className="font-mono text-sm font-semibold">{formatOdds(legTargetAmerican(defaultSlip))}</span>
+                                      <span className={`font-mono text-xs font-semibold ${slipEv >= 0 ? "text-blue-400" : "text-muted-foreground/50"}`}>
                                         {slipEv > 0 ? "+" : ""}{slipEv.toFixed(1)}%
                                       </span>
                                     </div>
+                                    {/* Reference book cells — positive EV gets pill-tier-1 blue fill */}
                                     {referenceBookColumns.map((book) => {
                                       const odds = prop.side === "Over" ? prop.offerings[book]?.over : prop.offerings[book]?.under;
                                       if (odds == null) return null;
                                       const ev = evPct(prop.fairProb, odds);
+                                      const isPositive = ev >= 0;
                                       return (
-                                        <div key={book} className="flex items-center gap-2.5 px-3 py-2">
+                                        <div key={book}
+                                          className="flex-1 flex items-center justify-center gap-2.5 px-3 py-3 border-l border-border"
+                                          style={isPositive ? {
+                                            // Matches hit-cell tier 1 fill — same BLUE rgb as pill
+                                            backgroundColor: "rgba(58, 120, 200, 0.22)",
+                                            borderLeft: "1px solid rgba(90, 154, 224, 0.40)",
+                                          } : undefined}
+                                        >
                                           <BookLogo book={getBook(book).label} size="sm" />
-                                          <span className="font-mono text-sm text-muted-foreground">{formatOdds(odds)}</span>
-                                          <span className={`font-mono text-xs ${ev >= 0 ? "text-blue-400/70" : "text-muted-foreground/50"}`}>
+                                          <span className={`font-mono text-sm ${isPositive ? "text-white font-bold" : "text-muted-foreground"}`}>
+                                            {formatOdds(odds)}
+                                          </span>
+                                          <span className={`font-mono text-xs font-bold ${isPositive ? "text-[#B0C8E0]" : "text-muted-foreground/50"}`}>
                                             {ev > 0 ? "+" : ""}{ev.toFixed(1)}%
                                           </span>
                                         </div>
@@ -797,6 +759,7 @@ function BoardInner() {
                                     })}
                                   </div>
                                 </div>
+
                               </div>
                             </div>
                           </TableCell>

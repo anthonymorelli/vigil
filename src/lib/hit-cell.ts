@@ -22,8 +22,8 @@ export type HitCellStyle = {
 //
 // ── Below target — red (unchanged) ──────────────────────────────────────
 
-const BLUE        = "58, 120, 200";  // boosted — perceivable blue on dark bg
-const BLUE_BORDER = "90, 154, 224";  // lighter rim to match
+const BLUE        = "58, 120, 200";
+const BLUE_BORDER = "90, 154, 224";
 const RED         = "239, 68, 68";
 const RED_BORDER  = "252, 165, 165";
 
@@ -37,7 +37,7 @@ function pill(
   return {
     backgroundColor: `rgba(${rgb}, ${fill})`,
     border: `1px solid rgba(${borderRgb}, ${border})`,
-    boxShadow: glow ? `0 0 12px rgba(${rgb}, ${glow})` : undefined,
+    boxShadow: glow ? `0 0 14px rgba(${rgb}, ${glow}), 0 0 4px rgba(${rgb}, ${glow * 0.5})` : undefined,
   };
 }
 
@@ -45,29 +45,28 @@ export function hitCellStyle(fairPct: number, targetPct: number): HitCellStyle {
   const delta = fairPct - targetPct;
 
   if (delta >= 0) {
-    // Tier 3 — strong edge (≥4pp)
+    // Tier 3 — strong edge (≥4pp): brightest glow
     if (delta >= 4) return {
-      pillStyle: pill(BLUE, BLUE_BORDER, 0.70, 0.90, 0.35),
+      pillStyle: pill(BLUE, BLUE_BORDER, 0.70, 0.90, 0.45),
       textClass: "text-white font-bold",
     };
-    // Tier 2 — solid edge (2–4pp)
+    // Tier 2 — solid edge (2–4pp): medium glow
     if (delta >= 2) return {
-      pillStyle: pill(BLUE, BLUE_BORDER, 0.50, 0.70),
+      pillStyle: pill(BLUE, BLUE_BORDER, 0.50, 0.70, 0.25),
       textClass: "text-blue-100 font-semibold",
     };
-    // Tier 1 — marginal (0–2pp): ghost pill
+    // Tier 1 — marginal (0–2pp): subtle glow
     return {
-      pillStyle: pill(BLUE, BLUE_BORDER, 0.22, 0.40),
+      pillStyle: pill(BLUE, BLUE_BORDER, 0.22, 0.40, 0.12),
       textClass: "text-blue-200 font-medium",
     };
   }
 
-  // Tier 2 — clearly below (-2pp or worse)
+  // Below target — red, no glow
   if (delta <= -2) return {
     pillStyle: pill(RED, RED_BORDER, 0.32, 0.50),
     textClass: "text-red-200 font-semibold",
   };
-  // Tier 1 — borderline (0 to -2pp)
   return {
     pillStyle: pill(RED, RED_BORDER, 0.14, 0.25),
     textClass: "text-red-300 font-medium",
