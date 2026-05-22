@@ -263,64 +263,54 @@ function PropCard({ prop, platformConfig, defaultSlip, targetPct, referenceBookC
     <div className={["rounded-xl border bg-card transition-colors", isExpanded ? "border-blue-400/30" : "border-border"].join(" ")}>
       {/* Main tap area */}
       <div className="p-4 cursor-pointer" onClick={onExpand}>
-        <div className="flex items-start gap-3">
-          {/* % Hit pill */}
+        {/* Top row: pill + player name + add button — all on same baseline */}
+        <div className="flex items-center gap-3 mb-2">
           <span className={`inline-flex items-center justify-center rounded-lg font-mono text-sm font-bold px-2.5 py-1.5 min-w-[64px] shrink-0 ${textClass}`} style={pillStyle}>
             {prop.fairPct.toFixed(1)}%
           </span>
+          <p className="font-semibold text-base leading-tight tracking-tight truncate flex-1">{prop.player}</p>
+          <button
+            onClick={(e) => { e.stopPropagation(); onToggleSlip(); }}
+            disabled={!inSlip && slipFull}
+            className={["inline-flex items-center justify-center h-7 w-7 rounded-lg border transition-all shrink-0",
+              inSlip ? "border-blue-400/50 text-blue-400 bg-blue-400/10"
+                : slipFull ? "border-border/30 text-muted-foreground/20 cursor-not-allowed"
+                : "border-border text-muted-foreground"].join(" ")}
+          >
+            {inSlip ? <Check className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
+          </button>
+        </div>
 
-          {/* Player + meta */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-2">
-              <div className="min-w-0">
-                <p className="font-semibold text-base leading-tight tracking-tight truncate">{prop.player}</p>
-                <p className="text-sm text-muted-foreground/60 mt-0.5">
-                  <span className={prop.side === "Over" ? "text-blue-400/80" : "text-red-400/80"}>{prop.side}</span>
-                  {" "}{prop.line} · {cleanMarket(prop.market)}
-                </p>
-                <p className="text-[11px] text-muted-foreground/40 mt-0.5 truncate">
-                  {prop.matchup}
-                  {prop.sport && <span className={`ml-1.5 ${sportMeta.color}`}>· {sportMeta.label}</span>}
-                </p>
-              </div>
-
-              {/* Right column: platform odds + add button */}
-              <div className="flex flex-col items-end gap-2 shrink-0">
-                <button
-                  onClick={(e) => { e.stopPropagation(); onToggleSlip(); }}
-                  disabled={!inSlip && slipFull}
-                  className={["inline-flex items-center justify-center h-7 w-7 rounded-lg border transition-all",
-                    inSlip ? "border-blue-400/50 text-blue-400 bg-blue-400/10"
-                      : slipFull ? "border-border/30 text-muted-foreground/20 cursor-not-allowed"
-                      : "border-border text-muted-foreground"].join(" ")}
-                >
-                  {inSlip ? <Check className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
-                </button>
-                <div className="text-right">
-                  <div className="flex items-center gap-1.5 justify-end">
-                    <BookLogo book={platformConfig.label} size="sm" />
-                    <span className="font-mono text-sm font-semibold">{formatOdds(legTargetAmerican(defaultSlip))}</span>
-                  </div>
-                  {bestBook && (
-                    <p className="text-[11px] text-muted-foreground/50 font-mono mt-0.5">
-                      Best {formatOdds(bestBook.odds)}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Slip EV chip */}
-            <div className="flex items-center gap-2 mt-2">
-              <span className={`text-xs font-mono font-semibold ${slipEv >= 0 ? "text-blue-400" : "text-muted-foreground/50"}`}>
-                Slip EV {slipEv > 0 ? "+" : ""}{slipEv.toFixed(2)}%
-              </span>
-              <span className="text-muted-foreground/30">·</span>
-              <span className="text-xs text-muted-foreground/40">
-                {isExpanded ? "tap to collapse" : "tap for details"}
-              </span>
-            </div>
+        {/* Second row: market/side/line + platform odds */}
+        <div className="flex items-start justify-between gap-2 pl-[76px]">
+          <div className="min-w-0">
+            <p className="text-sm text-muted-foreground/70">
+              <span className={prop.side === "Over" ? "text-blue-400/80" : "text-red-400/80"}>{prop.side}</span>
+              {" "}{prop.line} · {cleanMarket(prop.market)}
+            </p>
+            <p className="text-[11px] text-muted-foreground/40 mt-0.5 truncate">
+              {prop.matchup}
+              {prop.sport && <span className={`ml-1.5 ${sportMeta.color}`}>· {sportMeta.label}</span>}
+            </p>
           </div>
+          <div className="text-right shrink-0">
+            <div className="flex items-center gap-1.5 justify-end">
+              <BookLogo book={platformConfig.label} size="sm" />
+              <span className="font-mono text-sm font-semibold">{formatOdds(legTargetAmerican(defaultSlip))}</span>
+            </div>
+            {bestBook && (
+              <p className="text-[11px] text-muted-foreground/50 font-mono mt-0.5">
+                Best {formatOdds(bestBook.odds)}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Slip EV — no tap hint */}
+        <div className="pl-[76px] mt-2">
+          <span className={`text-xs font-mono font-semibold ${slipEv >= 0 ? "text-blue-400" : "text-muted-foreground/50"}`}>
+            Slip EV {slipEv > 0 ? "+" : ""}{slipEv.toFixed(2)}%
+          </span>
         </div>
       </div>
 
