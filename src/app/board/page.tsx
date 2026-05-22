@@ -259,20 +259,37 @@ function PropCard({ prop, platformConfig, defaultSlip, targetPct, referenceBookC
     return best;
   }, null);
 
+  // Left accent border — intensity tracks slip EV tier
+  const accentColor = slipEv >= 3
+    ? "rgba(58, 120, 200, 0.9)"
+    : slipEv >= 0
+    ? "rgba(58, 120, 200, 0.5)"
+    : "rgba(239, 68, 68, 0.25)";
+
   return (
-    <div className={["rounded-xl border bg-card transition-colors", isExpanded ? "border-blue-400/30" : "border-border"].join(" ")}>
+    <div
+      className={["rounded-xl border transition-colors overflow-hidden",
+        isExpanded ? "bg-card border-blue-400/20" : "bg-card/80 border-border/60"].join(" ")}
+      style={{ borderLeft: `3px solid ${accentColor}` }}
+    >
       {/* Main tap area */}
       <div className="p-4 cursor-pointer" onClick={onExpand}>
-        {/* Top row: pill + player name + add button — all on same baseline */}
-        <div className="flex items-center gap-3 mb-2">
-          <span className={`inline-flex items-center justify-center rounded-lg font-mono text-sm font-bold px-2.5 py-1.5 min-w-[64px] shrink-0 ${textClass}`} style={pillStyle}>
+        {/* Top row: pill + player name + market label + add button */}
+        <div className="flex items-start gap-3 mb-2">
+          <span className={`inline-flex items-center justify-center rounded-lg font-mono text-sm font-bold px-2.5 py-1.5 min-w-[64px] shrink-0 mt-0.5 ${textClass}`} style={pillStyle}>
             {prop.fairPct.toFixed(1)}%
           </span>
-          <p className="font-semibold text-base leading-tight tracking-tight truncate flex-1">{prop.player}</p>
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold text-base leading-tight tracking-tight truncate">{prop.player}</p>
+            {/* Market in caps — own line, Upside style */}
+            <p className="text-[11px] font-semibold tracking-widest text-muted-foreground/50 uppercase mt-0.5">
+              {cleanMarket(prop.market)}
+            </p>
+          </div>
           <button
             onClick={(e) => { e.stopPropagation(); onToggleSlip(); }}
             disabled={!inSlip && slipFull}
-            className={["inline-flex items-center justify-center h-7 w-7 rounded-lg border transition-all shrink-0",
+            className={["inline-flex items-center justify-center h-7 w-7 rounded-lg border transition-all shrink-0 mt-0.5",
               inSlip ? "border-blue-400/50 text-blue-400 bg-blue-400/10"
                 : slipFull ? "border-border/30 text-muted-foreground/20 cursor-not-allowed"
                 : "border-border text-muted-foreground"].join(" ")}
@@ -281,12 +298,12 @@ function PropCard({ prop, platformConfig, defaultSlip, targetPct, referenceBookC
           </button>
         </div>
 
-        {/* Second row: market/side/line + platform odds */}
+        {/* Second row: side/line + matchup + platform odds */}
         <div className="flex items-start justify-between gap-2 pl-[76px]">
           <div className="min-w-0">
             <p className="text-sm text-muted-foreground/70">
               <span className={prop.side === "Over" ? "text-blue-400/80" : "text-red-400/80"}>{prop.side}</span>
-              {" "}{prop.line} · {cleanMarket(prop.market)}
+              {" "}{prop.line}
             </p>
             <p className="text-[11px] text-muted-foreground/40 mt-0.5 truncate">
               {prop.matchup}
@@ -306,7 +323,7 @@ function PropCard({ prop, platformConfig, defaultSlip, targetPct, referenceBookC
           </div>
         </div>
 
-        {/* Slip EV — no tap hint */}
+        {/* Slip EV */}
         <div className="pl-[76px] mt-2">
           <span className={`text-xs font-mono font-semibold ${slipEv >= 0 ? "text-blue-400" : "text-muted-foreground/50"}`}>
             Slip EV {slipEv > 0 ? "+" : ""}{slipEv.toFixed(2)}%
@@ -413,7 +430,7 @@ function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSpor
   return (
     <div className="sticky top-0 z-30 bg-background border-b border-border">
       {/* Row 1: Logo + count + slip button */}
-      <div className="flex items-center justify-between px-4 py-3">
+      <div className="flex items-center justify-between px-4 pt-3 pb-2">
         <Logo size="sm" />
         <div className="flex items-center gap-2">
           <p className="text-sm text-muted-foreground tabular-nums">
@@ -429,7 +446,25 @@ function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSpor
         </div>
       </div>
 
-      {/* Row 2: Sport pills + filter toggle */}
+      {/* Row 2: Platform icons — always visible, primary action */}
+      <div className="flex items-center gap-2.5 px-4 pb-2">
+        {PLATFORMS.map((p) => {
+          const isActive = platform === p.id;
+          return (
+            <button key={p.id} disabled={!p.available}
+              onClick={() => p.available && setPlatformRaw(p.id as PlatformId)}
+              title={p.label}
+              className={["inline-flex items-center justify-center w-10 h-10 rounded-xl transition-all",
+                isActive ? "ring-2 ring-blue-400/60 ring-offset-1 ring-offset-background opacity-100" : "opacity-55",
+                !p.available ? "cursor-not-allowed opacity-25" : "cursor-pointer"].join(" ")}
+            >
+              <BookLogo book={PLATFORM_LOGO[p.id] ?? p.label} size="header" />
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Row 3: Sport pills + filter toggle */}
       <div className="flex items-center gap-2 px-4 pb-2">
         <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-1">
           <button onClick={() => setSelectedSport(null)}
@@ -453,28 +488,9 @@ function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSpor
         </button>
       </div>
 
-      {/* Expandable filter panel */}
+      {/* Expandable filter panel — min%, alt lines, search only */}
       {filtersOpen && (
         <div className="px-4 pb-3 space-y-3 border-t border-border/60 pt-3">
-          {/* Platform icons */}
-          <div className="flex items-center gap-2">
-            <p className="text-[10px] text-muted-foreground/50 uppercase tracking-widest w-16 shrink-0">Platform</p>
-            <div className="flex items-center gap-2">
-              {PLATFORMS.map((p) => {
-                const isActive = platform === p.id;
-                return (
-                  <button key={p.id} disabled={!p.available} onClick={() => p.available && setPlatformRaw(p.id as PlatformId)} title={p.label}
-                    className={["inline-flex items-center justify-center w-9 h-9 rounded-xl transition-all",
-                      isActive ? "ring-2 ring-blue-400/60 ring-offset-1 ring-offset-background opacity-100" : "opacity-60",
-                      !p.available ? "cursor-not-allowed opacity-30" : "cursor-pointer"].join(" ")}
-                  >
-                    <BookLogo book={PLATFORM_LOGO[p.id] ?? p.label} size="header" />
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
           {/* Min % Hit */}
           <div className="flex items-center gap-2">
             <p className="text-[10px] text-muted-foreground/50 uppercase tracking-widest w-16 shrink-0">Min Hit</p>
@@ -488,7 +504,7 @@ function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSpor
             </div>
           </div>
 
-          {/* Alt Lines + search */}
+          {/* Alt Lines + clear */}
           <div className="flex items-center gap-3">
             <button onClick={() => setShowAltLines(!showAltLines)}
               className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -830,9 +846,12 @@ function BoardInner() {
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <header className="flex items-center justify-between px-5 py-3 border-b border-border shrink-0">
             <div className="flex items-center gap-3">
-            <div className="flex items-center gap-0.5 rounded-lg bg-card border border-border p-0.5">
-  <Link href="/board" className="px-3 py-1 rounded-md text-sm font-medium text-foreground">Board</Link>
-</div>
+              <div className="flex items-center gap-0.5 rounded-lg bg-card border border-border p-0.5">
+                <Link href="/scanner" className={["px-3 py-1 rounded-md text-sm transition-colors",
+                  pathname === "/scanner" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}>Scanner</Link>
+                <Link href="/board" className={["px-3 py-1 rounded-md text-sm transition-colors",
+                  pathname === "/board" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}>Board</Link>
+              </div>
               <MarketFilterDropdown options={marketOptions} selectedMarket={selectedMarket} selectedSport={selectedSport} onSelect={setSelectedMarket} />
               <p className="text-sm text-muted-foreground tabular-nums">
                 <span className="text-foreground font-medium">{displayed.length}</span> props
