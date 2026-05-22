@@ -25,7 +25,6 @@ const BOOK_DOMAIN: Record<string, string> = {
   "BetOnline": "betonline.ag",
   "Bovada": "bovada.lv",
   "Hard Rock": "hardrock.bet",
-  "Fliff": "fliff.com",
   "PrizePicks": "prizepicks.com",
   "PP Demons": "prizepicks.com",
   "PP Goblins": "prizepicks.com",

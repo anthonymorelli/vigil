@@ -25941,6 +25941,3396 @@
           "type": "standard"
         }
       }
+    },
+    {
+      "playerId": "faker-player-maps-1-3-kills-8.0",
+      "player": "Faker",
+      "team": "T1",
+      "matchup": "T1 vs G2 Esports",
+      "gameTime": "2026-05-22T18:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 8.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -131,
+          "under": 137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -134,
+          "under": 127,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -145,
+          "under": 120,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -147,
+          "under": 124,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -147,
+          "under": 124,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "faker-player-maps-1-3-deaths-4.0",
+      "player": "Faker",
+      "team": "T1",
+      "matchup": "T1 vs G2 Esports",
+      "gameTime": "2026-05-22T18:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 4.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -100,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": 106,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -110,
+          "under": -109,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -111,
+          "under": -113,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "gumayusi-player-maps-1-3-assists-9.5",
+      "player": "Gumayusi",
+      "team": "T1",
+      "matchup": "T1 vs G2 Esports",
+      "gameTime": "2026-05-22T18:00:00Z",
+      "market": "Player Maps 1-3 Assists",
+      "line": 9.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -117,
+          "under": 121,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -113,
+          "under": 114,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -123,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "gumayusi-player-maps-1-3-deaths-5.0",
+      "player": "Gumayusi",
+      "team": "T1",
+      "matchup": "T1 vs G2 Esports",
+      "gameTime": "2026-05-22T18:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 5.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -114,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -113,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -118,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "caps-player-maps-1-3-deaths-4.5",
+      "player": "Caps",
+      "team": "G2 Esports",
+      "matchup": "T1 vs G2 Esports",
+      "gameTime": "2026-05-22T18:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 4.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -127,
+          "under": 131,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -130,
+          "under": 137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -145,
+          "under": 125,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -147,
+          "under": 126,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -150,
+          "under": 119,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "caps-player-maps-1-3-kills-5.5",
+      "player": "Caps",
+      "team": "G2 Esports",
+      "matchup": "T1 vs G2 Esports",
+      "gameTime": "2026-05-22T18:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 5.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": 106,
+          "under": -108,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": 109,
+          "under": -109,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -101,
+          "under": -117,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -103,
+          "under": -118,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "hans-sama-player-maps-1-3-kills-5.5",
+      "player": "Hans Sama",
+      "team": "G2 Esports",
+      "matchup": "T1 vs G2 Esports",
+      "gameTime": "2026-05-22T18:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 5.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -144,
+          "under": 143,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -145,
+          "under": 138,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -159,
+          "under": 133,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -152,
+          "under": 127,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "hans-sama-player-map-1-kills-4.5",
+      "player": "Hans Sama",
+      "team": "G2 Esports",
+      "matchup": "T1 vs G2 Esports",
+      "gameTime": "2026-05-22T18:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 4.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -140,
+          "under": 144,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -143,
+          "under": 137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -160,
+          "under": 132,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -150,
+          "under": 127,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "keria-player-maps-1-3-kills-8.5",
+      "player": "Keria",
+      "team": "T1",
+      "matchup": "T1 vs G2 Esports",
+      "gameTime": "2026-05-22T18:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 8.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -119,
+          "under": 122,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -126,
+          "under": 124,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": 114,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -129,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -130,
+          "under": 109,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "keria-player-maps-1-3-assists-12.0",
+      "player": "Keria",
+      "team": "T1",
+      "matchup": "T1 vs G2 Esports",
+      "gameTime": "2026-05-22T18:00:00Z",
+      "market": "Player Maps 1-3 Assists",
+      "line": 12.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -118,
+          "under": 120,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -119,
+          "under": 119,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -131,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -137,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "blaber-player-maps-1-3-kills-6.0",
+      "player": "Blaber",
+      "team": "Cloud9",
+      "matchup": "Cloud9 vs Team Liquid",
+      "gameTime": "2026-05-22T21:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 6.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -119,
+          "under": 119,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -119,
+          "under": 120,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -129,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "blaber-player-map-1-kills-5.0",
+      "player": "Blaber",
+      "team": "Cloud9",
+      "matchup": "Cloud9 vs Team Liquid",
+      "gameTime": "2026-05-22T21:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 5.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -103,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -105,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -111,
+          "under": -104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -116,
+          "under": -102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "fudge-player-map-1-kills-5.0",
+      "player": "Fudge",
+      "team": "Cloud9",
+      "matchup": "Cloud9 vs Team Liquid",
+      "gameTime": "2026-05-22T21:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 5.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -103,
+          "under": -101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -103,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -111,
+          "under": -105,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -111,
+          "under": -107,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -108,
+          "under": -110,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "fudge-player-maps-1-3-kills-7.5",
+      "player": "Fudge",
+      "team": "Cloud9",
+      "matchup": "Cloud9 vs Team Liquid",
+      "gameTime": "2026-05-22T21:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 7.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -121,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -118,
+          "under": 118,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -133,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -123,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "apa-player-map-1-kills-2.5",
+      "player": "APA",
+      "team": "Team Liquid",
+      "matchup": "Cloud9 vs Team Liquid",
+      "gameTime": "2026-05-22T21:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 2.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -131,
+          "under": 130,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -122,
+          "under": 126,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -134,
+          "under": 120,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -137,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "apa-player-maps-1-3-deaths-6.0",
+      "player": "APA",
+      "team": "Team Liquid",
+      "matchup": "Cloud9 vs Team Liquid",
+      "gameTime": "2026-05-22T21:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 6.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -109,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -111,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -119,
+          "under": -101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -117,
+          "under": -101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -121,
+          "under": -102,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "yeon-player-maps-1-3-deaths-5.5",
+      "player": "Yeon",
+      "team": "Team Liquid",
+      "matchup": "Cloud9 vs Team Liquid",
+      "gameTime": "2026-05-22T21:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 5.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -111,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -107,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -120,
+          "under": -103,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -114,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -123,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "yeon-player-maps-1-3-assists-12.0",
+      "player": "Yeon",
+      "team": "Team Liquid",
+      "matchup": "Cloud9 vs Team Liquid",
+      "gameTime": "2026-05-22T21:00:00Z",
+      "market": "Player Maps 1-3 Assists",
+      "line": 12.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -101,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -101,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -111,
+          "under": -102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -115,
+          "under": -109,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -114,
+          "under": -107,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "tenz-player-maps-1-3-deaths-10.0",
+      "player": "TenZ",
+      "team": "Sentinels",
+      "matchup": "Sentinels vs NRG Esports",
+      "gameTime": "2026-05-22T19:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 10.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -110,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -111,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -121,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -118,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "tenz-player-map-1-kills-14.5",
+      "player": "TenZ",
+      "team": "Sentinels",
+      "matchup": "Sentinels vs NRG Esports",
+      "gameTime": "2026-05-22T19:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 14.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -127,
+          "under": 127,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -126,
+          "under": 125,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -131,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -131,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "zekken-player-map-1-kills-10.5",
+      "player": "zekken",
+      "team": "Sentinels",
+      "matchup": "Sentinels vs NRG Esports",
+      "gameTime": "2026-05-22T19:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 10.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -142,
+          "under": 143,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -140,
+          "under": 133,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -147,
+          "under": 132,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -148,
+          "under": 123,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "zekken-player-maps-1-3-assists-5.5",
+      "player": "zekken",
+      "team": "Sentinels",
+      "matchup": "Sentinels vs NRG Esports",
+      "gameTime": "2026-05-22T19:00:00Z",
+      "market": "Player Maps 1-3 Assists",
+      "line": 5.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -140,
+          "under": 141,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -132,
+          "under": 139,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -143,
+          "under": 122,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -149,
+          "under": 123,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -149,
+          "under": 121,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "crashies-player-maps-1-3-kills-25.5",
+      "player": "crashies",
+      "team": "NRG Esports",
+      "matchup": "Sentinels vs NRG Esports",
+      "gameTime": "2026-05-22T19:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 25.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": 111,
+          "under": -106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": 108,
+          "under": -108,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": 101,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": 101,
+          "under": -115,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -103,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "crashies-player-map-1-kills-13.5",
+      "player": "crashies",
+      "team": "NRG Esports",
+      "matchup": "Sentinels vs NRG Esports",
+      "gameTime": "2026-05-22T19:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 13.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -114,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -113,
+          "under": 114,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -122,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -130,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "victor-player-maps-1-3-assists-8.5",
+      "player": "Victor",
+      "team": "NRG Esports",
+      "matchup": "Sentinels vs NRG Esports",
+      "gameTime": "2026-05-22T19:00:00Z",
+      "market": "Player Maps 1-3 Assists",
+      "line": 8.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -112,
+          "under": 118,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -111,
+          "under": 114,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -127,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -129,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -125,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "victor-player-map-1-kills-11.0",
+      "player": "Victor",
+      "team": "NRG Esports",
+      "matchup": "Sentinels vs NRG Esports",
+      "gameTime": "2026-05-22T19:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 11.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -131,
+          "under": 123,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -121,
+          "under": 121,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -137,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -142,
+          "under": 119,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -143,
+          "under": 117,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "s0m-player-maps-1-3-kills-22.5",
+      "player": "s0m",
+      "team": "NRG Esports",
+      "matchup": "Sentinels vs NRG Esports",
+      "gameTime": "2026-05-22T19:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 22.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -114,
+          "under": 119,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -112,
+          "under": 117,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -120,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -124,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "s0m-player-maps-1-3-deaths-8.5",
+      "player": "s0m",
+      "team": "NRG Esports",
+      "matchup": "Sentinels vs NRG Esports",
+      "gameTime": "2026-05-22T19:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 8.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -122,
+          "under": 129,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -131,
+          "under": 129,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -142,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -143,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "aspas-player-map-1-kills-13.5",
+      "player": "aspas",
+      "team": "LOUD",
+      "matchup": "LOUD vs FunPlus Phoenix",
+      "gameTime": "2026-05-22T22:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 13.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -126,
+          "under": 128,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -121,
+          "under": 120,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -131,
+          "under": 114,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -134,
+          "under": 117,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "aspas-player-maps-1-3-kills-15.5",
+      "player": "aspas",
+      "team": "LOUD",
+      "matchup": "LOUD vs FunPlus Phoenix",
+      "gameTime": "2026-05-22T22:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 15.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -152,
+          "under": 152,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -159,
+          "under": 154,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -160,
+          "under": 145,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -165,
+          "under": 141,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -175,
+          "under": 137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "less-player-maps-1-3-kills-19.0",
+      "player": "Less",
+      "team": "LOUD",
+      "matchup": "LOUD vs FunPlus Phoenix",
+      "gameTime": "2026-05-22T22:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 19.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": 107,
+          "under": -106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": 107,
+          "under": -108,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -103,
+          "under": -111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -106,
+          "under": -111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "less-player-map-1-kills-14.5",
+      "player": "Less",
+      "team": "LOUD",
+      "matchup": "LOUD vs FunPlus Phoenix",
+      "gameTime": "2026-05-22T22:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 14.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -155,
+          "under": 150,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -146,
+          "under": 150,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -169,
+          "under": 134,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -158,
+          "under": 133,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "ange1-player-maps-1-3-deaths-13.5",
+      "player": "ANGE1",
+      "team": "FunPlus Phoenix",
+      "matchup": "LOUD vs FunPlus Phoenix",
+      "gameTime": "2026-05-22T22:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 13.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -127,
+          "under": 126,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -123,
+          "under": 130,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -135,
+          "under": 117,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -132,
+          "under": 117,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "ange1-player-maps-1-3-kills-18.5",
+      "player": "ANGE1",
+      "team": "FunPlus Phoenix",
+      "matchup": "LOUD vs FunPlus Phoenix",
+      "gameTime": "2026-05-22T22:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 18.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": 100,
+          "under": -103,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": 105,
+          "under": -104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -111,
+          "under": -109,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -107,
+          "under": -111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -108,
+          "under": -109,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "suygetsu-player-maps-1-3-kills-21.5",
+      "player": "SUYGETSU",
+      "team": "FunPlus Phoenix",
+      "matchup": "LOUD vs FunPlus Phoenix",
+      "gameTime": "2026-05-22T22:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 21.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": 101,
+          "under": -101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": 104,
+          "under": -102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -105,
+          "under": -113,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -108,
+          "under": -111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "suygetsu-player-map-1-kills-9.0",
+      "player": "SUYGETSU",
+      "team": "FunPlus Phoenix",
+      "matchup": "LOUD vs FunPlus Phoenix",
+      "gameTime": "2026-05-22T22:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 9.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -143,
+          "under": 146,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -146,
+          "under": 140,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -156,
+          "under": 129,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -151,
+          "under": 135,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -159,
+          "under": 125,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "im-player-map-1-kills-12.0",
+      "player": "iM",
+      "team": "Natus Vincere",
+      "matchup": "Natus Vincere vs Team Vitality",
+      "gameTime": "2026-05-22T17:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 12.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -139,
+          "under": 139,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -135,
+          "under": 131,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -143,
+          "under": 128,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -143,
+          "under": 124,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -152,
+          "under": 119,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "im-player-maps-1-3-kills-32.5",
+      "player": "iM",
+      "team": "Natus Vincere",
+      "matchup": "Natus Vincere vs Team Vitality",
+      "gameTime": "2026-05-22T17:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 32.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -171,
+          "under": 178,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -175,
+          "under": 169,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -181,
+          "under": 155,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -182,
+          "under": 159,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -186,
+          "under": 155,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "b1t-player-maps-1-3-kills-21.5",
+      "player": "b1t",
+      "team": "Natus Vincere",
+      "matchup": "Natus Vincere vs Team Vitality",
+      "gameTime": "2026-05-22T17:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 21.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -137,
+          "under": 143,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -144,
+          "under": 148,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -152,
+          "under": 134,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -150,
+          "under": 126,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "b1t-player-maps-1-3-deaths-13.0",
+      "player": "b1t",
+      "team": "Natus Vincere",
+      "matchup": "Natus Vincere vs Team Vitality",
+      "gameTime": "2026-05-22T17:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 13.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": 102,
+          "under": -106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": 101,
+          "under": -106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -109,
+          "under": -111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -109,
+          "under": -111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "zywoo-player-map-1-headshots-6.0",
+      "player": "ZywOo",
+      "team": "Team Vitality",
+      "matchup": "Natus Vincere vs Team Vitality",
+      "gameTime": "2026-05-22T17:00:00Z",
+      "market": "Player Map 1 Headshots",
+      "line": 6.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -150,
+          "under": 148,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -150,
+          "under": 141,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -162,
+          "under": 132,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -153,
+          "under": 133,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -155,
+          "under": 129,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "zywoo-player-map-1-kills-13.0",
+      "player": "ZywOo",
+      "team": "Team Vitality",
+      "matchup": "Natus Vincere vs Team Vitality",
+      "gameTime": "2026-05-22T17:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 13.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -120,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -117,
+          "under": 122,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -123,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -135,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "apex-player-maps-1-3-kills-29.5",
+      "player": "apEX",
+      "team": "Team Vitality",
+      "matchup": "Natus Vincere vs Team Vitality",
+      "gameTime": "2026-05-22T17:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 29.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -125,
+          "under": 126,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -127,
+          "under": 123,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -137,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -139,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -139,
+          "under": 119,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "apex-player-maps-1-3-deaths-14.5",
+      "player": "apEX",
+      "team": "Team Vitality",
+      "matchup": "Natus Vincere vs Team Vitality",
+      "gameTime": "2026-05-22T17:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 14.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -125,
+          "under": 128,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -130,
+          "under": 127,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -146,
+          "under": 121,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -143,
+          "under": 118,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -144,
+          "under": 114,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "spinx-player-maps-1-3-kills-25.5",
+      "player": "Spinx",
+      "team": "Team Vitality",
+      "matchup": "Natus Vincere vs Team Vitality",
+      "gameTime": "2026-05-22T17:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 25.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -173,
+          "under": 182,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -178,
+          "under": 171,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -195,
+          "under": 161,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -191,
+          "under": 168,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -199,
+          "under": 163,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "spinx-player-maps-1-3-deaths-15.0",
+      "player": "Spinx",
+      "team": "Team Vitality",
+      "matchup": "Natus Vincere vs Team Vitality",
+      "gameTime": "2026-05-22T17:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 15.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -119,
+          "under": 120,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -120,
+          "under": 123,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -129,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -131,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -128,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "niko-player-map-1-kills-18.0",
+      "player": "NiKo",
+      "team": "FaZe Clan",
+      "matchup": "FaZe Clan vs G2 Esports",
+      "gameTime": "2026-05-22T20:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 18.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -111,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -108,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -113,
+          "under": -103,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -118,
+          "under": -102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -115,
+          "under": -106,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "niko-player-maps-1-3-kills-29.5",
+      "player": "NiKo",
+      "team": "FaZe Clan",
+      "matchup": "FaZe Clan vs G2 Esports",
+      "gameTime": "2026-05-22T20:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 29.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -156,
+          "under": 156,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -157,
+          "under": 151,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -175,
+          "under": 141,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -173,
+          "under": 143,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -167,
+          "under": 142,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "rain-player-map-1-kills-13.0",
+      "player": "rain",
+      "team": "FaZe Clan",
+      "matchup": "FaZe Clan vs G2 Esports",
+      "gameTime": "2026-05-22T20:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 13.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -121,
+          "under": 119,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -123,
+          "under": 123,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -133,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -132,
+          "under": 114,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -138,
+          "under": 109,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "rain-player-maps-1-3-kills-22.5",
+      "player": "rain",
+      "team": "FaZe Clan",
+      "matchup": "FaZe Clan vs G2 Esports",
+      "gameTime": "2026-05-22T20:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 22.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -109,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -106,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -116,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -118,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "karrigan-player-maps-1-3-deaths-16.0",
+      "player": "karrigan",
+      "team": "FaZe Clan",
+      "matchup": "FaZe Clan vs G2 Esports",
+      "gameTime": "2026-05-22T20:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 16.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -111,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -113,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -120,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -123,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -122,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "karrigan-player-map-1-headshots-9.0",
+      "player": "karrigan",
+      "team": "FaZe Clan",
+      "matchup": "FaZe Clan vs G2 Esports",
+      "gameTime": "2026-05-22T20:00:00Z",
+      "market": "Player Map 1 Headshots",
+      "line": 9.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -113,
+          "under": 114,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -114,
+          "under": 114,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -126,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -127,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -130,
+          "under": 109,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "m0nesy-player-map-1-headshots-5.5",
+      "player": "m0NESY",
+      "team": "G2 Esports",
+      "matchup": "FaZe Clan vs G2 Esports",
+      "gameTime": "2026-05-22T20:00:00Z",
+      "market": "Player Map 1 Headshots",
+      "line": 5.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -138,
+          "under": 139,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -143,
+          "under": 138,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -150,
+          "under": 123,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -144,
+          "under": 124,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "m0nesy-player-map-1-kills-12.5",
+      "player": "m0NESY",
+      "team": "G2 Esports",
+      "matchup": "FaZe Clan vs G2 Esports",
+      "gameTime": "2026-05-22T20:00:00Z",
+      "market": "Player Map 1 Kills",
+      "line": 12.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -144,
+          "under": 145,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -148,
+          "under": 144,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -156,
+          "under": 133,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -158,
+          "under": 137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -161,
+          "under": 128,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "hooxi-player-map-1-headshots-8.5",
+      "player": "HooXi",
+      "team": "G2 Esports",
+      "matchup": "FaZe Clan vs G2 Esports",
+      "gameTime": "2026-05-22T20:00:00Z",
+      "market": "Player Map 1 Headshots",
+      "line": 8.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -122,
+          "under": 121,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -120,
+          "under": 125,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -134,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -129,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "hooxi-player-maps-1-3-deaths-12.5",
+      "player": "HooXi",
+      "team": "G2 Esports",
+      "matchup": "FaZe Clan vs G2 Esports",
+      "gameTime": "2026-05-22T20:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 12.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -117,
+          "under": 121,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 117,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -136,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -131,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -133,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "yatoro-player-maps-1-3-deaths-5.5",
+      "player": "Yatoro",
+      "team": "Team Spirit",
+      "matchup": "Team Spirit vs OG",
+      "gameTime": "2026-05-22T15:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 5.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -100,
+          "under": -102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": 105,
+          "under": -102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -106,
+          "under": -111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -104,
+          "under": -113,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -106,
+          "under": -114,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "yatoro-player-maps-1-3-kills-10.0",
+      "player": "Yatoro",
+      "team": "Team Spirit",
+      "matchup": "Team Spirit vs OG",
+      "gameTime": "2026-05-22T15:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 10.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -135,
+          "under": 145,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -139,
+          "under": 139,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -153,
+          "under": 129,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -151,
+          "under": 128,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -158,
+          "under": 126,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "torontotokyo-player-maps-1-3-assists-17.0",
+      "player": "TORONTOTOKYO",
+      "team": "Team Spirit",
+      "matchup": "Team Spirit vs OG",
+      "gameTime": "2026-05-22T15:00:00Z",
+      "market": "Player Maps 1-3 Assists",
+      "line": 17.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -105,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -106,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -114,
+          "under": -102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -113,
+          "under": -107,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -111,
+          "under": -103,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "torontotokyo-player-maps-1-3-deaths-5.5",
+      "player": "TORONTOTOKYO",
+      "team": "Team Spirit",
+      "matchup": "Team Spirit vs OG",
+      "gameTime": "2026-05-22T15:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 5.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -119,
+          "under": 118,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -120,
+          "under": 121,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -131,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -129,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "bzm-player-maps-1-3-kills-6.0",
+      "player": "Bzm",
+      "team": "OG",
+      "matchup": "Team Spirit vs OG",
+      "gameTime": "2026-05-22T15:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 6.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -138,
+          "under": 143,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -143,
+          "under": 147,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -154,
+          "under": 135,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -161,
+          "under": 137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -159,
+          "under": 128,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "bzm-player-maps-1-3-assists-12.0",
+      "player": "Bzm",
+      "team": "OG",
+      "matchup": "Team Spirit vs OG",
+      "gameTime": "2026-05-22T15:00:00Z",
+      "market": "Player Maps 1-3 Assists",
+      "line": 12.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -101,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -105,
+          "under": -100,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -108,
+          "under": -106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -109,
+          "under": -104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -115,
+          "under": -108,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "resolut1on-player-maps-1-3-kills-8.5",
+      "player": "Resolut1on",
+      "team": "OG",
+      "matchup": "Team Spirit vs OG",
+      "gameTime": "2026-05-22T15:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 8.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -102,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -105,
+          "under": -101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -114,
+          "under": -110,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -107,
+          "under": -109,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "resolut1on-player-maps-1-3-assists-11.5",
+      "player": "Resolut1on",
+      "team": "OG",
+      "matchup": "Team Spirit vs OG",
+      "gameTime": "2026-05-22T15:00:00Z",
+      "market": "Player Maps 1-3 Assists",
+      "line": 11.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -128,
+          "under": 127,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -130,
+          "under": 128,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -140,
+          "under": 117,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -133,
+          "under": 120,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -133,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "arteezy-player-maps-1-3-deaths-6.5",
+      "player": "Arteezy",
+      "team": "Evil Geniuses",
+      "matchup": "Evil Geniuses vs Team Liquid",
+      "gameTime": "2026-05-22T23:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 6.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -112,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -117,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -127,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -125,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -132,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "arteezy-player-maps-1-3-kills-12.0",
+      "player": "Arteezy",
+      "team": "Evil Geniuses",
+      "matchup": "Evil Geniuses vs Team Liquid",
+      "gameTime": "2026-05-22T23:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 12.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -114,
+          "under": 119,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -118,
+          "under": 119,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -124,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -134,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "fly-player-maps-1-3-kills-9.0",
+      "player": "Fly",
+      "team": "Evil Geniuses",
+      "matchup": "Evil Geniuses vs Team Liquid",
+      "gameTime": "2026-05-22T23:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 9.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -107,
+          "under": 109,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -103,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -119,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -117,
+          "under": -101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -117,
+          "under": -108,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "fly-player-maps-1-3-deaths-7.5",
+      "player": "Fly",
+      "team": "Evil Geniuses",
+      "matchup": "Evil Geniuses vs Team Liquid",
+      "gameTime": "2026-05-22T23:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 7.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -108,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -107,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -120,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -117,
+          "under": -101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -118,
+          "under": -104,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "miracle--player-maps-1-3-kills-11.5",
+      "player": "Miracle-",
+      "team": "Team Liquid",
+      "matchup": "Evil Geniuses vs Team Liquid",
+      "gameTime": "2026-05-22T23:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 11.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -125,
+          "under": 131,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -125,
+          "under": 128,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -135,
+          "under": 118,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -138,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -137,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "miracle--player-maps-1-3-assists-9.5",
+      "player": "Miracle-",
+      "team": "Team Liquid",
+      "matchup": "Evil Geniuses vs Team Liquid",
+      "gameTime": "2026-05-22T23:00:00Z",
+      "market": "Player Maps 1-3 Assists",
+      "line": 9.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -125,
+          "under": 127,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -132,
+          "under": 132,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -142,
+          "under": 125,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -140,
+          "under": 119,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "gh-player-maps-1-3-deaths-6.0",
+      "player": "GH",
+      "team": "Team Liquid",
+      "matchup": "Evil Geniuses vs Team Liquid",
+      "gameTime": "2026-05-22T23:00:00Z",
+      "market": "Player Maps 1-3 Deaths",
+      "line": 6.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": 100,
+          "under": -102,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": 101,
+          "under": -101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -113,
+          "under": -107,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -111,
+          "under": -109,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -107,
+          "under": -108,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "gh-player-maps-1-3-kills-12.5",
+      "player": "GH",
+      "team": "Team Liquid",
+      "matchup": "Evil Geniuses vs Team Liquid",
+      "gameTime": "2026-05-22T23:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 12.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -159,
+          "under": 169,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -167,
+          "under": 160,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -184,
+          "under": 144,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -184,
+          "under": 144,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -177,
+          "under": 142,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "qojqva-player-maps-1-3-assists-18.0",
+      "player": "qojqva",
+      "team": "Team Liquid",
+      "matchup": "Evil Geniuses vs Team Liquid",
+      "gameTime": "2026-05-22T23:00:00Z",
+      "market": "Player Maps 1-3 Assists",
+      "line": 18.0,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": -110,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": -106,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -116,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -115,
+          "under": -104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -115,
+          "under": -101,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
+    },
+    {
+      "playerId": "qojqva-player-maps-1-3-kills-6.5",
+      "player": "qojqva",
+      "team": "Team Liquid",
+      "matchup": "Evil Geniuses vs Team Liquid",
+      "gameTime": "2026-05-22T23:00:00Z",
+      "market": "Player Maps 1-3 Kills",
+      "line": 6.5,
+      "sport": "esports",
+      "offerings": {
+        "Novig": {
+          "over": 104,
+          "under": -101,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "ProphetX": {
+          "over": 102,
+          "under": -104,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "DraftKings": {
+          "over": -104,
+          "under": -117,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "FanDuel": {
+          "over": -104,
+          "under": -111,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "PrizePicks": {
+          "over": -137,
+          "under": -137,
+          "multiplier": null,
+          "type": "standard"
+        },
+        "Fliff": {
+          "over": -108,
+          "under": -111,
+          "multiplier": null,
+          "type": "standard"
+        }
+      }
     }
   ]
 }

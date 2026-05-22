@@ -830,12 +830,9 @@ function BoardInner() {
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <header className="flex items-center justify-between px-5 py-3 border-b border-border shrink-0">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-0.5 rounded-lg bg-card border border-border p-0.5">
-                <Link href="/scanner" className={["px-3 py-1 rounded-md text-sm transition-colors",
-                  pathname === "/scanner" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}>Scanner</Link>
-                <Link href="/board" className={["px-3 py-1 rounded-md text-sm transition-colors",
-                  pathname === "/board" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}>Board</Link>
-              </div>
+            <div className="flex items-center gap-0.5 rounded-lg bg-card border border-border p-0.5">
+  <Link href="/board" className="px-3 py-1 rounded-md text-sm font-medium text-foreground">Board</Link>
+</div>
               <MarketFilterDropdown options={marketOptions} selectedMarket={selectedMarket} selectedSport={selectedSport} onSelect={setSelectedMarket} />
               <p className="text-sm text-muted-foreground tabular-nums">
                 <span className="text-foreground font-medium">{displayed.length}</span> props
