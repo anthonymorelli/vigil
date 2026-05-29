@@ -20,7 +20,7 @@ export function Navbar() {
 
         {/* Logo lockup */}
         <Link href="/" className="flex items-center">
-          <Logo size="sm" />
+          <Logo size={18} />
         </Link>
 
         {/* Nav links */}

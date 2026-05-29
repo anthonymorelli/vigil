@@ -375,7 +375,7 @@ function HomeInner() {
       <aside className="w-[220px] shrink-0 border-r border-border bg-card flex flex-col overflow-y-auto">
 
         <div className="px-4 pt-5 pb-4 border-b border-border">
-          <Logo size="md" />
+          <Logo size={22} />
         </div>
 
         <div className="px-3 pt-4 pb-2">
