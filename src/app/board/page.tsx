@@ -544,7 +544,7 @@ function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSpor
           {/* Search */}
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/40 pointer-events-none" />
-            <input type="text" placeholder="Players, markets..." value={searchQuery}
+            <input type="text" placeholder="Players, Markets..." value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full h-9 rounded-lg border border-border bg-card pl-9 pr-8 text-sm placeholder:text-muted-foreground/30 focus:outline-none focus:ring-1 focus:ring-border"
             />
@@ -835,7 +835,7 @@ function BoardInner() {
             <p className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-widest px-1 mb-1.5">Search</p>
             <div className="relative px-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/40 pointer-events-none" />
-              <input type="text" placeholder="Players, markets..." value={searchQuery}
+              <input type="text" placeholder="Players, Markets..." value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full h-8 rounded-md border border-border bg-background pl-8 pr-7 text-sm placeholder:text-muted-foreground/30 focus:outline-none focus:ring-1 focus:ring-border"
               />
@@ -1172,7 +1172,7 @@ function BoardInner() {
           <DialogContent className="p-0 max-w-lg overflow-hidden">
             <DialogTitle className="sr-only">Command Palette</DialogTitle>
             <Command className="rounded-lg">
-              <CommandInput placeholder="Search players..." className="h-11" />
+              <CommandInput placeholder="Search Players..." className="h-11" />
               <CommandList className="max-h-80">
                 <CommandEmpty>No results.</CommandEmpty>
                 <CommandGroup heading="Players">
@@ -1209,11 +1209,11 @@ function BoardInner() {
                   </CommandItem>
                 </CommandGroup>
               </CommandList>
-              <div className="border-t border-border px-3 py-2 flex items-center gap-4 text-xs text-muted-foreground">
-                <span><kbd className="font-mono">↑↓</kbd> Navigate</span>
-                <span><kbd className="font-mono">↵</kbd> Select</span>
-                <span><kbd className="font-mono">Esc</kbd> Close</span>
-                <span className="ml-auto"><kbd className="font-mono">⌘K</kbd> Open anywhere</span>
+              <div className="border-t border-border px-3 py-2 flex items-center gap-3 text-xs text-muted-foreground">
+                <span><kbd className="font-mono bg-muted px-1 py-0.5 rounded text-[10px]">↑↓</kbd> Navigate</span>
+                <span><kbd className="font-mono bg-muted px-1 py-0.5 rounded text-[10px]">↵</kbd> Select</span>
+                <span><kbd className="font-mono bg-muted px-1 py-0.5 rounded text-[10px]">Esc</kbd> Close</span>
+                <span className="ml-auto"><kbd className="font-mono bg-muted px-1 py-0.5 rounded text-[10px]">⌘K</kbd> Open Anywhere</span>
               </div>
             </Command>
           </DialogContent>
