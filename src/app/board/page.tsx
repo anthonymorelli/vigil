@@ -408,7 +408,7 @@ function PropCard({ prop, platformConfig, defaultSlip, targetPct, referenceBookC
 }
 
 // ── MobileTopBar ──────────────────────────────────────────────────────────
-function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSport, searchQuery, setSearchQuery, minHitPct, setMinHitPct, showAltLines, setShowAltLines, displayedCount, slipLegKeys, onOpenSlip, hasActiveFilters, onClearFilters }: {
+function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSport, searchQuery, setSearchQuery, minHitPct, setMinHitPct, showAltLines, setShowAltLines, displayedCount, slipLegKeys, onOpenSlip, hasActiveFilters, onClearFilters, marketOptions, selectedMarket, onSelectMarket }: {
   platform: PlatformId;
   setPlatformRaw: (p: PlatformId) => void;
   selectedSport: string | null;
@@ -424,6 +424,9 @@ function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSpor
   onOpenSlip: () => void;
   hasActiveFilters: boolean;
   onClearFilters: () => void;
+  marketOptions: MarketOption[];
+  selectedMarket: string | null;
+  onSelectMarket: (m: string | null) => void;
 }) {
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -491,6 +494,12 @@ function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSpor
       {/* Expandable filter panel — min%, alt lines, search only */}
       {filtersOpen && (
         <div className="px-4 pb-3 space-y-3 border-t border-border/60 pt-3">
+          {/* Market filter */}
+          <div className="flex items-center gap-2">
+            <p className="text-[10px] text-muted-foreground/50 uppercase tracking-widest w-16 shrink-0">Market</p>
+            <MarketFilterDropdown options={marketOptions} selectedMarket={selectedMarket} selectedSport={selectedSport} onSelect={onSelectMarket} />
+          </div>
+
           {/* Min % Hit */}
           <div className="flex items-center gap-2">
             <p className="text-[10px] text-muted-foreground/50 uppercase tracking-widest w-16 shrink-0">Min Hit</p>
@@ -714,6 +723,9 @@ function BoardInner() {
           onOpenSlip={() => setSlipOpen(true)}
           hasActiveFilters={hasActiveFilters}
           onClearFilters={clearFilters}
+          marketOptions={marketOptions}
+          selectedMarket={selectedMarket}
+          onSelectMarket={setSelectedMarket}
         />
 
         <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2">
