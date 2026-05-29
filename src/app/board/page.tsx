@@ -33,6 +33,7 @@ type FlatProp = {
   market: string; line: number; side: "Over" | "Under";
   fairProb: number; fairPct: number; offerings: Offerings;
   gameTime?: string;
+  lineType?: "standard" | "goblin" | "demon";
 };
 
 const MARKET_ABBREV: Record<string, string> = {
@@ -137,6 +138,7 @@ function processToFlat(markets: MarketRow[], weights: WeightMap, platformBooks: 
         line: market.line, side, fairProb, fairPct: fairProb * 100,
         offerings: market.offerings,
         gameTime: market.gameTime,
+        lineType: (offeringType === "goblin" || offeringType === "demon") ? offeringType : "standard",
       });
     }
   }
@@ -174,7 +176,7 @@ function SlipBreakdown({ fairProb, platformSlipPlatform, platformLabel }: {
   return (
     <div className="min-w-[180px]">
       <div className="flex items-center justify-between mb-2.5">
-        <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/50">{platformLabel} % Needed</p>
+        <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/50">Break-even</p>
         <span className="font-mono text-sm font-semibold" style={{ color: "#5A9AE0" }}>{fairPct.toFixed(1)}%</span>
       </div>
       {qualifying.length === 0 ? (
@@ -833,10 +835,15 @@ function BoardInner() {
           <div className="px-3 pt-3 pb-2 border-t border-border mt-2">
             <p className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-widest px-1 mb-2">Min % Hit</p>
             <div className="flex items-center gap-1 px-1">
-              {[52, 54, 56, 58].map((val) => (
+              {([
+                { val: 52, active: "bg-red-500/20 border-red-400/40 text-red-400", inactive: "border-border text-red-400/40 hover:text-red-400/70" },
+                { val: 54, active: "bg-blue-400/15 border-blue-400/30 text-blue-300", inactive: "border-border text-blue-400/30 hover:text-blue-400/60" },
+                { val: 56, active: "bg-blue-500/25 border-blue-400/50 text-blue-400", inactive: "border-border text-blue-400/40 hover:text-blue-400/70" },
+                { val: 58, active: "bg-blue-500/40 border-blue-400/70 text-blue-300 font-bold", inactive: "border-border text-blue-400/50 hover:text-blue-400/80" },
+              ] as const).map(({ val, active, inactive }) => (
                 <button key={val} onClick={() => setMinHitPct(val)}
                   className={["flex-1 py-1 rounded-md text-xs font-medium transition-colors border",
-                    minHitPct === val ? "bg-foreground text-background border-foreground" : "border-border text-muted-foreground hover:text-foreground"].join(" ")}
+                    minHitPct === val ? active : inactive].join(" ")}
                 >{val}%</button>
               ))}
             </div>
@@ -852,11 +859,14 @@ function BoardInner() {
             </button>
           </div>
 
-          <div className="px-4 pt-3 pb-2 border-t border-border mt-2">
+          <div className="px-3 pt-3 pb-2 border-t border-border mt-2">
             <button onClick={() => setFvOpen(true)}
-              className="w-full flex items-center justify-between text-sm text-muted-foreground hover:text-foreground transition-colors">
-              <span>Fair Value</span>
-              <span className="text-[10px] text-muted-foreground/40 hover:text-foreground">Configure</span>
+              className="w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm border border-blue-400/20 bg-blue-400/5 text-blue-400/80 hover:text-blue-400 hover:border-blue-400/40 hover:bg-blue-400/10 transition-colors group">
+              <div className="flex items-center gap-2">
+                <svg className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5"><path d="M2 4h12M4 8h8M6 12h4" strokeLinecap="round"/></svg>
+                <span>Fair Value</span>
+              </div>
+              <svg className="h-3 w-3 opacity-60 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth="1.5"><path d="M4.5 2.5L7.5 6l-3 3.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
           </div>
 
@@ -868,7 +878,7 @@ function BoardInner() {
             )}
             {updatedAt && (
               <div className="px-4 py-3">
-                <p className="text-[10px] text-muted-foreground/40">Updated {relativeTime(updatedAt)}</p>
+                <p className="text-[10px] text-muted-foreground/40">Sample data · Apr 18</p>
               </div>
             )}
           </div>
@@ -936,7 +946,7 @@ function BoardInner() {
                     </TableHead>
                     {referenceBookColumns.map((book) => (
                       <TableHead key={book} className="text-right">
-                        <div className="flex justify-end"><BookLogo book={getBook(book).label} size="header" /></div>
+                        <div className="flex justify-end" title={getBook(book).label}><BookLogo book={getBook(book).label} size="header" /></div>
                       </TableHead>
                     ))}
                     <TableHead className="w-12 text-center" />
@@ -1001,7 +1011,11 @@ function BoardInner() {
                           </TableCell>
                           <TableCell className="font-mono text-sm py-0 text-muted-foreground">{prop.line}</TableCell>
                           <TableCell className="py-0 max-w-[140px]">
-                            <span className="text-sm text-muted-foreground/60 truncate block" title={cleanMarket(prop.market)}>{cleanMarket(prop.market)}</span>
+                            <span className="flex items-center gap-1.5">
+                              <span className="text-sm text-muted-foreground/60 truncate" title={cleanMarket(prop.market)}>{cleanMarket(prop.market)}</span>
+                              {prop.lineType === "goblin" && <span className="text-xs font-bold px-2 py-1 rounded shrink-0" style={{background:"#1C385A",color:"#A8D4F8",border:"1.5px solid #39639D"}}>Alt−</span>}
+                              {prop.lineType === "demon" && <span className="text-xs font-bold px-2 py-1 rounded shrink-0" style={{background:"#2A5D9C55",color:"#A8D4F8",border:"1.5px solid #2A5D9C"}}>Alt+</span>}
+                            </span>
                           </TableCell>
                           <TableCell className="text-right font-mono font-semibold text-sm py-0">
                             {formatOdds(legTargetAmerican(defaultSlip))}
