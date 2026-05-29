@@ -889,22 +889,24 @@ function BoardInner() {
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <header className="flex items-center justify-between px-5 py-3 border-b border-border shrink-0">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-0.5 rounded-lg bg-card border border-border p-0.5">
-                <Link href="/scanner" className={["px-3 py-1 rounded-md text-sm transition-colors",
-                  pathname === "/scanner" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")} style={{display:"none"}}>Scanner</Link>
-                <Link href="/board" className={["px-3 py-1 rounded-md text-sm transition-colors",
-                  pathname === "/board" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}>Board</Link>
-              </div>
+
               <MarketFilterDropdown options={marketOptions} selectedMarket={selectedMarket} selectedSport={selectedSport} onSelect={setSelectedMarket} />
               <p className="text-sm text-muted-foreground tabular-nums">
                 <span className="text-foreground font-medium">{displayed.length}</span> props
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => setCmdkOpen(true)}
-                className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded border border-border text-xs text-muted-foreground hover:text-foreground transition-colors">
-                <CommandIcon className="h-3 w-3" /><span>K</span>
-              </button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button onClick={() => setCmdkOpen(true)}
+                      className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded border border-border text-xs text-muted-foreground hover:text-foreground transition-colors">
+                      <CommandIcon className="h-3 w-3" /><span>K</span>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" className="text-xs">Search players</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
               <button onClick={() => setSlipOpen(true)}
                 className={["flex items-center gap-2 px-3 py-1.5 rounded-md border text-sm font-medium transition-colors",
                   slipLegKeys.length > 0 ? "border-blue-400/40 text-blue-400 bg-blue-400/5 hover:bg-blue-400/10" : "border-border text-muted-foreground hover:text-foreground"].join(" ")}
