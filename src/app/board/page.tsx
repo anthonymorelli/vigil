@@ -874,6 +874,13 @@ function BoardInner() {
             </button>
           </div>
 
+          {hasActiveFilters && (
+            <div className="px-4 pb-2">
+              <button onClick={clearFilters} className="w-full flex items-center gap-1.5 text-xs text-blue-400/80 hover:text-blue-400 transition-colors">
+                <X className="h-3 w-3" />Clear all filters
+              </button>
+            </div>
+          )}
           <div className="px-3 pt-3 pb-2 border-t border-border mt-2">
             <button onClick={() => setFvOpen(true)}
               className="w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm border border-blue-400/20 bg-blue-400/5 text-blue-400/80 hover:text-blue-400 hover:border-blue-400/40 hover:bg-blue-400/10 transition-colors group">
@@ -886,11 +893,6 @@ function BoardInner() {
           </div>
 
           <div className="mt-auto border-t border-border">
-            {hasActiveFilters && (
-              <div className="px-4 pt-3 pb-1">
-                <button onClick={clearFilters} className="text-xs text-muted-foreground/70 hover:text-foreground transition-colors">Clear all filters</button>
-              </div>
-            )}
             {updatedAt && (
               <div className="px-4 py-3">
                 <p className="text-[10px] text-muted-foreground/40">Sample data · Apr 18</p>
