@@ -314,7 +314,7 @@ function PropCard({ prop, platformConfig, defaultSlip, targetPct, referenceBookC
         <div className="flex items-start justify-between gap-2 pl-[76px]">
           <div className="min-w-0">
             <p className="text-sm text-muted-foreground/70">
-              <span className={prop.side === "Over" ? "text-blue-400/80" : "text-red-400/80"}>{prop.side}</span>
+              <span className="text-foreground">{prop.side}</span>
               {" "}{prop.line}
             </p>
             <p className="text-[11px] mt-0.5 truncate" style={{color:"#8b9ab0"}}>
@@ -1037,7 +1037,7 @@ function BoardInner() {
                             </div>
                           </TableCell>
                           <TableCell className="py-0">
-                            <span className={`text-sm font-medium ${prop.side === "Over" ? "text-blue-400/80" : "text-red-400/80"}`}>{prop.side}</span>
+                            <span className="text-sm font-medium text-foreground">{prop.side}</span>
                           </TableCell>
                           <TableCell className="font-mono text-sm py-0 text-muted-foreground">{prop.line}</TableCell>
                           <TableCell className="py-0 max-w-[140px]">
