@@ -877,7 +877,7 @@ function BoardInner() {
           {hasActiveFilters && (
             <div className="px-4 pb-2">
               <button onClick={clearFilters} className="w-full flex items-center gap-1.5 text-xs text-blue-400/80 hover:text-blue-400 transition-colors">
-                <X className="h-3 w-3" />Clear all filters
+                <X className="h-3 w-3" />Clear All Filters
               </button>
             </div>
           )}
@@ -997,7 +997,7 @@ function BoardInner() {
                             </p>
                           </div>
                           {hasActiveFilters && (
-                            <button onClick={clearFilters} className="text-xs text-blue-400 hover:text-blue-300 transition-colors">Clear all filters</button>
+                            <button onClick={clearFilters} className="text-xs text-blue-400 hover:text-blue-300 transition-colors">Clear All Filters</button>
                           )}
                         </div>
                       </TableCell>
@@ -1199,7 +1199,7 @@ function BoardInner() {
                     <SlidersHorizontal className="h-3.5 w-3.5 mr-2 text-muted-foreground" />{showAltLines ? "Hide" : "Show"} alt lines
                   </CommandItem>
                   <CommandItem onSelect={() => { setSearchQuery(""); setSelectedSport("All Sports"); setSelectedMarket("All Markets"); setCmdkOpen(false); }}>
-                    <X className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Clear all filters
+                    <X className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Clear All Filters
                   </CommandItem>
                   <CommandItem onSelect={() => { setFvOpen(true); setCmdkOpen(false); }}>
                     <SlidersHorizontal className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Open Fair Value settings
