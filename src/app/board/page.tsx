@@ -454,9 +454,7 @@ function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSpor
               slipLegKeys.length > 0 ? "border-blue-400/40 text-blue-400 bg-blue-400/5" : "border-border text-muted-foreground"].join(" ")}
           >
             <ListPlus className="h-3.5 w-3.5" />
-            Slip{slipLegKeys.length > 0 && (
-                <span className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full bg-blue-500 text-white text-[10px] font-bold leading-none">{slipLegKeys.length}</span>
-              )}
+            {slipLegKeys.length > 0 ? `Slip (${slipLegKeys.length})` : "Slip"}
           </button>
         </div>
       </div>
@@ -856,11 +854,9 @@ function BoardInner() {
 
           <div className="px-4 pt-3 pb-2 border-t border-border mt-2">
             <button onClick={() => setFvOpen(true)}
-              className="w-full flex items-center justify-between text-sm text-muted-foreground hover:text-foreground transition-colors group">
+              className="w-full flex items-center justify-between text-sm text-muted-foreground hover:text-foreground transition-colors">
               <span>Fair Value</span>
-              <svg className="h-3.5 w-3.5 text-muted-foreground/40 group-hover:text-foreground transition-colors" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="8" cy="8" r="6.5"/><path d="M8 5v1.5M8 8.5V11M6 6.5h2.5a1 1 0 010 2H7a1 1 0 000 2H10"/>
-              </svg>
+              <span className="text-[10px] text-muted-foreground/40 hover:text-foreground">Configure</span>
             </button>
           </div>
 
@@ -904,9 +900,7 @@ function BoardInner() {
                   slipLegKeys.length > 0 ? "border-blue-400/40 text-blue-400 bg-blue-400/5 hover:bg-blue-400/10" : "border-border text-muted-foreground hover:text-foreground"].join(" ")}
               >
                 <ListPlus className="h-3.5 w-3.5" />
-                Slip Builder{slipLegKeys.length > 0 && (
-                    <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-blue-500 text-white text-[10px] font-bold leading-none">{slipLegKeys.length}</span>
-                  )}
+                {slipLegKeys.length > 0 ? `Slip Builder` : "Slip Builder"}
               </button>
             </div>
           </header>
