@@ -1207,6 +1207,12 @@ function BoardInner() {
                   </CommandItem>
                 </CommandGroup>
               </CommandList>
+              <div className="border-t border-border px-3 py-2 flex items-center gap-4 text-xs text-muted-foreground">
+                <span><kbd className="font-mono">↑↓</kbd> Navigate</span>
+                <span><kbd className="font-mono">↵</kbd> Select</span>
+                <span><kbd className="font-mono">Esc</kbd> Close</span>
+                <span className="ml-auto"><kbd className="font-mono">⌘K</kbd> Open anywhere</span>
+              </div>
             </Command>
           </DialogContent>
         </Dialog>
