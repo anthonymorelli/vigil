@@ -34,6 +34,7 @@ const BOOK_DOMAIN: Record<string, string> = {
   "Polymarket": "polymarket.com",
   "Underdog": "underdogfantasy.com",
   "Betr": "betr.app",
+  "Fliff":     "getfliff.com",
 };
 
 // Display name remap (for accessibility labels and fallback badges)

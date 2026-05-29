@@ -131,8 +131,8 @@ prop-screen-web/
 │   │   ├── board/page.tsx      ← Main board view
 │   │   └── layout.tsx
 │   ├── components/
-│   │   ├── Logo.tsx            ← Brand mark + wordmark
-│   │   ├── book-logo.tsx       ← Brandfetch CDN logos + fallbacks
+│   │   ├── Logo.tsx            ← Pulse mark (QRS waveform) + Elan ITC Black wordmark
+│   │   ├── book-logo.tsx       ← Brandfetch CDN logos + fallbacks (getfliff.com for Fliff)
 │   │   └── slip-builder.tsx    ← Slip builder sheet
 │   └── lib/
 │       ├── devig.ts            ← consensusFairProb, evPct
@@ -161,6 +161,7 @@ prop-screen-web/
 Built as both a functional personal tool and a portfolio piece demonstrating:
 
 - Full-stack product development (Next.js + TypeScript + Python)
+- Brand identity: custom SVG mark system, variant-aware logo component (dark/light surface), color system
 - Probability math: devigging, binomial EV modeling, bisection method, Kelly criterion
 - Data pipeline architecture: API normalization, multi-book aggregation, line classification
 - Product thinking: responsive design, mobile card layout, keyboard navigation, slip builder

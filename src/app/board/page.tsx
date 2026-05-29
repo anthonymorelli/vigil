@@ -848,7 +848,7 @@ function BoardInner() {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-0.5 rounded-lg bg-card border border-border p-0.5">
                 <Link href="/scanner" className={["px-3 py-1 rounded-md text-sm transition-colors",
-                  pathname === "/scanner" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}>Scanner</Link>
+                  pathname === "/scanner" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")} style={{display:"none"}}>Scanner</Link>
                 <Link href="/board" className={["px-3 py-1 rounded-md text-sm transition-colors",
                   pathname === "/board" ? "bg-background border border-border text-foreground font-medium shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}>Board</Link>
               </div>
