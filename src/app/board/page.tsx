@@ -16,6 +16,7 @@ import { hitCellStyle } from "@/lib/hit-cell";
 import { consensusFairProb, probToAmerican, evPct, type WeightMap } from "@/lib/devig";
 import { isReferenceBook, getBook } from "@/lib/books";
 import { useBookWeights } from "@/lib/book-weights";
+import { FairValueSettings } from "@/components/fair-value-settings";
 import { PLATFORMS, getPlatformById, DEFAULT_PLATFORM_ID, type PlatformId } from "@/lib/platforms";
 import { legBreakEvenProbability, legEvPctVsSlip, legTargetAmerican, getDefaultSlipForPlatform, groupedSlipTypes } from "@/lib/slip-types";
 import { Logo } from "@/components/Logo";
@@ -35,19 +36,28 @@ type FlatProp = {
 };
 
 const MARKET_ABBREV: Record<string, string> = {
-  "Points": "Pts", "Rebounds": "Reb", "Assists": "Ast", "Threes Made": "3PM",
-  "Steals": "Stl", "Blocks": "Blk", "Turnovers": "TO",
+  // NBA
+  "Points": "Pts", "Rebounds": "Reb", "Assists": "Ast", "Threes": "3PM", "Threes Made": "3PM",
   "Points + Rebounds": "Pts+Reb", "Points + Assists": "Pts+Ast",
-  "Rebounds + Assists": "Reb+Ast", "Points + Rebounds + Assists": "Pts+Reb+Ast",
-  "Steals + Blocks": "Stl+Blk", "Pitcher Strikeouts": "Ks", "Hitter Strikeouts": "K",
-  "Hits": "H", "H": "Hits", "Home Runs": "HR", "RBIs": "RBI", "Runs": "R",
-  "Walks": "BB", "Hits + Runs + RBIs": "H+R+RBI", "Earned Runs": "ER",
-  "Pitching Outs": "Outs", "Total Bases": "TB", "Goals": "G", "Shots on Goal": "SOG",
-  "Saves": "SV", "Goals + Assists": "G+A", "Passing Yards": "Pass Yds",
-  "Rushing Yards": "Rush Yds", "Receiving Yards": "Rec Yds", "Receptions": "Rec",
+  "Rebounds + Assists": "Reb+Ast", "Points + Rebounds + Assists": "PRA",
+  "Steals": "Stl", "Blocks": "Blk", "Steals + Blocks": "Stl+Blk",
+  "Turnovers": "TO", "Fantasy Score": "Fantasy",
+  // MLB
+  "Pitcher Strikeouts": "Ks", "Hitter Strikeouts": "K",
+  "Hits": "H", "Home Runs": "HR", "RBIs": "RBI", "Runs": "R",
+  "Walks": "BB", "Hits + Runs + RBIs": "HRR", "Earned Runs": "ER",
+  "Pitching Outs": "Outs", "Total Bases": "TB", "Singles": "1B",
+  "Doubles": "2B", "Triples": "3B", "Stolen Bases": "SB",
+  // NHL
+  "Goals": "G", "Shots on Goal": "SOG", "Saves": "SV", "Goals + Assists": "G+A",
+  // NFL
+  "Passing Yards": "Pass Yds", "Rushing Yards": "Rush Yds",
+  "Receiving Yards": "Rec Yds", "Receptions": "Rec",
   "Passing TDs": "Pass TDs", "Rushing TDs": "Rush TDs", "Receiving TDs": "Rec TDs",
   "Interceptions": "INT", "Sacks": "Sacks", "Pass Completions": "Comp",
-  "Pass Attempts": "Att", "Map 1 Kills": "M1 Kills", "Map 1 Headshots": "M1 HS",
+  "Pass Attempts": "Att", "Carries": "Car", "Targets": "Tgt",
+  // Esports
+  "Map 1 Kills": "M1 Kills", "Map 1 Headshots": "M1 HS",
   "Maps 1-3 Kills": "Kills", "Maps 1-3 Assists": "Assists", "Maps 1-3 Deaths": "Deaths",
 };
 
@@ -570,7 +580,8 @@ function BoardInner() {
   const [minHitPct, setMinHitPct] = useState(52);
   const [showAltLines, setShowAltLines] = useState(false);
 
-  const { weights } = useBookWeights();
+  const { weights, setWeights } = useBookWeights();
+  const [fvOpen, setFvOpen] = useState(false);
   const [platform, setPlatformRaw] = useQueryState(
     "platform",
     parseAsStringLiteral(PLATFORM_IDS).withDefault(DEFAULT_PLATFORM_ID),
@@ -841,6 +852,14 @@ function BoardInner() {
             </button>
           </div>
 
+          <div className="px-4 pt-3 pb-2 border-t border-border mt-2">
+            <button onClick={() => setFvOpen(true)}
+              className="w-full flex items-center justify-between text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <span>Fair Value</span>
+              <span className="text-[10px] text-blue-400/70 font-mono">Configure →</span>
+            </button>
+          </div>
+
           <div className="mt-auto border-t border-border">
             {hasActiveFilters && (
               <div className="px-4 pt-3 pb-1">
@@ -854,6 +873,8 @@ function BoardInner() {
             )}
           </div>
         </aside>
+
+        <FairValueSettings open={fvOpen} onClose={() => setFvOpen(false)} weights={weights} setWeights={setWeights} />
 
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <header className="flex items-center justify-between px-5 py-3 border-b border-border shrink-0">
