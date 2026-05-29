@@ -6,7 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useQueryState, parseAsStringLiteral } from "nuqs";
 import { usePathname } from "next/navigation";
-import { Check, Plus, ListPlus, Search, X, Command as CommandIcon, ArrowDown, ArrowUp, ArrowUpDown, ChevronDown, ChevronRight, ChevronUp, SlidersHorizontal } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, Check, ChevronDown, ChevronRight, ChevronUp, Command as CommandIcon, ListPlus, Plus, RefreshCw, Search, SlidersHorizontal, X } from "lucide-react";
 import Link from "next/link";
 import { BookLogo } from "@/components/book-logo";
 import { SlipBuilder, type SlipLeg } from "@/components/slip-builder";
@@ -219,9 +219,9 @@ function MarketFilterDropdown({ options, selectedMarket, selectedSport, onSelect
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <button className={["flex items-center gap-1.5 h-7 px-2.5 rounded-md border text-xs font-medium transition-colors",
+        <button className={["flex items-center gap-2 h-8 px-3 rounded-md border text-sm font-medium transition-colors",
           selectedMarket ? "border-blue-400/40 text-blue-400 bg-blue-400/5" : "border-border text-muted-foreground hover:text-foreground hover:bg-accent/50"].join(" ")}>
-          {selectedAbbrev ?? "Market"}<ChevronDown className="h-3 w-3 opacity-50" />
+          <span>{selectedAbbrev ?? "Market"}</span><ChevronDown className="h-3.5 w-3.5 opacity-50" />
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-44 p-1" align="start">
@@ -317,7 +317,7 @@ function PropCard({ prop, platformConfig, defaultSlip, targetPct, referenceBookC
               <span className={prop.side === "Over" ? "text-blue-400/80" : "text-red-400/80"}>{prop.side}</span>
               {" "}{prop.line}
             </p>
-            <p className="text-[11px] text-muted-foreground/40 mt-0.5 truncate">
+            <p className="text-[11px] mt-0.5 truncate" style={{color:"#8b9ab0"}}>
               {prop.matchup}
               {prop.sport && <span className={`ml-1.5 ${sportMeta.color}`}>· {sportMeta.label}</span>}
             </p>
@@ -578,6 +578,8 @@ function BoardInner() {
   const [slipLegKeys, setSlipLegKeys] = useState<string[]>([]);
   const [slipOpen, setSlipOpen] = useState(false);
   const [cmdkOpen, setCmdkOpen] = useState(false);
+  const [dateFilter, setDateFilter] = useState<"all" | "today" | "tomorrow">("all");
+  const [refreshKey, setRefreshKey] = useState(0);
   const [sortDir, setSortDir] = useState<"desc" | "asc">("desc");
   const [minHitPct, setMinHitPct] = useState(52);
   const [showAltLines, setShowAltLines] = useState(false);
@@ -594,7 +596,7 @@ function BoardInner() {
   useEffect(() => { setSelectedMarket(null); }, [selectedSport, platform]);
 
   useEffect(() => {
-    fetch("/opportunities.json")
+    fetch("/opportunities.json?r=" + refreshKey)
       .then((r) => r.json())
       .then((data: PipelinePayload | unknown[]) => {
         const rows = Array.isArray(data) ? [] : ((data as PipelinePayload).markets ?? []);
@@ -645,6 +647,19 @@ function BoardInner() {
     let result = allProps.filter((p) => p.fairPct >= minHitPct);
     if (selectedSport) result = result.filter((p) => p.sport === selectedSport);
     if (selectedMarket) result = result.filter((p) => p.market === selectedMarket);
+    if (dateFilter !== "all") {
+      const now = new Date();
+      const todayStr = now.toDateString();
+      const tomorrow = new Date(now); tomorrow.setDate(now.getDate() + 1);
+      const tomorrowStr = tomorrow.toDateString();
+      result = result.filter((p) => {
+        if (!p.gameTime) return dateFilter === "today";
+        const d = new Date(p.gameTime);
+        if (dateFilter === "today") return d.toDateString() === todayStr;
+        if (dateFilter === "tomorrow") return d.toDateString() === tomorrowStr;
+        return true;
+      });
+    }
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       result = result.filter((p) =>
@@ -899,12 +914,23 @@ function BoardInner() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
+                    <button onClick={() => setRefreshKey(k => k + 1)}
+                      className="hidden md:flex items-center justify-center w-7 h-7 rounded border border-border text-muted-foreground hover:text-foreground transition-colors">
+                      <RefreshCw className="h-3.5 w-3.5" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" className="text-xs">Refresh data</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
                     <button onClick={() => setCmdkOpen(true)}
                       className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded border border-border text-xs text-muted-foreground hover:text-foreground transition-colors">
                       <CommandIcon className="h-3 w-3" /><span>K</span>
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="bottom" className="text-xs">Search players</TooltipContent>
+                  <TooltipContent side="bottom" className="text-xs">Command palette — search, sort, filters</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
               <button onClick={() => setSlipOpen(true)}
