@@ -821,7 +821,7 @@ function BoardInner() {
                 return (
                   <button key={p.id} disabled={!p.available} onClick={() => p.available && setPlatformRaw(p.id)} title={p.label}
                     className={["inline-flex items-center justify-center w-10 h-10 rounded-xl transition-all",
-                      isActive ? "ring-2 ring-blue-400/60 ring-offset-1 ring-offset-card opacity-100" : "opacity-60 hover:opacity-85",
+                      isActive ? "ring-2 ring-blue-400/80 ring-offset-2 ring-offset-card bg-blue-400/10 opacity-100" : "opacity-50 hover:opacity-80",
                       !p.available ? "cursor-not-allowed opacity-30 hover:opacity-30" : "cursor-pointer"].join(" ")}
                   >
                     <BookLogo book={PLATFORM_LOGO[p.id] ?? p.label} size="header" />

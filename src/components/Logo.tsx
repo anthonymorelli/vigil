@@ -60,7 +60,7 @@ export function Logo({ className, size, variant = "dark" }: LogoProps) {
           // Tries the CSS variable first (if configured via next/font),
           // then falls back to the direct font-family name.
           fontFamily:
-            "var(--font-brand, 'Elan ITC W04 Black', 'Elan ITC Black', sans-serif)",
+            "var(--font-elan, 'Elan ITC', sans-serif)",
           fontSize: s,
           fontWeight: 900,
           color: ink,
