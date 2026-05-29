@@ -431,7 +431,7 @@ function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSpor
     <div className="sticky top-0 z-30 bg-background border-b border-border">
       {/* Row 1: Logo + count + slip button */}
       <div className="flex items-center justify-between px-4 pt-3 pb-2">
-        <Logo size="sm" />
+        <Logo size={18} />
         <div className="flex items-center gap-2">
           <p className="text-sm text-muted-foreground tabular-nums">
             <span className="text-foreground font-medium">{displayedCount}</span> props
