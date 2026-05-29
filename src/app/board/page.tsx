@@ -888,7 +888,7 @@ function BoardInner() {
           <div className="mt-auto border-t border-border">
             {hasActiveFilters && (
               <div className="px-4 pt-3 pb-1">
-                <button onClick={clearFilters} className="text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors">Clear all filters</button>
+                <button onClick={clearFilters} className="text-xs text-muted-foreground/70 hover:text-foreground transition-colors">Clear all filters</button>
               </div>
             )}
             {updatedAt && (
