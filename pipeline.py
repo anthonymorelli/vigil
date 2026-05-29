@@ -1,353 +1,352 @@
 """
-OddsBlaze Data Pipeline — loader + devig + EV calculation
-
-Reads the 17 NBA JSON snapshots you captured and produces a DataFrame of
-+EV opportunities by devigging PrizePicks/Demons/Goblins prices against
-a peer-to-peer exchange consensus (Novig + ProphetX midpoints).
-
-Drop-in replacement for the mock fetch_opportunities() in app.py.
+Prop Screen Pipeline — The Odds API
+Fetches live player props from The Odds API and writes opportunities.json
+for Vigil (prop-screen-web) to consume.
 """
 
-from pathlib import Path
+import os
 import json
-import pandas as pd
-import numpy as np
+import time
+from pathlib import Path
+from datetime import datetime, timezone
 
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ============================================================================
 # CONFIG
 # ============================================================================
 
-# Where your OddsBlaze capture lives — update this path if you re-run the capture
-SNAPSHOT_DIR = Path("oddsblaze_snapshot")
+API_KEY   = os.getenv("ODDS_API_KEY")
+BASE_URL  = "https://api.the-odds-api.com/v4"
+OUT_PATH  = Path("../prop-screen-web/public/opportunities.json")
 
-# Books whose prices we want to EVALUATE for +EV (the "soft" side)
-TARGET_BOOKS = ["prizepicks", "prizepicks-demons", "prizepicks-goblins"]
+SPORTS = [
+    "basketball_nba",
+    "basketball_wnba",
+]
 
-# Books whose prices form our "sharp" / "fair" reference for devigging
-# Exchanges have no house vig, so their midpoints approximate true probability
-REFERENCE_BOOKS = ["novig", "prophetx"]
+REGIONS = "us_dfs,us_ex,us,us2"
 
-# Pretty display names
-BOOK_LABELS = {
-    "prizepicks": "PrizePicks",
-    "prizepicks-demons": "PP Demons",
-    "prizepicks-goblins": "PP Goblins",
-    "novig": "Novig",
-    "prophetx": "ProphetX",
-    "kalshi": "Kalshi",
-    "polymarket": "Polymarket",
+MARKETS = [
+    "player_points",
+    "player_points_alternate",
+    "player_rebounds",
+    "player_rebounds_alternate",
+    "player_assists",
+    "player_assists_alternate",
+    "player_threes",
+    "player_threes_alternate",
+    "player_blocks",
+    "player_steals",
+    "player_blocks_steals",
+    "player_points_rebounds_assists",
+    "player_points_rebounds",
+    "player_points_assists",
+]
+
+BOOK_ID_MAP = {
+    "prizepicks":    "PrizePicks",
+    "pick6":         "Pick6",
+    "underdog":      "Underdog",
+    "betr_us_dfs":   "Betr",
+    "novig":         "Novig",
+    "prophetx":      "ProphetX",
+    "draftkings":    "DraftKings",
+    "fanduel":       "FanDuel",
+    "fanatics":      "Fanatics",
+    "fliff":         "Fliff",
+    "pinnacle":      "Pinnacle",
+    "betmgm":        "BetMGM",
+    "caesars":       "Caesars",
+    "betrivers":     "BetRivers",
+    "bet365":        "bet365",
+    "hardrockbet":   "HardRock",
+    "betonlineag":   "BetOnline",
+    "bovada":        "Bovada",
+}
+
+DFS_BOOKS = {"prizepicks", "pick6", "underdog", "betr_us_dfs"}
+
+MARKET_LABELS = {
+    "player_points":                   "Player Points",
+    "player_points_alternate":         "Player Points",
+    "player_rebounds":                 "Player Rebounds",
+    "player_rebounds_alternate":       "Player Rebounds",
+    "player_assists":                  "Player Assists",
+    "player_assists_alternate":        "Player Assists",
+    "player_threes":                   "Player Threes",
+    "player_threes_alternate":         "Player Threes",
+    "player_blocks":                   "Player Blocks",
+    "player_steals":                   "Player Steals",
+    "player_blocks_steals":            "Player Blks+Stls",
+    "player_points_rebounds_assists":  "Player PRA",
+    "player_points_rebounds":          "Player P+R",
+    "player_points_assists":           "Player P+A",
 }
 
 
 # ============================================================================
-# ODDS MATH (same functions as app.py, duplicated for standalone use)
+# HELPERS
 # ============================================================================
 
-def american_to_prob(odds) -> float:
-    """American odds string or int -> implied probability (with vig)."""
-    o = int(str(odds).replace("+", ""))
-    return 100 / (o + 100) if o > 0 else -o / (-o + 100)
+def dedup_outcomes(outcomes: list) -> list:
+    seen = set()
+    unique = []
+    for o in outcomes:
+        key = (o.get("description"), o.get("point"), o.get("multiplier"))
+        if key not in seen:
+            seen.add(key)
+            unique.append(o)
+    return unique
 
 
-def prob_to_american(prob: float) -> int:
-    if prob <= 0 or prob >= 1:
-        return 0
-    if prob >= 0.5:
-        return round(-100 * prob / (1 - prob))
-    return round(100 * (1 - prob) / prob)
+def classify_dfs_type(price: int, book_key: str, market_key: str) -> str:
+    """Classify a DFS line as goblin, demon, or standard.
+
+    Standard lines come from non-alternate market keys — applies to all books.
+    Alternate markets are alt lines regardless of book.
+
+    PP-specific: alternate -137 = goblin, alternate +100 = demon.
+    All other DFS books: alternate market = goblin (filtered as alt line).
+    """
+    is_alternate = market_key.endswith("_alternate")
+    if not is_alternate:
+        return "standard"
+    # Alternate market — classify by book
+    if book_key == "prizepicks":
+        if price == -137:
+            return "goblin"
+        if price == 100:
+            return "demon"
+        return "goblin"  # PP alternate fallback
+    # Underdog, Betr, Pick6 — any alternate market = alt line
+    return "goblin"
 
 
-def calc_ev_pct(fair_prob: float, book_odds) -> float:
-    o = int(str(book_odds).replace("+", ""))
-    b = (o / 100) if o > 0 else (100 / -o)
-    return (fair_prob * b - (1 - fair_prob)) * 100
+def slugify(text: str) -> str:
+    return text.lower().replace(" ", "-").replace("'", "")
 
 
-def calc_kelly_pct(fair_prob: float, book_odds) -> float:
-    o = int(str(book_odds).replace("+", ""))
-    b = (o / 100) if o > 0 else (100 / -o)
-    k = (fair_prob * b - (1 - fair_prob)) / b
-    return max(0, k * 100)
-
-
-# ============================================================================
-# STEP 1 — Find the latest snapshot
-# ============================================================================
-
-def find_latest_run(snapshot_dir: Path = SNAPSHOT_DIR) -> Path:
-    """Find the most recent run_<timestamp> folder."""
-    if not snapshot_dir.exists():
-        raise FileNotFoundError(
-            f"No snapshot directory at {snapshot_dir.absolute()}. "
-            f"Run capture_oddsblaze.py first."
-        )
-    runs = sorted([p for p in snapshot_dir.iterdir() if p.name.startswith("run_")])
-    if not runs:
-        raise FileNotFoundError(f"No run_* folders inside {snapshot_dir}")
-    return runs[-1]
+def make_player_id(player: str, market_label: str, line: float) -> str:
+    return f"{slugify(player)}-{slugify(market_label)}-{line}"
 
 
 # ============================================================================
-# STEP 2 — Load + normalize a single book's JSON into rows
+# FETCH
 # ============================================================================
 
-def load_book_odds(json_path: Path) -> pd.DataFrame:
-    """Load one book's JSON, flatten into rows with a consistent schema."""
-    if not json_path.exists():
-        return pd.DataFrame()
+def fetch_events(sport: str) -> list:
+    res = requests.get(
+        f"{BASE_URL}/sports/{sport}/events",
+        params={"apiKey": API_KEY},
+        timeout=10,
+    )
+    res.raise_for_status()
+    return res.json()
 
-    with open(json_path) as f:
-        data = json.load(f)
+
+def fetch_event_odds(sport: str, event_id: str) -> dict | None:
+    res = requests.get(
+        f"{BASE_URL}/sports/{sport}/events/{event_id}/odds",
+        params={
+            "apiKey":             API_KEY,
+            "regions":            REGIONS,
+            "markets":            ",".join(MARKETS),
+            "oddsFormat":         "american",
+            "includeMultipliers": "true",
+        },
+        timeout=10,
+    )
+    if res.status_code == 422:
+        return None
+    res.raise_for_status()
+    remaining = res.headers.get("x-requests-remaining", "?")
+    used = res.headers.get("x-requests-last", "?")
+    print(f"    credits used: {used} | remaining: {remaining}")
+
+    # Debug: print all book keys returned so you can verify BOOK_ID_MAP coverage
+    data = res.json()
+    found_keys = set(b["key"] for b in data.get("bookmakers", []))
+    unmapped = found_keys - set(BOOK_ID_MAP.keys())
+    if unmapped:
+        print(f"    [unmapped books]: {unmapped}")
+
+    return data
+
+
+# ============================================================================
+# NORMALIZE
+# ============================================================================
+
+def normalize_event(event_data: dict) -> list[dict]:
+    if not event_data:
+        return []
+
+    home = event_data.get("home_team", "")
+    away = event_data.get("away_team", "")
+    matchup = f"{away} @ {home}" if away and home else None
+    game_time = event_data.get("commence_time")
 
     rows = []
-    book_id = data.get("sportsbook", {}).get("id", "unknown")
 
-    for event in data.get("events", []):
-        matchup = f"{event['teams']['away']['abbreviation']} @ {event['teams']['home']['abbreviation']}"
-        event_id = event.get("id")
+    for book in event_data.get("bookmakers", []):
+        book_key = book["key"]
+        if book_key not in BOOK_ID_MAP:
+            continue
+        canonical = BOOK_ID_MAP[book_key]
 
-        for odd in event.get("odds", []):
-            # Skip non-player markets (spreads, moneylines, totals) for now
-            if "player" not in odd:
+        for market in book.get("markets", []):
+            market_key = market["key"]
+            market_label = MARKET_LABELS.get(market_key)
+            if not market_label:
                 continue
 
-            player = odd["player"]
-            selection = odd.get("selection", {})
+            raw_outcomes = market.get("outcomes", [])
+            if book_key == "pick6":
+                raw_outcomes = dedup_outcomes(raw_outcomes)
 
-            rows.append({
-                "book": book_id,
-                "event_id": event_id,
-                "matchup": matchup,
-                "player_id": player.get("id"),
-                "player_name": player.get("name"),
-                "team": player.get("team", {}).get("abbreviation"),
-                "market": odd.get("market"),
-                "line": selection.get("line"),
-                "side": selection.get("side"),
-                "price": odd.get("price"),
-                "main": odd.get("main", False),
-                "sdio_id": player.get("mappings", {}).get("SportsDataIO", {}).get("id"),
-            })
+            for o in raw_outcomes:
+                player = o.get("description")
+                side = o.get("name")
+                point = o.get("point")
+                price = o.get("price")
+                multiplier = o.get("multiplier")
 
-    return pd.DataFrame(rows)
+                if not all([player, side, point is not None, price is not None]):
+                    continue
+                if side not in ("Over", "Under"):
+                    continue
+
+                dfs_type = (
+                    classify_dfs_type(price, book_key, market_key)
+                    if book_key in DFS_BOOKS
+                    else "standard"
+                )
+
+                rows.append({
+                    "book_key":   book_key,
+                    "book":       canonical,
+                    "matchup":    matchup,
+                    "game_time":  game_time,
+                    "player":     player,
+                    "market":     market_label,
+                    "market_key": market_key,
+                    "line":       float(point),
+                    "side":       side,
+                    "price":      int(price),
+                    "multiplier": multiplier,
+                    "dfs_type":   dfs_type,
+                })
+
+    return rows
 
 
 # ============================================================================
-# STEP 3 — Load all books we care about
+# BUILD MARKETS
 # ============================================================================
 
-def load_all_books(run_dir: Path, books: list[str]) -> pd.DataFrame:
-    """Load and concatenate the specified books from a run directory."""
-    nba_dir = run_dir / "odds" / "nba"
-    frames = []
-    for book in books:
-        df = load_book_odds(nba_dir / f"{book}.json")
-        if not df.empty:
-            frames.append(df)
-            print(f"  loaded {len(df):>5} rows from {book}")
-        else:
-            print(f"  [skip] no data for {book}")
-    if not frames:
-        return pd.DataFrame()
-    return pd.concat(frames, ignore_index=True)
+def build_markets(all_rows: list[dict]) -> list[dict]:
+    grouped: dict[tuple, dict] = {}
+
+    for r in all_rows:
+        key = (r["player"], r["market"], r["line"])
+
+        if key not in grouped:
+            grouped[key] = {
+                "playerId":  make_player_id(r["player"], r["market"], r["line"]),
+                "player":    r["player"],
+                "team":      None,
+                "matchup":   r["matchup"],
+                "gameTime":  r["game_time"],
+                "market":    r["market"],
+                "line":      r["line"],
+                "offerings": {},
+            }
+
+        book = r["book"]
+        if book not in grouped[key]["offerings"]:
+            grouped[key]["offerings"][book] = {
+                "over":       None,
+                "under":      None,
+                "multiplier": None,
+                "type":       r["dfs_type"],
+            }
+
+        side = r["side"].lower()
+        grouped[key]["offerings"][book][side] = r["price"]
+
+        if r["multiplier"] is not None:
+            grouped[key]["offerings"][book]["multiplier"] = r["multiplier"]
+
+    markets = list(grouped.values())
+    markets.sort(key=lambda m: (m["player"], m["market"], m["line"]))
+    return markets
 
 
 # ============================================================================
-# STEP 4 — Compute fair probability from exchange consensus
+# MAIN
 # ============================================================================
 
-def compute_exchange_fair_probs(ref_df: pd.DataFrame) -> pd.DataFrame:
-    """
-    For each (player_id, market, line) group in reference books,
-    compute a vig-free fair probability for Over.
+def main(out_path: Path = OUT_PATH) -> None:
+    if not API_KEY:
+        raise RuntimeError("ODDS_API_KEY not set in .env")
 
-    Method: devig each exchange's two-way market proportionally, then average
-    the resulting fair Over probabilities across exchanges.
-    """
-    if ref_df.empty:
-        return pd.DataFrame()
+    all_rows: list[dict] = []
+    total_events = 0
 
-    # Pivot: for each (player, market, line, book), we need both Over and Under prices
-    ref_df = ref_df.copy()
-    ref_df["prob"] = ref_df["price"].apply(american_to_prob)
-
-    # Group key — unique bet
-    group_cols = ["player_id", "player_name", "market", "line"]
-
-    fair_rows = []
-    for key, group in ref_df.groupby(group_cols):
-        # We need BOTH sides from at least one book to devig
-        over_rows = group[group["side"].str.lower() == "over"]
-        under_rows = group[group["side"].str.lower() == "under"]
-
-        if over_rows.empty or under_rows.empty:
+    for sport in SPORTS:
+        print(f"\nFetching events for {sport}...")
+        try:
+            events = fetch_events(sport)
+        except Exception as e:
+            print(f"  Error fetching events: {e}")
             continue
 
-        # For each book that has both sides, devig proportionally
-        fair_overs = []
-        for book in over_rows["book"].unique():
-            o_prob = over_rows[over_rows["book"] == book]["prob"]
-            u_prob = under_rows[under_rows["book"] == book]["prob"]
-            if o_prob.empty or u_prob.empty:
+        print(f"  {len(events)} events found")
+
+        for event in events:
+            eid = event["id"]
+            home = event.get("home_team", "")
+            away = event.get("away_team", "")
+            print(f"  → {away} @ {home}")
+
+            try:
+                data = fetch_event_odds(sport, eid)
+            except Exception as e:
+                print(f"    Error: {e}")
                 continue
-            p_o = o_prob.iloc[0]
-            p_u = u_prob.iloc[0]
-            total = p_o + p_u
-            if total <= 0:
-                continue
-            fair_overs.append(p_o / total)
 
-        if not fair_overs:
-            continue
+            if data:
+                rows = normalize_event(data)
+                all_rows.extend(rows)
+                total_events += 1
 
-        # Average the devigged fair Over probs across exchanges
-        fair_over = float(np.mean(fair_overs))
+            time.sleep(0.25)
 
-        player_id, player_name, market, line = key
-        fair_rows.append({
-            "player_id": player_id,
-            "player_name": player_name,
-            "market": market,
-            "line": line,
-            "fair_over": fair_over,
-            "fair_under": 1 - fair_over,
-            "reference_books": ",".join(sorted(set(
-                list(over_rows["book"]) + list(under_rows["book"])
-            ))),
-        })
+    print(f"\n{len(all_rows):,} total offering rows across {total_events} events")
 
-    return pd.DataFrame(fair_rows)
+    markets = build_markets(all_rows)
+    print(f"{len(markets)} unique (player, market, line) markets")
 
+    payload = {
+        "updated": datetime.now(timezone.utc).isoformat(),
+        "source":  "the-odds-api",
+        "markets": markets,
+    }
 
-# ============================================================================
-# STEP 5 — Join targets with fair probs and compute EV
-# ============================================================================
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w") as f:
+        json.dump(payload, f, indent=2)
 
-def compute_ev(target_df: pd.DataFrame, fair_df: pd.DataFrame) -> pd.DataFrame:
-    """Join target book prices with fair probs, calculate EV and Kelly."""
-    if target_df.empty or fair_df.empty:
-        return pd.DataFrame()
-
-    merged = target_df.merge(
-        fair_df,
-        on=["player_id", "market", "line"],
-        how="inner",
-        suffixes=("", "_fair"),
-    )
-
-    if merged.empty:
-        return merged
-
-    # Pick the right fair prob based on side
-    merged["fair_prob"] = merged.apply(
-        lambda r: r["fair_over"] if str(r["side"]).lower() == "over" else r["fair_under"],
-        axis=1,
-    )
-
-    merged["fair_odds"] = merged["fair_prob"].apply(prob_to_american)
-    merged["ev_pct"] = merged.apply(
-        lambda r: calc_ev_pct(r["fair_prob"], r["price"]), axis=1
-    )
-    merged["kelly_pct"] = merged.apply(
-        lambda r: calc_kelly_pct(r["fair_prob"], r["price"]), axis=1
-    )
-
-    # Use player_name from target_df (non-null), else from fair_df
-    merged["player_display"] = merged["player_name"].fillna(merged["player_name_fair"])
-
-    return merged
+    print(f"\nWrote → {out_path}")
+    print("Sample markets:")
+    for m in markets[:3]:
+        books = ", ".join(sorted(m["offerings"].keys()))
+        print(f"  {m['player']} | {m['market']} {m['line']} | {books}")
 
 
-# ============================================================================
-# MAIN — build the opportunities DataFrame
-# ============================================================================
-
-def fetch_opportunities_from_snapshot() -> pd.DataFrame:
-    """
-    Main entry point — drop this into app.py to replace the mock fetcher.
-
-    Returns a DataFrame with columns compatible with the existing Streamlit UI:
-      Player, Team, Matchup, Market, Line, Side, Book, Odds, Fair Odds,
-      Fair %, EV %, Kelly %, Updated
-    """
-    print("Finding latest snapshot...")
-    run_dir = find_latest_run()
-    print(f"Using: {run_dir}\n")
-
-    print("Loading reference (exchange) books...")
-    ref_df = load_all_books(run_dir, REFERENCE_BOOKS)
-
-    print("\nLoading target (PrizePicks) books...")
-    target_df = load_all_books(run_dir, TARGET_BOOKS)
-
-    if ref_df.empty or target_df.empty:
-        print("No data to work with.")
-        return pd.DataFrame()
-
-    print("\nComputing exchange fair probabilities...")
-    fair_df = compute_exchange_fair_probs(ref_df)
-    print(f"  -> {len(fair_df)} unique (player, market, line) tuples with devigged fair probs")
-
-    print("\nJoining targets with fair probs...")
-    ev_df = compute_ev(target_df, fair_df)
-    print(f"  -> {len(ev_df)} priced opportunities")
-
-    if ev_df.empty:
-        print("No overlap between PrizePicks markets and exchange markets.")
-        return pd.DataFrame()
-
-    # Shape into the schema the existing Streamlit app expects
-    output = pd.DataFrame({
-        "Player": ev_df["player_display"],
-        "Team": ev_df["team"],
-        "Matchup": ev_df["matchup"],
-        "Market": ev_df["market"],
-        "Line": ev_df["line"],
-        "Side": ev_df["side"],
-        "Book": ev_df["book"].map(BOOK_LABELS).fillna(ev_df["book"]),
-        "Odds": ev_df["price"].apply(lambda x: int(str(x).replace("+", ""))),
-        "Fair Odds": ev_df["fair_odds"],
-        "Fair %": ev_df["fair_prob"] * 100,
-        "EV %": ev_df["ev_pct"],
-        "Kelly %": ev_df["kelly_pct"],
-        "Updated": pd.Timestamp.now(),
-        "Reference": ev_df["reference_books"],
-    })
-
-    return output.sort_values("EV %", ascending=False).reset_index(drop=True)
-
-
-# ============================================================================
-# STANDALONE TEST — run this file directly to see what it produces
-# ============================================================================
-def export_to_json(output_path: str = "opportunities.json") -> None:
-    """Export opportunities as JSON for the Next.js frontend to consume."""
-    df = fetch_opportunities_from_snapshot()
-    if df.empty:
-        print("No data to export")
-        return
-
-    df = df.copy()
-    df["Updated"] = df["Updated"].apply(lambda t: t.isoformat())
-
-    df.to_json(output_path, orient="records", indent=2)
 if __name__ == "__main__":
-    df = fetch_opportunities_from_snapshot()
-    export_to_json("../prop-screen-web/public/opportunities.json")
-    
-    if df.empty:
-        print("\nNo opportunities found. Check that exchanges have overlapping markets.")
-    else:
-        print(f"\n=== Top 20 opportunities by EV% ===\n")
-        cols = ["Player", "Market", "Line", "Side", "Book", "Odds", "Fair Odds", "EV %", "Kelly %"]
-        with pd.option_context("display.max_rows", 50, "display.width", 200):
-            print(df[cols].head(20).to_string(index=False))
-
-        print(f"\n=== Summary ===")
-        print(f"Total opportunities: {len(df)}")
-        print(f"Positive EV plays:   {(df['EV %'] > 0).sum()}")
-        print(f"EV > 3%:             {(df['EV %'] > 3).sum()}")
-        print(f"EV > 5%:             {(df['EV %'] > 5).sum()}")
-        print(f"Best EV:             {df['EV %'].max():.2f}%")
-        print(f"Books found:         {df['Book'].unique().tolist()}")
+    main()
