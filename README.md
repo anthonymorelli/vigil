@@ -1,190 +1,90 @@
 # prop-screen
 
-Python data pipeline for **Vigil** — a +EV DFS prop betting scanner. Ingests odds from exchange and DFS platform APIs, deviggs against exchange consensus to derive fair probabilities, and calculates per-leg expected value against PrizePicks, Underdog Fantasy, and Betr slip structures.
+Python data pipeline for [Vigil](https://github.com/anthonymorelli/prop-screen-web) — a +EV NBA prop betting scanner.
 
-The frontend (Next.js) lives at [prop-screen-web](https://github.com/anthonymorelli/prop-screen-web).
+Fetches live player prop odds from [The Odds API](https://the-odds-api.com), normalizes across sportsbooks and DFS platforms, and writes `opportunities.json` for the Next.js frontend to consume.
 
----
+## What it does
 
-## What It Does
+1. Fetches all active NBA (and WNBA) events
+2. For each event, pulls player prop markets across 18 books and DFS platforms — PrizePicks, Underdog, Betr, Pick6, Pinnacle, DraftKings, FanDuel, and more
+3. Normalizes odds into a unified `(player, market, line)` structure with per-book over/under prices
+4. Classifies PrizePicks alternate lines as goblins (−137, easier line) or demons (+100, harder line)
+5. Writes `opportunities.json` to the frontend's `public/` directory
 
-1. **Ingests** raw odds from OddsBlaze API across 17+ sportsbooks and DFS platforms
-2. **Deviggs** exchange prices (Novig + ProphetX) using proportional devigging to derive a vig-free fair probability for each player prop
-3. **Calculates EV** for each DFS platform offering vs the fair probability
-4. **Exports** a structured `opportunities.json` consumed by the Next.js frontend
+The frontend devig logic (in `prop-screen-web`) then computes fair value probabilities using a weighted consensus across sharp and exchange books (Pinnacle, Novig, ProphetX), calculates +EV against each DFS platform's implied break-even, and surfaces the best plays ranked by edge.
 
-### Why exchange-only devigging?
+## Stack
 
-Novig and ProphetX are peer-to-peer exchanges with no house vig. Their midpoints approximate true market probability more accurately than retail sportsbooks (which bake in 4–8% vig) or prediction markets (which introduce unrelated liquidity dynamics). This is the same methodology used by sharp bettors and tools like Upside.
-
----
-
-## Core Math
-
-### Devigging
-
-For each player prop with both Over and Under prices on an exchange:
-
-```
-fair_over = p_over / (p_over + p_under)
-```
-
-Where `p_over` and `p_under` are the implied probabilities from American odds. When multiple exchanges have the prop, fair probabilities are averaged across them.
-
-### EV Calculation
-
-```
-ev_pct = (fair_prob × decimal_odds) - (1 - fair_prob)
-```
-
-Expressed as a percentage. Positive EV means the DFS platform is offering better than fair odds for that leg.
-
-### Kelly Criterion
-
-```
-kelly_pct = (fair_prob × b - (1 - fair_prob)) / b
-```
-
-Where `b` is the decimal odds minus 1. Hard cap: 2–3% of bankroll per leg recommended on DFS slips.
-
----
-
-## Project Structure
-
-```
-prop-screen/
-├── pipeline.py          ← Main pipeline: load → devig → EV → export
-├── capture_oddsblaze.py ← Snapshot tool: captures OddsBlaze API responses
-├── app.py               ← Streamlit prototype (precursor to Next.js frontend)
-├── .env.example         ← Environment variable template
-└── .gitignore
-```
-
----
+- Python 3.11+
+- `requests` — API calls
+- `python-dotenv` — API key management
+- No database — output is a single flat JSON file
 
 ## Setup
 
 ```bash
-# Clone
-git clone https://github.com/anthonymorelli/prop-screen.git
-cd prop-screen
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install pandas python-dotenv requests numpy
-
-# Configure environment
-cp .env.example .env
-# Add your OddsBlaze API key to .env
+python3 -m venv venv
+source venv/bin/activate
+pip install requests python-dotenv
 ```
 
-`.env.example`:
+Create a `.env` file:
+
 ```
-ODDSBLAZE_API_KEY=your_key_here
+ODDS_API_KEY=your_key_here
 ```
 
----
+Get a key at [the-odds-api.com](https://the-odds-api.com). The `$119/mo` tier (5M credits) covers full NBA season scanning across all markets.
 
 ## Usage
 
-### 1. Capture a snapshot
-
 ```bash
-python capture_oddsblaze.py
+python3 pipeline.py
 ```
 
-Hits the OddsBlaze API across all configured books and leagues, saves raw JSON responses to `oddsblaze_snapshot/run_<timestamp>/`. Rate-limited to 30 req/min.
-
-### 2. Run the pipeline
-
-```bash
-python pipeline.py
-```
-
-Finds the latest snapshot, deviggs exchange prices, joins with DFS platform offerings, calculates EV and Kelly, and exports to `opportunities.json`.
-
-### 3. Export to frontend
-
-The pipeline auto-exports to `../prop-screen-web/public/opportunities.json` when run directly. To export to a custom path:
+Output is written to `../prop-screen-web/public/opportunities.json` by default. Override with:
 
 ```python
-from pipeline import export_to_json
-export_to_json("path/to/output.json")
+from pipeline import main
+from pathlib import Path
+main(out_path=Path("./output.json"))
 ```
 
----
-
-## Pipeline Internals
-
-### Reference books (sharp/exchange)
-- **Novig** — peer-to-peer exchange, zero vig
-- **ProphetX** — peer-to-peer exchange, zero vig
-
-### Target books (DFS platforms evaluated for EV)
-- PrizePicks (standard + alt lines)
-- Underdog Fantasy
-- Betr
-
-### Key functions
-
-| Function | Description |
-|---|---|
-| `find_latest_run()` | Locates most recent OddsBlaze snapshot |
-| `load_book_odds()` | Normalizes a single book's JSON into a flat DataFrame |
-| `compute_exchange_fair_probs()` | Proportional devig across exchange books |
-| `compute_ev()` | Joins DFS prices with fair probs, calculates EV + Kelly |
-| `fetch_opportunities_from_snapshot()` | Full pipeline entry point |
-| `export_to_json()` | Serializes output for Next.js consumption |
-
----
-
-## Output Schema
-
-`opportunities.json` — array of objects:
+## Output format
 
 ```json
 {
-  "Player": "Shai Gilgeous-Alexander",
-  "Team": "OKC",
-  "Matchup": "PHO @ OKC",
-  "Market": "Player Points",
-  "Line": 31.5,
-  "Side": "Over",
-  "Book": "PrizePicks",
-  "Odds": -119,
-  "Fair Odds": -165,
-  "Fair %": 62.3,
-  "EV %": 14.1,
-  "Kelly %": 8.2,
-  "Updated": "2026-04-18T22:14:03",
-  "Reference": "novig,prophetx"
+  "updated": "2026-04-18T22:00:00+00:00",
+  "source": "the-odds-api",
+  "markets": [
+    {
+      "playerId": "jalen-williams-player-points-15.5",
+      "player": "Jalen Williams",
+      "matchup": "San Antonio Spurs @ Oklahoma City Thunder",
+      "gameTime": "2026-04-18T23:10:00Z",
+      "market": "Player Points",
+      "line": 15.5,
+      "offerings": {
+        "PrizePicks": { "over": -119, "under": -119, "type": "standard" },
+        "Pinnacle":   { "over": -112, "under": -108, "type": "standard" }
+      }
+    }
+  ]
 }
 ```
 
----
+## Markets covered
 
-## Data Source
+NBA player props: Points, Rebounds, Assists, Threes, Blocks, Steals, Blks+Stls, PRA, P+R, P+A — plus alternate lines for each.
 
-Currently running against an OddsBlaze snapshot from April 18, 2026 (trial period). Live data integration via [The Odds API](https://the-odds-api.com/) is the planned next step — their `us_dfs` region covers PrizePicks, Underdog, and Pinnacle in a single endpoint.
+## Planned
 
-| Budget | Source | Coverage |
-|---|---|---|
-| $0 | OddsBlaze snapshot (current) | 17 books, static |
-| $119/mo | The Odds API | PP + Underdog + Pinnacle |
-| $249/mo | OddsBlaze real-time | Sub-second SSE, 20+ US books |
+- FastAPI wrapper so Vigil can fetch live data on demand (replacing static JSON)
+- WNBA, MLB, NFL, NHL market expansion
+- Scheduled runs via Railway or similar
+- Hit rate backtesting against OddsBlaze Rewind dataset
 
----
+## Related
 
-## Context
-
-Built as both a personal tool (active use, verified Top 10% NBA Bettor on Pikkit) and a portfolio piece demonstrating:
-
-- Probability math — devigging, EV calculation, Kelly sizing
-- Data pipeline architecture — ingestion, normalization, transformation, export
-- API integration and rate limiting
-- Python/pandas data modeling
-
-Part of the Vigil project. Frontend: [prop-screen-web](https://github.com/anthonymorelli/prop-screen-web).
+[prop-screen-web](https://github.com/anthonymorelli/prop-screen-web) — the Next.js frontend (Vigil)
