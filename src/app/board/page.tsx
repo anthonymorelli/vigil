@@ -915,8 +915,8 @@ function BoardInner() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button onClick={() => setRefreshKey(k => k + 1)}
-                      className="hidden md:flex items-center justify-center w-7 h-7 rounded border border-border text-muted-foreground hover:text-foreground transition-colors">
-                      <RefreshCw className="h-3.5 w-3.5" />
+                      className="hidden md:flex items-center justify-center w-8 h-8 rounded-md border border-border text-muted-foreground hover:text-foreground transition-colors">
+                      <RefreshCw className="h-4 w-4" />
                     </button>
                   </TooltipTrigger>
                   <TooltipContent side="bottom" className="text-xs">Refresh data</TooltipContent>
@@ -926,15 +926,15 @@ function BoardInner() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button onClick={() => setCmdkOpen(true)}
-                      className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded border border-border text-xs text-muted-foreground hover:text-foreground transition-colors">
-                      <CommandIcon className="h-3 w-3" /><span>K</span>
+                      className="hidden md:flex items-center gap-1 h-8 px-2.5 rounded-md border border-border text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
+                      <CommandIcon className="h-3.5 w-3.5" /><span>K</span>
                     </button>
                   </TooltipTrigger>
                   <TooltipContent side="bottom" className="text-xs">Command palette — search, sort, filters</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
               <button onClick={() => setSlipOpen(true)}
-                className={["flex items-center gap-2 px-3 py-1.5 rounded-md border text-sm font-medium transition-colors",
+                className={["flex items-center gap-2 px-3 h-8 rounded-md border text-sm font-medium transition-colors",
                   slipLegKeys.length > 0 ? "border-blue-400/40 text-blue-400 bg-blue-400/5 hover:bg-blue-400/10" : "border-border text-muted-foreground hover:text-foreground"].join(" ")}
               >
                 <ListPlus className="h-3.5 w-3.5" />
@@ -1181,15 +1181,26 @@ function BoardInner() {
                   ))}
                 </CommandGroup>
                 <CommandSeparator />
+                <CommandGroup heading="Sports">
+                  {["All Sports","NBA","MLB","NFL","NHL","Esports"].map((sport) => (
+                    <CommandItem key={sport} onSelect={() => { setSelectedSport(sport); setCmdkOpen(false); }}>
+                      <ChevronRight className="h-3.5 w-3.5 mr-2 text-muted-foreground" />{sport}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+                <CommandSeparator />
                 <CommandGroup heading="Actions">
                   <CommandItem onSelect={() => { setSortDir(d => d === "desc" ? "asc" : "desc"); setCmdkOpen(false); }}>
-                    <ArrowUpDown className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Toggle sort — {sortDir === "desc" ? "highest first" : "lowest first"}
+                    <ArrowUpDown className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Sort by % Hit — {sortDir === "desc" ? "lowest first" : "highest first"}
                   </CommandItem>
                   <CommandItem onSelect={() => { setShowAltLines(!showAltLines); setCmdkOpen(false); }}>
-                    <ArrowUpDown className="h-3.5 w-3.5 mr-2 text-muted-foreground" />{showAltLines ? "Hide" : "Show"} alt lines
+                    <SlidersHorizontal className="h-3.5 w-3.5 mr-2 text-muted-foreground" />{showAltLines ? "Hide" : "Show"} alt lines
                   </CommandItem>
-                  <CommandItem onSelect={() => { setSearchQuery(""); setCmdkOpen(false); }}>
-                    <X className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Clear search
+                  <CommandItem onSelect={() => { setSearchQuery(""); setSelectedSport("All Sports"); setSelectedMarket("All Markets"); setCmdkOpen(false); }}>
+                    <X className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Clear all filters
+                  </CommandItem>
+                  <CommandItem onSelect={() => { setFvOpen(true); setCmdkOpen(false); }}>
+                    <SlidersHorizontal className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Open Fair Value settings
                   </CommandItem>
                   <CommandItem onSelect={() => { setSlipOpen(true); setCmdkOpen(false); }}>
                     <ListPlus className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Open slip builder
