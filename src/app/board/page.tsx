@@ -758,7 +758,7 @@ function BoardInner() {
       <div className="hidden md:flex h-screen overflow-hidden bg-background">
 
         <aside className="w-[220px] shrink-0 border-r border-border bg-card flex flex-col overflow-y-auto">
-          <div className="px-4 pt-5 pb-4 border-b border-border"><Logo size="md" /></div>
+          <div className="px-4 pt-5 pb-4 border-b border-border"><Logo size={22} /></div>
           <div className="px-3 pt-4 pb-2">
             <p className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-widest px-1 mb-1.5">Sport</p>
             <button onClick={() => setSelectedSport(null)}
