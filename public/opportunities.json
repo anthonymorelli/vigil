@@ -1,357 +1,569 @@
 {
-  "updated": "2026-06-03T01:21:25.558530+00:00",
+  "updated": "2026-06-03T04:25:41.453646+00:00",
   "source": "mock",
   "markets": [
     {
-      "playerId": "megan-gustafson-player-points-9.5",
-      "player": "Megan Gustafson",
-      "team": null,
-      "matchup": "Portland Fire @ Golden State Valkyries",
-      "gameTime": "2026-06-03T05:21:25.558530+00:00",
+      "playerId": "jalen-brunson-player-points-28.5",
+      "player": "Jalen Brunson",
+      "team": "NYK",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
       "market": "Player Points",
-      "line": 9.5,
+      "line": 28.5,
+      "sport": "nba",
       "offerings": {
         "PrizePicks": {
           "over": -119,
           "under": -119,
           "multiplier": null,
           "type": "standard",
-          "line": 9.5
+          "line": 28.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 28.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 28.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 28.5
         },
         "Novig": {
-          "over": -120,
-          "under": 118,
+          "over": -136,
+          "under": 111,
           "multiplier": null,
           "type": "standard",
-          "line": 9.5
+          "line": 28.5
         },
         "ProphetX": {
-          "over": -122,
-          "under": 119,
+          "over": -135,
+          "under": 111,
           "multiplier": null,
           "type": "standard",
-          "line": 9.5
+          "line": 28.5
         },
         "FanDuel": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 28.5
+        },
+        "DraftKings": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 28.5
+        },
+        "BetMGM": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 28.5
+        },
+        "Bovada": {
           "over": -132,
           "under": null,
           "multiplier": null,
           "type": "standard",
-          "line": 9.5
+          "line": 28.5
+        }
+      }
+    },
+    {
+      "playerId": "victor-wembanyama-player-blocks-3.5",
+      "player": "Victor Wembanyama",
+      "team": "SAS",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Blocks",
+      "line": 3.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Novig": {
+          "over": -136,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "ProphetX": {
+          "over": -135,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "FanDuel": {
+          "over": -145,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
         },
         "DraftKings": {
           "over": -140,
           "under": null,
           "multiplier": null,
           "type": "standard",
-          "line": 9.5
+          "line": 3.5
         },
         "BetMGM": {
-          "over": -120,
+          "over": -135,
           "under": null,
           "multiplier": null,
           "type": "standard",
-          "line": 9.5
+          "line": 3.5
         },
         "HardRock": {
-          "over": -135,
+          "over": -138,
           "under": null,
           "multiplier": null,
           "type": "standard",
-          "line": 9.5
-        },
-        "Betr": {
-          "over": -109,
-          "under": -157,
-          "multiplier": null,
-          "type": "standard",
-          "line": 10.5
-        },
-        "Bovada": {
-          "over": -135,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 9.5
+          "line": 3.5
         }
       }
     },
     {
-      "playerId": "janelle-salaun-player-points-12.5",
-      "player": "Janelle Salaun",
+      "playerId": "karl-anthony-towns-player-points-plus-rebounds-plus-assists-33.5",
+      "player": "Karl-Anthony Towns",
+      "team": "NYK",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Points + Rebounds + Assists",
+      "line": 33.5,
+      "sport": "nba",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 33.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 33.5
+        },
+        "Novig": {
+          "over": 116,
+          "under": -143,
+          "multiplier": null,
+          "type": "standard",
+          "line": 33.5
+        },
+        "ProphetX": {
+          "over": 117,
+          "under": -142,
+          "multiplier": null,
+          "type": "standard",
+          "line": 33.5
+        },
+        "DraftKings": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 33.5
+        },
+        "Bovada": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 33.5
+        },
+        "BetRivers": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 33.5
+        },
+        "FanDuel": {
+          "over": -112,
+          "under": -118,
+          "multiplier": null,
+          "type": "standard",
+          "line": 32.5
+        },
+        "Fanatics": {
+          "over": -120,
+          "under": -120,
+          "multiplier": null,
+          "type": "standard",
+          "line": 32.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 32.5
+        },
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 33.0
+        }
+      }
+    },
+    {
+      "playerId": "anthony-davis-player-rebounds-11.5",
+      "player": "Anthony Davis",
       "team": null,
-      "matchup": "Portland Fire @ Golden State Valkyries",
-      "gameTime": "2026-06-03T05:21:25.558530+00:00",
-      "market": "Player Points",
-      "line": 12.5,
+      "matchup": "Los Angeles Lakers @ Denver Nuggets",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Rebounds",
+      "line": 11.5,
+      "sport": "nba",
       "offerings": {
         "PrizePicks": {
           "over": -119,
           "under": -119,
           "multiplier": null,
           "type": "standard",
-          "line": 12.5
+          "line": 11.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
         },
         "Novig": {
-          "over": 109,
-          "under": -133,
+          "over": -133,
+          "under": 108,
           "multiplier": null,
           "type": "standard",
-          "line": 12.5
+          "line": 11.5
         },
         "ProphetX": {
-          "over": 111,
-          "under": -135,
+          "over": -132,
+          "under": 109,
           "multiplier": null,
           "type": "standard",
-          "line": 12.5
+          "line": 11.5
         },
         "FanDuel": {
-          "over": -107,
+          "over": -132,
           "under": null,
           "multiplier": null,
           "type": "standard",
           "line": 11.5
         },
         "DraftKings": {
-          "over": -128,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 12.5
-        },
-        "BetMGM": {
-          "over": -132,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 12.5
-        },
-        "HardRock": {
           "over": -130,
           "under": null,
           "multiplier": null,
           "type": "standard",
-          "line": 12.5
+          "line": 11.5
         },
-        "Bovada": {
-          "over": -134,
+        "BetMGM": {
+          "over": -125,
           "under": null,
           "multiplier": null,
           "type": "standard",
-          "line": 12.5
+          "line": 11.5
+        },
+        "Bovada": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
         }
       }
     },
     {
-      "playerId": "luke-raley-batter-hits-0.5",
-      "player": "Luke Raley",
-      "team": null,
-      "matchup": "New York Mets @ Seattle Mariners",
-      "gameTime": "2026-06-03T05:21:25.558530+00:00",
-      "market": "Batter Hits",
-      "line": 0.5,
+      "playerId": "karl-anthony-towns-player-points-21.5",
+      "player": "Karl-Anthony Towns",
+      "team": "NYK",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 21.5,
+      "sport": "nba",
       "offerings": {
         "PrizePicks": {
           "over": -119,
           "under": -119,
           "multiplier": null,
           "type": "standard",
-          "line": 0.5
+          "line": 21.5
         },
-        "Novig": {
-          "over": -129,
-          "under": 106,
+        "Pick6": {
+          "over": -122,
+          "under": -122,
           "multiplier": null,
           "type": "standard",
-          "line": 0.5
+          "line": 21.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        },
+        "Novig": {
+          "over": -140,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        },
+        "ProphetX": {
+          "over": -140,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        },
+        "FanDuel": {
+          "over": -142,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        },
+        "DraftKings": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        },
+        "BetMGM": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        },
+        "HardRock": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        }
+      }
+    },
+    {
+      "playerId": "josh-hart-player-rebounds-10.5",
+      "player": "Josh Hart",
+      "team": "NYK",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Rebounds",
+      "line": 10.5,
+      "sport": "nba",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "Novig": {
+          "over": -133,
+          "under": 109,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "ProphetX": {
+          "over": -133,
+          "under": 109,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "FanDuel": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "DraftKings": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "BetMGM": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        }
+      }
+    },
+    {
+      "playerId": "nikola-jokic-player-assists-8.5",
+      "player": "Nikola Jokic",
+      "team": null,
+      "matchup": "Los Angeles Lakers @ Denver Nuggets",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Assists",
+      "line": 8.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "Novig": {
+          "over": -132,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
         },
         "ProphetX": {
           "over": -131,
           "under": 108,
           "multiplier": null,
           "type": "standard",
-          "line": 0.5
+          "line": 8.5
         },
         "FanDuel": {
-          "over": -126,
+          "over": -132,
           "under": null,
           "multiplier": null,
           "type": "standard",
-          "line": 0.5
+          "line": 8.5
         },
         "DraftKings": {
           "over": -130,
           "under": null,
           "multiplier": null,
           "type": "standard",
-          "line": 0.5
+          "line": 8.5
         },
         "BetMGM": {
           "over": -125,
           "under": null,
           "multiplier": null,
           "type": "standard",
-          "line": 0.5
-        },
-        "Betr": {
-          "over": -137,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 0.5
+          "line": 8.5
         },
         "Bovada": {
-          "over": -140,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 0.5
-        }
-      }
-    },
-    {
-      "playerId": "michael-soroka-pitcher-earned-runs-2.5",
-      "player": "Michael Soroka",
-      "team": null,
-      "matchup": "Los Angeles Dodgers @ Arizona Diamondbacks",
-      "gameTime": "2026-06-03T05:21:25.558530+00:00",
-      "market": "Pitcher Earned Runs",
-      "line": 2.5,
-      "offerings": {
-        "PrizePicks": {
-          "over": -119,
-          "under": -119,
-          "multiplier": null,
-          "type": "standard",
-          "line": 2.5
-        },
-        "Novig": {
-          "over": 104,
-          "under": -128,
-          "multiplier": null,
-          "type": "standard",
-          "line": 2.5
-        },
-        "ProphetX": {
-          "over": 102,
-          "under": -126,
-          "multiplier": null,
-          "type": "standard",
-          "line": 2.5
-        },
-        "FanDuel": {
-          "over": -105,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 2.5
-        },
-        "DraftKings": {
           "over": -130,
           "under": null,
           "multiplier": null,
           "type": "standard",
-          "line": 2.5
-        },
-        "BetMGM": {
-          "over": -133,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 2.5
-        },
-        "Betr": {
-          "over": -125,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 2.5
-        },
-        "Bovada": {
-          "over": -140,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 2.5
+          "line": 8.5
         }
       }
     },
     {
-      "playerId": "erica-wheeler-player-points-12.5",
-      "player": "Erica Wheeler",
-      "team": null,
-      "matchup": "Las Vegas Aces @ Los Angeles Sparks",
-      "gameTime": "2026-06-03T05:21:25.558530+00:00",
-      "market": "Player Points",
-      "line": 12.5,
-      "offerings": {
-        "PrizePicks": {
-          "over": -119,
-          "under": -119,
-          "multiplier": null,
-          "type": "standard",
-          "line": 12.5
-        },
-        "Novig": {
-          "over": 104,
-          "under": -127,
-          "multiplier": null,
-          "type": "standard",
-          "line": 11.5
-        },
-        "ProphetX": {
-          "over": 106,
-          "under": -129,
-          "multiplier": null,
-          "type": "standard",
-          "line": 11.5
-        },
-        "FanDuel": {
-          "over": -128,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 12.5
-        },
-        "DraftKings": {
-          "over": -134,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 12.5
-        },
-        "BetMGM": {
-          "over": -125,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 12.5
-        },
-        "HardRock": {
-          "over": -105,
-          "under": -119,
-          "multiplier": null,
-          "type": "standard",
-          "line": 11.5
-        },
-        "Bovada": {
-          "over": -128,
-          "under": null,
-          "multiplier": null,
-          "type": "standard",
-          "line": 12.5
-        }
-      }
-    },
-    {
-      "playerId": "lebron-james-player-assists-7.5",
-      "player": "LeBron James",
-      "team": null,
-      "matchup": "Los Angeles Lakers @ Denver Nuggets",
-      "gameTime": "2026-06-04T05:21:25.558530+00:00",
-      "market": "Player Assists",
+      "playerId": "og-anunoby-player-rebounds-plus-assists-7.5",
+      "player": "OG Anunoby",
+      "team": "NYK",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Rebounds + Assists",
       "line": 7.5,
+      "sport": "nba",
       "offerings": {
         "PrizePicks": {
           "over": -119,
@@ -360,16 +572,410 @@
           "type": "standard",
           "line": 7.5
         },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
         "Novig": {
-          "over": -145,
-          "under": 122,
+          "over": -135,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "ProphetX": {
+          "over": -134,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "DraftKings": {
+          "over": -142,
+          "under": 118,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "BetMGM": {
+          "over": -121,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "HardRock": {
+          "over": -148,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Bovada": {
+          "over": -150,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        }
+      }
+    },
+    {
+      "playerId": "mikal-bridges-player-points-16.5",
+      "player": "Mikal Bridges",
+      "team": "NYK",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 16.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "Novig": {
+          "over": 105,
+          "under": -129,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "ProphetX": {
+          "over": 106,
+          "under": -128,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "FanDuel": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        }
+      }
+    },
+    {
+      "playerId": "devin-vassell-player-threes-2.5",
+      "player": "Devin Vassell",
+      "team": "SAS",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Threes",
+      "line": 2.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": 109,
+          "under": -134,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": 110,
+          "under": -133,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -144,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -119,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Bovada": {
+          "over": -129,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "dylan-harper-player-points-18.5",
+      "player": "Dylan Harper",
+      "team": "SAS",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 18.5,
+      "sport": "nba",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "Novig": {
+          "over": -130,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "ProphetX": {
+          "over": -130,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "FanDuel": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "DraftKings": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "BetMGM": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        }
+      }
+    },
+    {
+      "playerId": "nikola-jokic-player-points-27.5",
+      "player": "Nikola Jokic",
+      "team": null,
+      "matchup": "Los Angeles Lakers @ Denver Nuggets",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 27.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "Novig": {
+          "over": -138,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "ProphetX": {
+          "over": -137,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "FanDuel": {
+          "over": -142,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "DraftKings": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "BetMGM": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "Bovada": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        }
+      }
+    },
+    {
+      "playerId": "stephon-castle-player-assists-4.5",
+      "player": "Stephon Castle",
+      "team": "SAS",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Assists",
+      "line": 4.5,
+      "sport": "nba",
+      "offerings": {
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "Novig": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "ProphetX": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "FanDuel": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "BetMGM": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        }
+      }
+    },
+    {
+      "playerId": "lebron-james-player-assists-7.5",
+      "player": "LeBron James",
+      "team": null,
+      "matchup": "Los Angeles Lakers @ Denver Nuggets",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Assists",
+      "line": 7.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Novig": {
+          "over": -108,
+          "under": -113,
           "multiplier": null,
           "type": "standard",
           "line": 8.5
         },
         "ProphetX": {
-          "over": -142,
-          "under": 118,
+          "over": -107,
+          "under": -113,
           "multiplier": null,
           "type": "standard",
           "line": 8.5
@@ -394,6 +1000,5390 @@
           "multiplier": null,
           "type": "standard",
           "line": 8.5
+        }
+      }
+    },
+    {
+      "playerId": "jalen-brunson-player-assists-7.5",
+      "player": "Jalen Brunson",
+      "team": "NYK",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Assists",
+      "line": 7.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Novig": {
+          "over": -133,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "ProphetX": {
+          "over": -132,
+          "under": 109,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "FanDuel": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Bovada": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        }
+      }
+    },
+    {
+      "playerId": "victor-wembanyama-player-points-27.5",
+      "player": "Victor Wembanyama",
+      "team": "SAS",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 27.5,
+      "sport": "nba",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "Novig": {
+          "over": -138,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "ProphetX": {
+          "over": -137,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "FanDuel": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "DraftKings": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "BetMGM": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        },
+        "Bovada": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 27.5
+        }
+      }
+    },
+    {
+      "playerId": "keldon-johnson-player-points-8.5",
+      "player": "Keldon Johnson",
+      "team": "SAS",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 8.5,
+      "sport": "nba",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "Novig": {
+          "over": 104,
+          "under": -128,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "ProphetX": {
+          "over": 105,
+          "under": -127,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "DraftKings": {
+          "over": 118,
+          "under": -141,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "BetMGM": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "Bovada": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        }
+      }
+    },
+    {
+      "playerId": "luke-kornet-player-rebounds-2.5",
+      "player": "Luke Kornet",
+      "team": "NYK",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Rebounds",
+      "line": 2.5,
+      "sport": "nba",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -130,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -129,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -109,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Bovada": {
+          "over": -143,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "jamal-murray-player-points-21.5",
+      "player": "Jamal Murray",
+      "team": null,
+      "matchup": "Los Angeles Lakers @ Denver Nuggets",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 21.5,
+      "sport": "nba",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        },
+        "Novig": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        },
+        "ProphetX": {
+          "over": -126,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        },
+        "DraftKings": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 21.5
+        }
+      }
+    },
+    {
+      "playerId": "rui-hachimura-player-points-12.5",
+      "player": "Rui Hachimura",
+      "team": null,
+      "matchup": "Los Angeles Lakers @ Denver Nuggets",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 12.5,
+      "sport": "nba",
+      "offerings": {
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 12.5
+        },
+        "Novig": {
+          "over": -124,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 12.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 12.5
+        },
+        "FanDuel": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 12.5
+        },
+        "DraftKings": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 12.5
+        },
+        "BetMGM": {
+          "over": -115,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 12.5
+        }
+      }
+    },
+    {
+      "playerId": "miles-mcbride-player-threes-1.5",
+      "player": "Miles McBride",
+      "team": "NYK",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Threes",
+      "line": 1.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Novig": {
+          "over": -125,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "FanDuel": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "BetMGM": {
+          "over": -115,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        }
+      }
+    },
+    {
+      "playerId": "austin-reaves-player-threes-2.5",
+      "player": "Austin Reaves",
+      "team": null,
+      "matchup": "Los Angeles Lakers @ Denver Nuggets",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Threes",
+      "line": 2.5,
+      "sport": "nba",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -124,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -123,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -115,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "aaron-gordon-player-rebounds-6.5",
+      "player": "Aaron Gordon",
+      "team": null,
+      "matchup": "Los Angeles Lakers @ Denver Nuggets",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Rebounds",
+      "line": 6.5,
+      "sport": "nba",
+      "offerings": {
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "Novig": {
+          "over": -126,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "ProphetX": {
+          "over": -125,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "DraftKings": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        }
+      }
+    },
+    {
+      "playerId": "devin-vassell-player-points-19.5",
+      "player": "Devin Vassell",
+      "team": "SAS",
+      "matchup": "New York Knicks @ San Antonio Spurs",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 19.5,
+      "sport": "nba",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "Novig": {
+          "over": -126,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "ProphetX": {
+          "over": -125,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "DraftKings": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "Bovada": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        }
+      }
+    },
+    {
+      "playerId": "aja-wilson-player-points-24.5",
+      "player": "A'ja Wilson",
+      "team": "LV",
+      "matchup": "Las Vegas Aces @ Los Angeles Sparks",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 24.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "Novig": {
+          "over": -138,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "ProphetX": {
+          "over": -138,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "FanDuel": {
+          "over": -145,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "DraftKings": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "BetMGM": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "HardRock": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        }
+      }
+    },
+    {
+      "playerId": "caitlin-clark-player-assists-7.5",
+      "player": "Caitlin Clark",
+      "team": "IND",
+      "matchup": "Indiana Fever @ Chicago Sky",
+      "gameTime": "2026-06-04T07:25:41.453646+00:00",
+      "market": "Player Assists",
+      "line": 7.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Novig": {
+          "over": -141,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "ProphetX": {
+          "over": -141,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "FanDuel": {
+          "over": -145,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "DraftKings": {
+          "over": -142,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "BetMGM": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "HardRock": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        }
+      }
+    },
+    {
+      "playerId": "breanna-stewart-player-points-19.5",
+      "player": "Breanna Stewart",
+      "team": "NY",
+      "matchup": "Toronto Tempo @ New York Liberty",
+      "gameTime": "2026-06-04T05:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 19.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "Novig": {
+          "over": -135,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "ProphetX": {
+          "over": -134,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "FanDuel": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "DraftKings": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        },
+        "BetMGM": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 19.5
+        }
+      }
+    },
+    {
+      "playerId": "alyssa-thomas-player-rebounds-7.5",
+      "player": "Alyssa Thomas",
+      "team": "PHX",
+      "matchup": "Phoenix Mercury @ Seattle Storm",
+      "gameTime": "2026-06-04T06:25:41.453646+00:00",
+      "market": "Player Rebounds",
+      "line": 7.5,
+      "sport": "nba",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Novig": {
+          "over": 108,
+          "under": -133,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "ProphetX": {
+          "over": 109,
+          "under": -132,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "DraftKings": {
+          "over": -138,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "BetMGM": {
+          "over": -117,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "BetRivers": {
+          "over": -146,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Fanatics": {
+          "over": -129,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        }
+      }
+    },
+    {
+      "playerId": "caitlin-clark-player-points-20.5",
+      "player": "Caitlin Clark",
+      "team": "IND",
+      "matchup": "Indiana Fever @ Chicago Sky",
+      "gameTime": "2026-06-04T07:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 20.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 20.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 20.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 20.5
+        },
+        "Novig": {
+          "over": -136,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 20.5
+        },
+        "ProphetX": {
+          "over": -135,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard",
+          "line": 20.5
+        },
+        "FanDuel": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 20.5
+        },
+        "DraftKings": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 20.5
+        },
+        "BetMGM": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 20.5
+        },
+        "HardRock": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 20.5
+        }
+      }
+    },
+    {
+      "playerId": "sabrina-ionescu-player-threes-2.5",
+      "player": "Sabrina Ionescu",
+      "team": "NY",
+      "matchup": "Toronto Tempo @ New York Liberty",
+      "gameTime": "2026-06-04T05:25:41.453646+00:00",
+      "market": "Player Threes",
+      "line": 2.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -132,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -131,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "aja-wilson-player-rebounds-10.5",
+      "player": "A'ja Wilson",
+      "team": "LV",
+      "matchup": "Las Vegas Aces @ Los Angeles Sparks",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Rebounds",
+      "line": 10.5,
+      "sport": "nba",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "Novig": {
+          "over": -135,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "ProphetX": {
+          "over": -134,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "FanDuel": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "DraftKings": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        },
+        "BetMGM": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 10.5
+        }
+      }
+    },
+    {
+      "playerId": "kelsey-plum-player-points-18.5",
+      "player": "Kelsey Plum",
+      "team": "LA",
+      "matchup": "Las Vegas Aces @ Los Angeles Sparks",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 18.5,
+      "sport": "nba",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "Novig": {
+          "over": -132,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "ProphetX": {
+          "over": -131,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "FanDuel": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "DraftKings": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 18.5
+        }
+      }
+    },
+    {
+      "playerId": "nneka-ogwumike-player-rebounds-7.5",
+      "player": "Nneka Ogwumike",
+      "team": "SEA",
+      "matchup": "Phoenix Mercury @ Seattle Storm",
+      "gameTime": "2026-06-04T06:25:41.453646+00:00",
+      "market": "Player Rebounds",
+      "line": 7.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Novig": {
+          "over": -128,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "ProphetX": {
+          "over": -127,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        }
+      }
+    },
+    {
+      "playerId": "angel-reese-player-rebounds-11.5",
+      "player": "Angel Reese",
+      "team": "CHI",
+      "matchup": "Indiana Fever @ Chicago Sky",
+      "gameTime": "2026-06-04T07:25:41.453646+00:00",
+      "market": "Player Rebounds",
+      "line": 11.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
+        },
+        "Novig": {
+          "over": -130,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
+        },
+        "ProphetX": {
+          "over": -130,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
+        },
+        "FanDuel": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
+        },
+        "DraftKings": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
+        },
+        "Bovada": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 11.5
+        }
+      }
+    },
+    {
+      "playerId": "nyara-sabally-player-points-9.5",
+      "player": "Nyara Sabally",
+      "team": "TOR",
+      "matchup": "Toronto Tempo @ New York Liberty",
+      "gameTime": "2026-06-04T05:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 9.5,
+      "sport": "nba",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 9.5
+        },
+        "Novig": {
+          "over": 108,
+          "under": -132,
+          "multiplier": null,
+          "type": "standard",
+          "line": 9.5
+        },
+        "ProphetX": {
+          "over": 108,
+          "under": -131,
+          "multiplier": null,
+          "type": "standard",
+          "line": 9.5
+        },
+        "DraftKings": {
+          "over": -136,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "HardRock": {
+          "over": -110,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        }
+      }
+    },
+    {
+      "playerId": "kahleah-copper-player-points-15.5",
+      "player": "Kahleah Copper",
+      "team": "PHX",
+      "matchup": "Phoenix Mercury @ Seattle Storm",
+      "gameTime": "2026-06-04T06:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 15.5,
+      "sport": "nba",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 15.5
+        },
+        "Novig": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 15.5
+        },
+        "ProphetX": {
+          "over": -126,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 15.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 15.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 15.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 15.5
+        }
+      }
+    },
+    {
+      "playerId": "jackie-young-player-assists-4.5",
+      "player": "Jackie Young",
+      "team": "LV",
+      "matchup": "Las Vegas Aces @ Los Angeles Sparks",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Assists",
+      "line": 4.5,
+      "sport": "nba",
+      "offerings": {
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "Novig": {
+          "over": -125,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "FanDuel": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        }
+      }
+    },
+    {
+      "playerId": "aliyah-boston-player-rebounds-7.5",
+      "player": "Aliyah Boston",
+      "team": "IND",
+      "matchup": "Indiana Fever @ Chicago Sky",
+      "gameTime": "2026-06-04T07:25:41.453646+00:00",
+      "market": "Player Rebounds",
+      "line": 7.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Novig": {
+          "over": -128,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "ProphetX": {
+          "over": -127,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        }
+      }
+    },
+    {
+      "playerId": "skylar-diggins-player-assists-5.5",
+      "player": "Skylar Diggins",
+      "team": "SEA",
+      "matchup": "Phoenix Mercury @ Seattle Storm",
+      "gameTime": "2026-06-04T06:25:41.453646+00:00",
+      "market": "Player Assists",
+      "line": 5.5,
+      "sport": "nba",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "Novig": {
+          "over": -126,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "ProphetX": {
+          "over": -125,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        }
+      }
+    },
+    {
+      "playerId": "jonquel-jones-player-rebounds-8.5",
+      "player": "Jonquel Jones",
+      "team": "NY",
+      "matchup": "Toronto Tempo @ New York Liberty",
+      "gameTime": "2026-06-04T05:25:41.453646+00:00",
+      "market": "Player Rebounds",
+      "line": 8.5,
+      "sport": "nba",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "Novig": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "ProphetX": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "DraftKings": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 8.5
+        }
+      }
+    },
+    {
+      "playerId": "kelsey-mitchell-player-points-16.5",
+      "player": "Kelsey Mitchell",
+      "team": "IND",
+      "matchup": "Indiana Fever @ Chicago Sky",
+      "gameTime": "2026-06-04T07:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 16.5,
+      "sport": "nba",
+      "offerings": {
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "Novig": {
+          "over": -124,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "FanDuel": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        }
+      }
+    },
+    {
+      "playerId": "dearica-hamby-player-points-plus-rebounds-24.5",
+      "player": "Dearica Hamby",
+      "team": "LA",
+      "matchup": "Las Vegas Aces @ Los Angeles Sparks",
+      "gameTime": "2026-06-04T08:25:41.453646+00:00",
+      "market": "Player Points + Rebounds",
+      "line": 24.5,
+      "sport": "nba",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "Novig": {
+          "over": -126,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "ProphetX": {
+          "over": -125,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "DraftKings": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 24.5
+        }
+      }
+    },
+    {
+      "playerId": "satou-sabally-player-points-16.5",
+      "player": "Satou Sabally",
+      "team": "PHX",
+      "matchup": "Phoenix Mercury @ Seattle Storm",
+      "gameTime": "2026-06-04T06:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 16.5,
+      "sport": "nba",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "Novig": {
+          "over": -125,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 16.5
+        }
+      }
+    },
+    {
+      "playerId": "shohei-ohtani-batter-hits-0.5",
+      "player": "Shohei Ohtani",
+      "team": "LAD",
+      "matchup": "Los Angeles Dodgers @ San Diego Padres",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -150,
+          "under": 123,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -150,
+          "under": 123,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -162,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -158,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -155,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Bovada": {
+          "over": -160,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "aaron-judge-batter-hits-0.5",
+      "player": "Aaron Judge",
+      "team": "NYY",
+      "matchup": "New York Yankees @ Boston Red Sox",
+      "gameTime": "2026-06-03T07:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -141,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -141,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -142,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Bovada": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "max-meyer-pitcher-strikeouts-5.5",
+      "player": "Max Meyer",
+      "team": "MIA",
+      "matchup": "Miami Marlins @ Washington Nationals",
+      "gameTime": "2026-06-04T00:25:41.453646+00:00",
+      "market": "Pitcher Strikeouts",
+      "line": 5.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "Novig": {
+          "over": 119,
+          "under": -146,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "ProphetX": {
+          "over": 120,
+          "under": -146,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "FanDuel": {
+          "over": 118,
+          "under": -144,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "HardRock": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        }
+      }
+    },
+    {
+      "playerId": "freddie-freeman-batter-hits-0.5",
+      "player": "Freddie Freeman",
+      "team": "LAD",
+      "matchup": "Los Angeles Dodgers @ San Diego Padres",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -143,
+          "under": 117,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -143,
+          "under": 117,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -145,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Bovada": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "spencer-strider-pitcher-strikeouts-7.5",
+      "player": "Spencer Strider",
+      "team": "ATL",
+      "matchup": "Atlanta Braves @ Philadelphia Phillies",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Pitcher Strikeouts",
+      "line": 7.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Novig": {
+          "over": -141,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "ProphetX": {
+          "over": -141,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "FanDuel": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "DraftKings": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "BetMGM": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        }
+      }
+    },
+    {
+      "playerId": "yu-darvish-pitcher-strikeouts-5.5",
+      "player": "Yu Darvish",
+      "team": "SD",
+      "matchup": "Los Angeles Dodgers @ San Diego Padres",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Pitcher Strikeouts",
+      "line": 5.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "Novig": {
+          "over": -139,
+          "under": 114,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "ProphetX": {
+          "over": -138,
+          "under": 114,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "FanDuel": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "DraftKings": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        },
+        "BetMGM": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 5.5
+        }
+      }
+    },
+    {
+      "playerId": "fernando-tatis-jr-batter-hits-0.5",
+      "player": "Fernando Tatis Jr.",
+      "team": "SD",
+      "matchup": "Los Angeles Dodgers @ San Diego Padres",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -137,
+          "under": 112,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -137,
+          "under": 113,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "juan-soto-batter-hits-0.5",
+      "player": "Juan Soto",
+      "team": "NYY",
+      "matchup": "New York Yankees @ Boston Red Sox",
+      "gameTime": "2026-06-03T07:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -136,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -135,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "bryce-harper-batter-hits-0.5",
+      "player": "Bryce Harper",
+      "team": "PHI",
+      "matchup": "Atlanta Braves @ Philadelphia Phillies",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -136,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -135,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -136,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -134,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "ronald-acuna-jr-batter-hits-0.5",
+      "player": "Ronald Acuna Jr.",
+      "team": "ATL",
+      "matchup": "Atlanta Braves @ Philadelphia Phillies",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -141,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -141,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "mookie-betts-batter-runs-0.5",
+      "player": "Mookie Betts",
+      "team": "LAD",
+      "matchup": "Los Angeles Dodgers @ San Diego Padres",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Batter Runs",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -133,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -132,
+          "under": 109,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "nick-martinez-pitcher-strikeouts-4.5",
+      "player": "Nick Martinez",
+      "team": "DET",
+      "matchup": "Detroit Tigers @ Tampa Bay Rays",
+      "gameTime": "2026-06-04T00:25:41.453646+00:00",
+      "market": "Pitcher Strikeouts",
+      "line": 4.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "Novig": {
+          "over": 115,
+          "under": -141,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "ProphetX": {
+          "over": 116,
+          "under": -141,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "FanDuel": {
+          "over": 112,
+          "under": -140,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        },
+        "DraftKings": {
+          "over": -134,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 4.5
+        }
+      }
+    },
+    {
+      "playerId": "gerrit-cole-pitcher-strikeouts-7.5",
+      "player": "Gerrit Cole",
+      "team": "NYY",
+      "matchup": "New York Yankees @ Boston Red Sox",
+      "gameTime": "2026-06-03T07:25:41.453646+00:00",
+      "market": "Pitcher Strikeouts",
+      "line": 7.5,
+      "sport": "mlb",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Novig": {
+          "over": -129,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "ProphetX": {
+          "over": -128,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "FanDuel": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        }
+      }
+    },
+    {
+      "playerId": "zack-wheeler-pitcher-strikeouts-7.5",
+      "player": "Zack Wheeler",
+      "team": "PHI",
+      "matchup": "Atlanta Braves @ Philadelphia Phillies",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Pitcher Strikeouts",
+      "line": 7.5,
+      "sport": "mlb",
+      "offerings": {
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "Novig": {
+          "over": -134,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "ProphetX": {
+          "over": -134,
+          "under": 110,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "FanDuel": {
+          "over": -136,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "DraftKings": {
+          "over": -134,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        },
+        "BetMGM": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 7.5
+        }
+      }
+    },
+    {
+      "playerId": "rafael-devers-batter-hits-1.5",
+      "player": "Rafael Devers",
+      "team": "BOS",
+      "matchup": "New York Yankees @ Boston Red Sox",
+      "gameTime": "2026-06-03T07:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 1.5,
+      "sport": "mlb",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Novig": {
+          "over": -126,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "ProphetX": {
+          "over": -125,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "FanDuel": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        }
+      }
+    },
+    {
+      "playerId": "clayton-kershaw-pitcher-earned-runs-1.5",
+      "player": "Clayton Kershaw",
+      "team": "LAD",
+      "matchup": "Los Angeles Dodgers @ San Diego Padres",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Pitcher Earned Runs",
+      "line": 1.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Novig": {
+          "over": 107,
+          "under": -132,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "ProphetX": {
+          "over": 108,
+          "under": -131,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "FanDuel": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        }
+      }
+    },
+    {
+      "playerId": "jose-altuve-batter-hits-0.5",
+      "player": "Jose Altuve",
+      "team": "HOU",
+      "matchup": "Houston Astros @ Seattle Mariners",
+      "gameTime": "2026-06-04T07:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -130,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -129,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "framber-valdez-pitcher-strikeouts-6.5",
+      "player": "Framber Valdez",
+      "team": "HOU",
+      "matchup": "Houston Astros @ Seattle Mariners",
+      "gameTime": "2026-06-04T07:25:41.453646+00:00",
+      "market": "Pitcher Strikeouts",
+      "line": 6.5,
+      "sport": "mlb",
+      "offerings": {
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "Novig": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "ProphetX": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        }
+      }
+    },
+    {
+      "playerId": "seiya-suzuki-batter-hits-0.5",
+      "player": "Seiya Suzuki",
+      "team": "CHC",
+      "matchup": "Chicago Cubs @ St. Louis Cardinals",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -129,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -128,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "corey-seager-batter-hits-0.5",
+      "player": "Corey Seager",
+      "team": "TEX",
+      "matchup": "Houston Astros @ Seattle Mariners",
+      "gameTime": "2026-06-04T07:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -133,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -132,
+          "under": 109,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "paul-goldschmidt-batter-rbis-0.5",
+      "player": "Paul Goldschmidt",
+      "team": "STL",
+      "matchup": "Chicago Cubs @ St. Louis Cardinals",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Batter RBIs",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -126,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "trea-turner-batter-hits-0.5",
+      "player": "Trea Turner",
+      "team": "PHI",
+      "matchup": "Atlanta Braves @ Philadelphia Phillies",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -129,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -129,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "kyle-tucker-batter-runs-0.5",
+      "player": "Kyle Tucker",
+      "team": "HOU",
+      "matchup": "Houston Astros @ Seattle Mariners",
+      "gameTime": "2026-06-04T07:25:41.453646+00:00",
+      "market": "Batter Runs",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -125,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -115,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "connor-mcdavid-player-points-0.5",
+      "player": "Connor McDavid",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -214,
+          "under": 171,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -213,
+          "under": 172,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -210,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Bovada": {
+          "over": -218,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -180,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "DraftKings": {
+          "over": -175,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        }
+      }
+    },
+    {
+      "playerId": "leon-draisaitl-player-goals-0.5",
+      "player": "Leon Draisaitl",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Goals",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -141,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -141,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Bovada": {
+          "over": -145,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "matthew-tkachuk-player-points-1.5",
+      "player": "Matthew Tkachuk",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 1.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Novig": {
+          "over": -136,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "ProphetX": {
+          "over": -135,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "FanDuel": {
+          "over": -136,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "DraftKings": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "BetMGM": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        }
+      }
+    },
+    {
+      "playerId": "aleksander-barkov-player-goals-0.5",
+      "player": "Aleksander Barkov",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Goals",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -133,
+          "under": 109,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -133,
+          "under": 109,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Bovada": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "sam-reinhart-player-points-1.5",
+      "player": "Sam Reinhart",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 1.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Novig": {
+          "over": -132,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "ProphetX": {
+          "over": -131,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "FanDuel": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "BetMGM": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        }
+      }
+    },
+    {
+      "playerId": "connor-mcdavid-player-shots-on-goal-3.5",
+      "player": "Connor McDavid",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 3.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Novig": {
+          "over": -132,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "ProphetX": {
+          "over": -131,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "FanDuel": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Bovada": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        }
+      }
+    },
+    {
+      "playerId": "leon-draisaitl-player-points-1.5",
+      "player": "Leon Draisaitl",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 1.5,
+      "sport": "nhl",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Novig": {
+          "over": -136,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "ProphetX": {
+          "over": -135,
+          "under": 111,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "FanDuel": {
+          "over": -136,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "DraftKings": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "BetMGM": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        }
+      }
+    },
+    {
+      "playerId": "evan-bouchard-player-shots-on-goal-2.5",
+      "player": "Evan Bouchard",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 2.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -132,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -131,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "ryan-nugent-hopkins-player-points-0.5",
+      "player": "Ryan Nugent-Hopkins",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -141,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -141,
+          "under": 116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -140,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "matthew-tkachuk-player-shots-on-goal-3.5",
+      "player": "Matthew Tkachuk",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 3.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Novig": {
+          "over": -130,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "ProphetX": {
+          "over": -130,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "FanDuel": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        }
+      }
+    },
+    {
+      "playerId": "sam-reinhart-player-goals-0.5",
+      "player": "Sam Reinhart",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Goals",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -129,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -128,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "zach-hyman-player-goals-0.5",
+      "player": "Zach Hyman",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Goals",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -124,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -123,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "BetMGM": {
+          "over": -115,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "carter-verhaeghe-player-shots-on-goal-2.5",
+      "player": "Carter Verhaeghe",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 2.5,
+      "sport": "nhl",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -126,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -125,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "gustav-forsling-player-shots-on-goal-2.5",
+      "player": "Gustav Forsling",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 2.5,
+      "sport": "nhl",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -124,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -123,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -115,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "darnell-nurse-player-shots-on-goal-2.5",
+      "player": "Darnell Nurse",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 2.5,
+      "sport": "nhl",
+      "offerings": {
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -125,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -115,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "aleksander-barkov-player-points-1.5",
+      "player": "Aleksander Barkov",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 1.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Novig": {
+          "over": -131,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "ProphetX": {
+          "over": -130,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "FanDuel": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Bovada": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        }
+      }
+    },
+    {
+      "playerId": "evan-bouchard-player-points-0.5",
+      "player": "Evan Bouchard",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -126,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -125,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "brad-marchand-player-shots-on-goal-2.5",
+      "player": "Brad Marchand",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 2.5,
+      "sport": "nhl",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "corey-perry-player-goals-0.5",
+      "player": "Corey Perry",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Goals",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -124,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -115,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "sam-bennett-player-shots-on-goal-2.5",
+      "player": "Sam Bennett",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 2.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -125,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -125,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "xander-bogaerts-batter-hits-0.5",
+      "player": "Xander Bogaerts",
+      "team": "SD",
+      "matchup": "Los Angeles Dodgers @ San Diego Padres",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -126,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -125,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "yordan-alvarez-batter-hits-1.5",
+      "player": "Yordan Alvarez",
+      "team": "HOU",
+      "matchup": "Houston Astros @ Seattle Mariners",
+      "gameTime": "2026-06-04T07:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 1.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "Novig": {
+          "over": -124,
+          "under": 101,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "ProphetX": {
+          "over": -123,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "FanDuel": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "DraftKings": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        },
+        "BetMGM": {
+          "over": -115,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 1.5
+        }
+      }
+    },
+    {
+      "playerId": "manny-machado-batter-hits-0.5",
+      "player": "Manny Machado",
+      "team": "SD",
+      "matchup": "Los Angeles Dodgers @ San Diego Padres",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -128,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -127,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "teoscar-hernandez-batter-hits-0.5",
+      "player": "Teoscar Hernandez",
+      "team": "LAD",
+      "matchup": "Los Angeles Dodgers @ San Diego Padres",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -125,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "will-smith-batter-hits-0.5",
+      "player": "Will Smith",
+      "team": "LAD",
+      "matchup": "Los Angeles Dodgers @ San Diego Padres",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Batter Hits",
+      "line": 0.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -124,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -115,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "tyler-glasnow-pitcher-strikeouts-6.5",
+      "player": "Tyler Glasnow",
+      "team": "LAD",
+      "matchup": "Los Angeles Dodgers @ San Diego Padres",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Pitcher Strikeouts",
+      "line": 6.5,
+      "sport": "mlb",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "Novig": {
+          "over": -130,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "ProphetX": {
+          "over": -130,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "FanDuel": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "DraftKings": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        }
+      }
+    },
+    {
+      "playerId": "aaron-nola-pitcher-strikeouts-6.5",
+      "player": "Aaron Nola",
+      "team": "PHI",
+      "matchup": "Atlanta Braves @ Philadelphia Phillies",
+      "gameTime": "2026-06-03T08:25:41.453646+00:00",
+      "market": "Pitcher Strikeouts",
+      "line": 6.5,
+      "sport": "mlb",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "Novig": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "ProphetX": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "DraftKings": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 6.5
+        }
+      }
+    },
+    {
+      "playerId": "connor-mcdavid-player-assists-0.5",
+      "player": "Connor McDavid",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Assists",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -140,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -140,
+          "under": 115,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -135,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Bovada": {
+          "over": -138,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "leon-draisaitl-player-shots-on-goal-3.5",
+      "player": "Leon Draisaitl",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 3.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "Novig": {
+          "over": -129,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "ProphetX": {
+          "over": -129,
+          "under": 106,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "FanDuel": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "DraftKings": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        },
+        "BetMGM": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 3.5
+        }
+      }
+    },
+    {
+      "playerId": "sam-reinhart-player-shots-on-goal-2.5",
+      "player": "Sam Reinhart",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 2.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -128,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -127,
+          "under": 105,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -128,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "matthew-tkachuk-player-goals-0.5",
+      "player": "Matthew Tkachuk",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Goals",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -127,
+          "under": 104,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "aleksander-barkov-player-shots-on-goal-2.5",
+      "player": "Aleksander Barkov",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 2.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -126,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -125,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -126,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        }
+      }
+    },
+    {
+      "playerId": "brad-marchand-player-points-0.5",
+      "player": "Brad Marchand",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Points",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "PrizePicks": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -132,
+          "under": 107,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -131,
+          "under": 108,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -132,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -130,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -125,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "sam-bennett-player-goals-0.5",
+      "player": "Sam Bennett",
+      "team": "FLA",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Goals",
+      "line": 0.5,
+      "sport": "nhl",
+      "offerings": {
+        "Pick6": {
+          "over": -122,
+          "under": -122,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "Novig": {
+          "over": -125,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 103,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "FanDuel": {
+          "over": -124,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "DraftKings": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        },
+        "BetMGM": {
+          "over": -118,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 0.5
+        }
+      }
+    },
+    {
+      "playerId": "evander-kane-player-shots-on-goal-2.5",
+      "player": "Evander Kane",
+      "team": "EDM",
+      "matchup": "Edmonton Oilers @ Florida Panthers",
+      "gameTime": "2026-06-03T09:25:41.453646+00:00",
+      "market": "Player Shots on Goal",
+      "line": 2.5,
+      "sport": "nhl",
+      "offerings": {
+        "Underdog": {
+          "over": -116,
+          "under": -116,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Betr": {
+          "over": -119,
+          "under": -119,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "Novig": {
+          "over": -124,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "ProphetX": {
+          "over": -124,
+          "under": 102,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "FanDuel": {
+          "over": -122,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "DraftKings": {
+          "over": -120,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
+        },
+        "BetMGM": {
+          "over": -115,
+          "under": null,
+          "multiplier": null,
+          "type": "standard",
+          "line": 2.5
         }
       }
     }
