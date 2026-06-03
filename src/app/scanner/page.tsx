@@ -612,7 +612,7 @@ function HomeInner() {
                   const isFocused = focusedIdx === idx;
                   const targetPct = legBreakEvenProbability(play.slip!) * 100;
                   const { pillStyle, textClass: hitTextClass } = hitCellStyle(play.fairPct, targetPct);
-                  const expandedBg = expandedRowStyle;
+                  const expandedBg = expandedRowStyle.pillStyle;
                   const isAbove = play.fairPct >= targetPct;
                   const accentBg   = isAbove ? "bg-blue-400/5"  : "bg-red-400/5";
                   const accentText = isAbove ? "text-blue-400"   : "text-red-400";
