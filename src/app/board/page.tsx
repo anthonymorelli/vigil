@@ -117,7 +117,7 @@ function processToFlat(markets: MarketRow[], weights: WeightMap, platformBooks: 
       (b) => market.offerings[b]?.over != null || market.offerings[b]?.under != null
     );
     if (!hasProp) continue;
-    const { fairOver } = consensusFairProb(market.offerings, weights);
+    const { fairOver } = consensusFairProb(market.offerings, weights, market.line);
     if (fairOver == null) continue;
     const sport = market.sport ?? "nba";
     for (const side of ["Over", "Under"] as const) {
@@ -1058,8 +1058,10 @@ function BoardInner() {
                             </div>
                           </TableCell>
                           {referenceBookColumns.map((book) => {
-                            const odds = prop.side === "Over" ? prop.offerings[book]?.over : prop.offerings[book]?.under;
+                            const offering = prop.offerings[book];
+                            const odds = prop.side === "Over" ? offering?.over : offering?.under;
                             const isBest = bestBook?.book === book && odds != null;
+                            const altLine = offering?.line != null && offering.line !== prop.line ? offering.line : null;
                             return (
                               <TableCell key={book} className="text-right font-mono text-sm py-0 transition-colors"
                                 style={isBest ? { backgroundColor: "rgba(42, 93, 156, 0.75)", borderLeft: "3px solid rgba(90, 154, 224, 1)", boxShadow: "inset 0 0 28px rgba(42, 93, 156, 0.5)" } : undefined}
@@ -1068,6 +1070,7 @@ function BoardInner() {
                                   <div className="flex flex-col items-end leading-tight pr-1">
                                     {isBest && <span className="text-[8px] font-bold uppercase tracking-wide mb-0.5 text-[#B0C8E0]">BEST</span>}
                                     <span className={isBest ? "text-white font-bold text-base" : "text-muted-foreground"}>{formatOdds(odds)}</span>
+                                    {altLine != null && <span className="text-[10px] text-muted-foreground/50">{altLine}</span>}
                                   </div>
                                 ) : <span className="text-muted-foreground/20">—</span>}
                               </TableCell>
@@ -1135,16 +1138,21 @@ function BoardInner() {
                                         </span>
                                       </div>
                                       {referenceBookColumns.map((book) => {
-                                        const odds = prop.side === "Over" ? prop.offerings[book]?.over : prop.offerings[book]?.under;
+                                        const offering = prop.offerings[book];
+                                        const odds = prop.side === "Over" ? offering?.over : offering?.under;
                                         if (odds == null) return null;
                                         const ev = evPct(prop.fairProb, odds);
                                         const isPositive = ev >= 0;
+                                        const altLine = offering?.line != null && offering.line !== prop.line ? offering.line : null;
                                         return (
                                           <div key={book} className="flex-1 flex items-center justify-center gap-2.5 px-3 py-3 border-l border-border"
                                             style={isPositive ? { backgroundColor: "rgba(58, 120, 200, 0.22)", borderLeft: "1px solid rgba(90, 154, 224, 0.40)" } : undefined}
                                           >
                                             <BookLogo book={getBook(book).label} size="sm" />
-                                            <span className={`font-mono text-sm ${isPositive ? "text-white font-bold" : "text-muted-foreground"}`}>{formatOdds(odds)}</span>
+                                            <div className="flex flex-col items-center leading-tight">
+                                              <span className={`font-mono text-sm ${isPositive ? "text-white font-bold" : "text-muted-foreground"}`}>{formatOdds(odds)}</span>
+                                              {altLine != null && <span className="text-[10px] text-muted-foreground/50">{altLine}</span>}
+                                            </div>
                                             <span className={`font-mono text-xs font-bold ${isPositive ? "text-[#B0C8E0]" : "text-muted-foreground/50"}`}>
                                               {ev > 0 ? "+" : ""}{ev.toFixed(1)}%
                                             </span>

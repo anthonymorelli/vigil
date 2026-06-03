@@ -19,6 +19,7 @@ import { isReferenceBook } from "./books";
 export type BookOffering = {
   over: number | null;   // American odds, null if no price
   under: number | null;
+  line?: number;         // Per-offering line — used to detect cross-line books
 };
 
 /** Map of book id -> offering. Comes from pipeline output. */
@@ -84,22 +85,38 @@ export type ConsensusResult = {
 export function consensusFairProb(
   offerings: MarketOfferings,
   weights: WeightMap,
+  anchorLine?: number,
 ): ConsensusResult {
   let weightedSum = 0;
   let totalWeight = 0;
   const contributing: string[] = [];
 
+  // First pass: same-line books only (preferred — apples-to-apples)
   for (const [bookId, offering] of Object.entries(offerings)) {
     if (!isReferenceBook(bookId)) continue;
     const w = weights[bookId];
     if (!w?.enabled || w.weight <= 0) continue;
-
+    if (anchorLine != null && offering.line != null && offering.line !== anchorLine) continue;
     const fairO = devigBookOver(offering);
     if (fairO == null) continue;
-
     weightedSum += fairO * w.weight;
     totalWeight += w.weight;
     contributing.push(bookId);
+  }
+
+  // Fallback: if no same-line books contributed, use all two-sided books
+  // (cross-line reference better than no fair value — subscripts show context)
+  if (totalWeight === 0) {
+    for (const [bookId, offering] of Object.entries(offerings)) {
+      if (!isReferenceBook(bookId)) continue;
+      const w = weights[bookId];
+      if (!w?.enabled || w.weight <= 0) continue;
+      const fairO = devigBookOver(offering);
+      if (fairO == null) continue;
+      weightedSum += fairO * w.weight;
+      totalWeight += w.weight;
+      contributing.push(bookId + "*");
+    }
   }
 
   if (totalWeight === 0) {

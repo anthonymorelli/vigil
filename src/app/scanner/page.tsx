@@ -52,7 +52,7 @@ type Play = {
 function processMarkets(markets: MarketRow[], weights: WeightMap, activePlatformBooks: string[], showAltLines: boolean): Play[] {
   const plays: Play[] = [];
   for (const market of markets) {
-    const { fairOver } = consensusFairProb(market.offerings, weights);
+    const { fairOver } = consensusFairProb(market.offerings, weights, market.line);
     if (fairOver == null) continue;
     for (const side of ["Over", "Under"] as const) {
       const fairProb = side === "Over" ? fairOver : 1 - fairOver;
