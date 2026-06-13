@@ -1072,10 +1072,10 @@ function BoardInner() {
                                 style={isBest ? { backgroundColor: "rgba(42, 93, 156, 0.75)", borderLeft: "3px solid rgba(90, 154, 224, 1)", boxShadow: "inset 0 0 28px rgba(42, 93, 156, 0.5)" } : undefined}
                               >
                                 {odds != null ? (
-                                  <div className={`flex flex-col leading-tight ${isBest ? "items-center" : "items-end pr-1"}`}>
+                                  <div className={`flex flex-col leading-tight ${isBest || altLine != null ? "items-center" : "items-end pr-1"}`}>
                                     {isBest && <span className="text-[8px] font-bold uppercase tracking-wide mb-0.5 text-[#B0C8E0]">BEST</span>}
-                                    <span className={isBest ? "text-white font-bold text-base" : altLine != null ? "text-muted-foreground/50 italic" : "text-muted-foreground"}>{formatOdds(odds)}</span>
-                                    {altLine != null && <span className="text-[10px] text-white/90 font-mono font-medium bg-white/25 rounded px-1.5 py-1 leading-none">{altLine}</span>}
+                                    <span className={isBest ? "text-white font-bold text-base" : "text-muted-foreground"}>{formatOdds(odds)}</span>
+                                    {altLine != null && <span className="text-[10px] text-white/90 font-mono font-medium bg-white/25 rounded px-1.5 py-1 leading-none mt-1.5">{altLine}</span>}
                                   </div>
                                 ) : <span className="text-muted-foreground/20">—</span>}
                               </TableCell>
@@ -1155,8 +1155,8 @@ function BoardInner() {
                                           >
                                             <BookLogo book={getBook(book).label} size="sm" />
                                             <div className="flex flex-col items-center leading-tight">
-                                              <span className={`font-mono text-sm ${isPositive ? (altLine != null ? "text-white/60 font-bold italic" : "text-white font-bold") : (altLine != null ? "text-muted-foreground/50 italic" : "text-muted-foreground")}`}>{formatOdds(odds)}</span>
-                                              {altLine != null && <span className="text-[10px] text-white/90 font-mono font-medium bg-white/25 rounded px-1.5 py-1 leading-none">{altLine}</span>}
+                                              <span className={`font-mono text-sm ${isPositive ? "text-white font-bold" : "text-muted-foreground"}`}>{formatOdds(odds)}</span>
+                                              {altLine != null && <span className="text-[10px] text-white/90 font-mono font-medium bg-white/25 rounded px-1.5 py-1 leading-none mt-1.5">{altLine}</span>}
                                             </div>
                                             <span className={`font-mono text-xs font-bold ${isPositive ? "text-[#B0C8E0]" : "text-muted-foreground/50"}`}>
                                               {ev > 0 ? "+" : ""}{ev.toFixed(1)}%
