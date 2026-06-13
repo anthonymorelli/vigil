@@ -224,7 +224,7 @@ function MarketFilterDropdown({ options, selectedMarket, selectedSport, onSelect
           <span>{selectedAbbrev ?? "Market"}</span><ChevronDown className="h-3.5 w-3.5 opacity-50" />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-44 p-1" align="start">
+      <PopoverContent className="w-44 p-1 overflow-y-auto max-h-64" align="start">
         <button onClick={() => { onSelect(null); setOpen(false); }}
           className={["w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm transition-colors",
             selectedMarket === null ? "text-foreground bg-accent" : "text-muted-foreground hover:text-foreground hover:bg-accent/50"].join(" ")}>
@@ -420,7 +420,7 @@ function PropCard({ prop, platformConfig, defaultSlip, targetPct, referenceBookC
 }
 
 // ── MobileTopBar ──────────────────────────────────────────────────────────
-function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSport, searchQuery, setSearchQuery, minHitPct, setMinHitPct, showAltLines, setShowAltLines, displayedCount, slipLegKeys, onOpenSlip, hasActiveFilters, onClearFilters, marketOptions, selectedMarket, onSelectMarket }: {
+function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSport, searchQuery, setSearchQuery, minHitPct, setMinHitPct, showAltLines, setShowAltLines, displayedCount, slipLegKeys, onOpenSlip, hasActiveFilters, onClearFilters, marketOptions, selectedMarket, onSelectMarket, targetPct }: {
   platform: PlatformId;
   setPlatformRaw: (p: PlatformId) => void;
   selectedSport: string | null;
@@ -437,6 +437,7 @@ function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSpor
   hasActiveFilters: boolean;
   onClearFilters: () => void;
   marketOptions: MarketOption[];
+  targetPct: number;
   selectedMarket: string | null;
   onSelectMarket: (m: string | null) => void;
 }) {
@@ -516,12 +517,16 @@ function MobileTopBar({ platform, setPlatformRaw, selectedSport, setSelectedSpor
           <div className="flex items-center gap-2">
             <p className="text-[10px] text-muted-foreground/50 uppercase tracking-widest w-16 shrink-0">Min Hit</p>
             <div className="flex items-center gap-1">
-              {[52, 54, 56, 58].map((val) => (
-                <button key={val} onClick={() => setMinHitPct(val)}
-                  className={["px-3 py-1 rounded-md text-xs font-medium transition-colors border",
-                    minHitPct === val ? "bg-foreground text-background border-foreground" : "border-border text-muted-foreground"].join(" ")}
-                >{val}%</button>
-              ))}
+              {[52, 54, 56, 58].map((val) => {
+                const isActive = minHitPct === val;
+                const { pillStyle, textClass } = hitCellStyle(val, targetPct);
+                return (
+                  <button key={val} onClick={() => setMinHitPct(val)}
+                    className={["px-3 py-1 rounded-md text-xs transition-all border", isActive ? textClass : "border-border text-muted-foreground"].join(" ")}
+                    style={isActive ? pillStyle : undefined}
+                  >{val}%</button>
+                );
+              })}
             </div>
           </div>
 
@@ -752,6 +757,7 @@ function BoardInner() {
           hasActiveFilters={hasActiveFilters}
           onClearFilters={clearFilters}
           marketOptions={marketOptions}
+          targetPct={targetPct}
           selectedMarket={selectedMarket}
           onSelectMarket={setSelectedMarket}
         />
