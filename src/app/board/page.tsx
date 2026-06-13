@@ -852,7 +852,7 @@ function BoardInner() {
             <div className="flex items-center gap-1 px-1">
               {[52, 54, 56, 58].map((val) => {
                 const isActive = minHitPct === val;
-                const { pillStyle, textClass } = hitCellStyle(val, 54.25);
+                const { pillStyle, textClass } = hitCellStyle(val, targetPct);
                 return (
                   <button key={val} onClick={() => setMinHitPct(val)}
                     className={["flex-1 py-1 rounded-md text-xs transition-all border", isActive ? textClass : "border-border text-muted-foreground hover:text-[#5A9AE0]/70"].join(" ")}
@@ -882,10 +882,10 @@ function BoardInner() {
           )}
           <div className="px-3 pt-3 pb-2 border-t border-border mt-2">
             <button onClick={() => setFvOpen(true)}
-              className="w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm border border-blue-400/20 bg-blue-400/5 text-blue-400/80 hover:text-blue-400 hover:border-blue-400/40 hover:bg-blue-400/10 transition-colors group">
+              className="w-full flex items-center justify-between px-2 py-1.5 rounded-md text-sm border border-blue-400/20 bg-blue-400/5 text-white/70 hover:text-white hover:border-blue-400/40 hover:bg-blue-400/10 transition-colors group">
               <div className="flex items-center gap-2">
                 <svg className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5"><path d="M2 4h12M4 8h8M6 12h4" strokeLinecap="round"/></svg>
-                <span>Fair Value</span>
+                <span>Book Weights</span>
               </div>
               <svg className="h-3 w-3 opacity-60 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth="1.5"><path d="M4.5 2.5L7.5 6l-3 3.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
@@ -1209,7 +1209,7 @@ function BoardInner() {
                     <X className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Clear All Filters
                   </CommandItem>
                   <CommandItem onSelect={() => { setFvOpen(true); setCmdkOpen(false); }}>
-                    <SlidersHorizontal className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Open Fair Value settings
+                    <SlidersHorizontal className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Open Book Weights
                   </CommandItem>
                   <CommandItem onSelect={() => { setSlipOpen(true); setCmdkOpen(false); }}>
                     <ListPlus className="h-3.5 w-3.5 mr-2 text-muted-foreground" />Open slip builder
