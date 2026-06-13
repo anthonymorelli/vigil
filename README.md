@@ -1,169 +1,94 @@
 # Vigil
 
-**+EV prop betting intelligence for DFS platforms.**
+**+EV DFS prop scanner.** Ingests player prop lines from PrizePicks, Underdog Fantasy, Pick6, and Betr, deviggs against sharp sportsbook and exchange references, and surfaces plays ranked by statistical edge on a real-time decision dashboard.
 
-Vigil deviggs exchange prices to derive a fair probability for every player prop, then compares that probability against the mathematical break-even threshold for each DFS slip type. The result: a ranked list of legs where your edge exceeds what the slip structure requires.
+Live at **[prop-screen-web.vercel.app](https://prop-screen-web.vercel.app/board)**
 
-Not a picks app. A math tool.
-
-**Live:** [prop-screen-web.vercel.app](https://prop-screen-web.vercel.app)
+![Vigil Board](https://prop-screen-web.vercel.app/board)
 
 ---
 
-## How It Works
+## What it does
 
-### 1. Devigging
-
-Sportsbooks embed a margin (vig) in their odds. To find the true probability of an outcome, you need to remove it.
-
-Vigil uses peer-to-peer exchanges — **Novig** and **ProphetX** — as reference books. Exchanges have no house margin by design; their prices represent the market's best estimate of true probability.
-
-For each prop, Vigil computes a consensus fair probability by proportional devigging across both exchanges:
-
-```
-fair_over = implied_over / (implied_over + implied_under)
-```
-
-The consensus is a weighted average across both books, giving a vig-free fair probability for every player prop.
-
-Exchange-only devigging is arguably superior to using Pinnacle (the traditional sharp reference) because exchanges have zero structural vig — Pinnacle still has a small margin baked in.
-
-### 2. Slip Break-Even
-
-DFS platforms like PrizePicks don't pay out at fixed odds — they pay multipliers conditional on hitting all (or most) legs in a slip. The break-even per leg depends on the specific slip structure.
-
-Vigil solves for the per-leg win rate required for any slip to be +EV using a **binomial expected value model** and a **bisection method**:
-
-```
-EV(p, slip) = Σ [C(n,k) × p^k × (1-p)^(n-k) × payoutGrid[k]]
-
-Solve: EV(p*) = 1.0  →  p* = break-even probability
-```
-
-Where `p` is the per-leg hit rate, `n` is the number of legs, and `payoutGrid[k]` is the multiplier paid when exactly `k` legs hit.
-
-Examples:
-- PrizePicks Flex 5 (10× all-hit, 2× 4/5, 0.4× 3/5): break-even = **54.25%** = -119 effective
-- PrizePicks Flex 6 (12.5×): break-even = **58.98%**
-- PrizePicks Power 5 (20×): break-even = **65.87%**
-
-### 3. Slip EV
-
-The slip EV for a given leg is the edge against the break-even:
-
-```
-Slip EV = fair_prob − break_even_prob   (expressed as percentage points)
-```
-
-A positive Slip EV means this leg is profitable to include in the selected slip structure. The board sorts by Slip EV descending.
+- Fetches prop lines across DFS platforms (PrizePicks, Underdog, Pick6, Betr)
+- Cross-references against sharp reference books (Novig, ProphetX, Pinnacle) and removes bookmaker margin via a devigging model
+- Computes a consensus fair probability weighted across reference books
+- Calculates break-even thresholds per slip type (PrizePicks Flex 5/6, Power, Underdog Flex, etc.) using exact payout grid math
+- Ranks every prop by edge above break-even and displays a tiered signal system — glow intensity maps directly to +EV magnitude
+- Flags cross-line discrepancies when a reference book prices a different line than the DFS anchor
+- Multi-sport: NBA, MLB, NHL, WNBA, Esports
 
 ---
 
-## Tech Stack
+## Stack
 
-| Layer | Technology |
+| Layer | Tech |
 |---|---|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind v4 + shadcn/ui |
-| Font | Geist Sans / Geist Mono + Elan ITC Black |
-| URL State | nuqs |
-| Data Pipeline | Python + pandas |
+| Frontend | Next.js 16 · TypeScript · Tailwind v4 · shadcn/ui |
+| Data pipeline | Python 3.11 · pandas |
 | Deployment | Vercel |
+| Fonts | Geist Sans / Geist Mono |
 
 ---
 
-## Data Pipeline
-
-The Python pipeline (`pipeline.py`) fetches live player prop odds from The Odds API, normalizes them across all books, classifies DFS lines (standard / goblin / demon), and outputs `public/opportunities.json` for the frontend to consume.
+## Architecture
 
 ```
-The Odds API
-    ↓  regions: us_dfs, us_ex, us, us2
-    ↓  normalize + classify lines
-    ↓  build market objects with offerings per book
-    ↓  export → public/opportunities.json
-
-Next.js Board
-    ↓  fetch /opportunities.json
-    ↓  consensusFairProb() — devig exchange books
-    ↓  legBreakEvenProbability() — bisection solve per slip type
-    ↓  slipEv = fairProb − breakEven
-    ↓  render board sorted by Slip EV
+prop-screen/ (Python pipeline)
+  pipeline.py         → fetches odds, normalizes, deviggs, writes JSON
+  
+prop-screen-web/ (this repo)
+  src/app/board/      → main decision dashboard
+  src/lib/devig.ts    → devig math, weighted consensus fair probability
+  src/lib/slip-types.ts → break-even math per slip type via payout grids
+  src/lib/hit-cell.ts → tiered color system (glow = edge signal)
+  public/opportunities.json → pipeline output consumed by the frontend
 ```
 
-### Line Classification
-
-PrizePicks serves three line types under a single API:
-- **Standard** (-137): main market line — real plays
-- **Goblin** (-137, alternate market): easier line, 0.75× multiplier contribution
-- **Demon** (+100, alternate market): harder line, 1.25× multiplier contribution
-
-The pipeline classifies these by inspecting the market key suffix (`_alternate`) and price. Goblins and Demons are hidden by default and toggled via "Alt Lines."
+The pipeline runs locally and writes `opportunities.json` to `public/`. The Next.js frontend fetches it statically. The planned architecture converts the pipeline to a FastAPI server that the frontend polls.
 
 ---
 
-## Running Locally
+## Running locally
 
 ```bash
 # Frontend
 cd prop-screen-web
 npm install
 npm run dev
-# → localhost:3000
+# → localhost:3000/board
+```
 
-# Pipeline (requires The Odds API key)
-cd "prop - screen"
+```bash
+# Pipeline (requires ODDS_API_KEY in .env)
+cd prop-screen
 source venv/bin/activate
-echo "ODDS_API_KEY=your_key" > .env
 python3 pipeline.py
-# → writes public/opportunities.json
+# writes → prop-screen-web/public/opportunities.json
 ```
 
 ---
 
-## Project Structure
+## Devig model
 
-```
-prop-screen-web/
-├── src/
-│   ├── app/
-│   │   ├── board/page.tsx      ← Main board view
-│   │   └── layout.tsx
-│   ├── components/
-│   │   ├── Logo.tsx            ← Pulse mark (QRS waveform) + Elan ITC Black wordmark
-│   │   ├── book-logo.tsx       ← Brandfetch CDN logos + fallbacks (getfliff.com for Fliff)
-│   │   └── slip-builder.tsx    ← Slip builder sheet
-│   └── lib/
-│       ├── devig.ts            ← consensusFairProb, evPct
-│       ├── slip-types.ts       ← Break-even math, all slip structures
-│       ├── hit-cell.ts         ← % Hit pill color tiers
-│       ├── books.ts            ← Reference book registry
-│       └── platforms.ts        ← DFS platform config
-└── public/
-    └── opportunities.json      ← Pipeline output
-```
+Fair probability is computed via the [power method](https://www.medicine.mcgill.ca/epidemiology/hanley/bios601/Likelihood/devig.pdf) across a weighted consensus of reference books. Exchanges (Novig, ProphetX) are treated as zero-vig reference points and weighted above sportsbooks. The resulting `fairPct` is compared against the break-even probability for the active slip type to produce the EV delta.
+
+Break-even per slip is solved numerically: given a payout grid `[0, 0, 0, ..., multiplier]` at each hit count, find the leg probability `p` where `E[slip] = 1`. This means break-even shifts with slip type — Flex 5 (54.25%) vs Flex 6 (58.98%) vs Power 5 (54.93%).
 
 ---
 
-## Key Design Decisions
+## Kelly sizing
 
-**Exchange-only devigging.** Retail books (DraftKings, FanDuel) are displayed for line shopping but excluded from the fair probability calculation. Only Novig and ProphetX — zero-vig exchanges — inform the math.
-
-**Slip-aware EV, not raw odds EV.** The primary metric is edge against the specific slip structure you're playing, not raw edge against fair odds. A prop at 56% fair is a strong play for Flex 5 (54.25% needed) but not Flex 6 (58.98% needed). The board surfaces this distinction per row.
-
-**% Hit pill as the score.** The core signal is one number: your fair hit probability versus the slip's break-even. Blue = above threshold, red = below. Intensity scales with edge magnitude.
+Standard Kelly per leg. Never exceed 2–3% of bankroll per leg on DFS slips given parlayed variance.
 
 ---
 
-## Portfolio Context
+## Data source
 
-Built as both a functional personal tool and a portfolio piece demonstrating:
+Current deployment runs on a static snapshot. Live data requires a valid [The Odds API](https://the-odds-api.com) key (`us_dfs` region covers PrizePicks, Underdog Fantasy, Pick6, Betr with Demons/Goblins via `_alternate` markets).
 
-- Full-stack product development (Next.js + TypeScript + Python)
-- Brand identity: custom SVG mark system, variant-aware logo component (dark/light surface), color system
-- Probability math: devigging, binomial EV modeling, bisection method, Kelly criterion
-- Data pipeline architecture: API normalization, multi-book aggregation, line classification
-- Product thinking: responsive design, mobile card layout, keyboard navigation, slip builder
+---
 
-Pikkit-verified Top 10% NBA Bettor (@puffersnoopy) — the tool is used in production.
+## Pikkit
+
+Verified Top 10% NBA bettor · [@puffersnoopy](https://pikkit.com)
