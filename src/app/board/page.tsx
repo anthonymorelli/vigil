@@ -739,7 +739,7 @@ function BoardInner() {
       {/* ══════════════════════════════════════════════════════════
           MOBILE LAYOUT  (< md)
       ══════════════════════════════════════════════════════════ */}
-      <div className="md:hidden flex flex-col h-screen bg-background overflow-hidden">
+      <div className="md:hidden flex flex-col h-dvh bg-background overflow-hidden">
         <MobileTopBar
           platform={platform as PlatformId}
           setPlatformRaw={(p) => setPlatformRaw(p)}
