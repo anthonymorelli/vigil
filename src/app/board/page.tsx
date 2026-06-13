@@ -850,17 +850,16 @@ function BoardInner() {
           <div className="px-3 pt-3 pb-2 border-t border-border mt-2">
             <p className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-widest px-1 mb-2">Min % Hit</p>
             <div className="flex items-center gap-1 px-1">
-              {([
-                { val: 52, active: "bg-red-500/20 border-red-400/40 text-red-400", inactive: "border-border text-red-400/40 hover:text-red-400/70" },
-                { val: 54, active: "bg-blue-400/15 border-blue-400/30 text-blue-300", inactive: "border-border text-blue-400/30 hover:text-blue-400/60" },
-                { val: 56, active: "bg-blue-500/25 border-blue-400/50 text-blue-400", inactive: "border-border text-blue-400/40 hover:text-blue-400/70" },
-                { val: 58, active: "bg-blue-500/40 border-blue-400/70 text-blue-300 font-bold", inactive: "border-border text-blue-400/50 hover:text-blue-400/80" },
-              ] as const).map(({ val, active, inactive }) => (
-                <button key={val} onClick={() => setMinHitPct(val)}
-                  className={["flex-1 py-1 rounded-md text-xs font-medium transition-colors border",
-                    minHitPct === val ? active : inactive].join(" ")}
-                >{val}%</button>
-              ))}
+              {[52, 54, 56, 58].map((val) => {
+                const isActive = minHitPct === val;
+                const { pillStyle, textClass } = hitCellStyle(val, 54.25);
+                return (
+                  <button key={val} onClick={() => setMinHitPct(val)}
+                    className={["flex-1 py-1 rounded-md text-xs transition-all border", isActive ? textClass : "border-border text-muted-foreground hover:text-[#5A9AE0]/70"].join(" ")}
+                    style={isActive ? pillStyle : undefined}
+                  >{val}%</button>
+                );
+              })}
             </div>
           </div>
 
