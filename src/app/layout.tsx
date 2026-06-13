@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Barlow_Condensed } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
@@ -17,6 +17,13 @@ const geistMono = Geist_Mono({
 // ── Elan ITC Black — Arc'teryx-adjacent high-contrast serif ──────────────
 // Font file lives at: app/fonts/Elan_ITC_W04_Black.ttf
 // next/font/local resolves paths relative to this layout.tsx file.
+const barlowCondensed = Barlow_Condensed({
+  weight: "900",
+  subsets: ["latin"],
+  variable: "--font-barlow",
+  display: "swap",
+});
+
 const elanITC = localFont({
   src: "./fonts/Elan_ITC_W04_Black.ttf",
   weight: "900",
@@ -42,7 +49,7 @@ export default function RootLayout({
     >
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} ${elanITC.variable} min-h-screen bg-background font-sans text-foreground antialiased overflow-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} ${elanITC.variable} ${barlowCondensed.variable} min-h-screen bg-background font-sans text-foreground antialiased overflow-hidden`}
       >
         <NuqsAdapter>{children}</NuqsAdapter>
       </body>

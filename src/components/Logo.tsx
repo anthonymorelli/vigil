@@ -4,63 +4,87 @@ interface LogoProps {
   /** Extra classes on the outer wrapper */
   className?: string;
   /**
-   * Mark height in px — wordmark font-size matches.
+   * Wordmark font-size in px.
    * Desktop sidebar: 22 (default)
    * Mobile top bar:  18
    */
   size?: number;
+  /**
+   * Mark height multiplier relative to `size`.
+   * The three-crosses mark needs to render larger than wordmark cap-height
+   * to keep its detail at small sizes. 1.7 ≈ mark sits a bit above/below the
+   * cap line, which reads as a normal lockup. Tune 1.5–2.0 to taste.
+   */
+  markScale?: number;
   variant?: "dark" | "light";
 }
 
 /**
  * Vigil primary logo
  *
- * Mark  — Pulse (QRS waveform)
- *          viewBox="0 0 88 34"
- *          path: M 0,23 L 20,23 L 23,26.5 L 29,5
- *                L 35,23 L 39.5,18 L 44,23 L 88,23
- *          apex dot: cx=29 cy=5 r=2.8 fill="#2A5D9C"
+ * Mark — Three Crosses (NOCTA-construction cross glyph, V formation)
+ *         Locked: outer tilt 28°, arm reach 100%, center cross signal blue.
+ *         viewBox is cropped tight to the artwork so height isn't wasted on padding.
+ *         Center cross stays #2A5D9C in both variants (brand color, not foreground).
  *
  * Wordmark — Elan ITC Black, tracked 6px
  */
-export function Logo({ className, size, variant = "dark" }: LogoProps) {
-  const s      = typeof size === "number" && !isNaN(size) && size > 0 ? size : 22;
-  const markW  = Math.round((s * 88) / 34);
-  const stroke = variant === "light" ? "#0a0a0a" : "#ffffff";
-  const ink    = variant === "light" ? "#0a0a0a" : "#ffffff";
+
+const CENTER_PATH =
+  "M 0,-68 C 1.5,-48.96 9.24,-15 42,-12 C 9.24,-9 2,35 0,175 C -2,35 -9.24,-9 -42,-12 C -9.24,-15 -1.5,-48.96 0,-68 Z";
+const OUTER_PATH =
+  "M 0,-57 C 1.5,-41.04 7.7,-13 35,-10 C 7.7,-7 2,29.6 0,148 C -2,29.6 -7.7,-7 -35,-10 C -7.7,-13 -1.5,-41.04 0,-57 Z";
+
+// Locked formation transforms (tilt 28°)
+const TILT = 28;
+const SPREAD = 110;
+const DROP = 56;
+
+// Tight bounding box of the assembled artwork (computed, +6 pad)
+const VB = { x: -151.6, y: -74.0, w: 303.2, h: 266.7 };
+const MARK_ASPECT = VB.w / VB.h; // ~1.137
+
+export function Logo({
+  className,
+  size,
+  markScale = 1.7,
+  variant = "dark",
+}: LogoProps) {
+  const s = typeof size === "number" && !isNaN(size) && size > 0 ? size : 22;
+
+  const markH = Math.round(s * markScale);
+  const markW = Math.round(markH * MARK_ASPECT);
+
+  const ink = variant === "light" ? "#0a0a0a" : "#ffffff";
+  const outerFill = variant === "light" ? "#0a0a0a" : "#f0efec";
 
   return (
     <div
       className={cn("flex items-center select-none shrink-0", className)}
-      style={{ gap: 16 }}
+      style={{ gap: 14 }}
     >
-      {/* ── Pulse mark ── */}
+      {/* ── Three-crosses mark ── */}
       <svg
-        viewBox="0 0 88 34"
+        viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`}
         width={markW}
-        height={s}
-        fill="none"
+        height={markH}
         xmlns="http://www.w3.org/2000/svg"
         style={{ overflow: "visible", flexShrink: 0 }}
         aria-hidden="true"
       >
-        <path
-          d="M 0,23 L 20,23 L 23,26.5 L 29,5 L 35,23 L 39.5,18 L 44,23 L 88,23"
-          stroke={stroke}
-          strokeWidth="1.6"
-          strokeLinecap="butt"
-          strokeLinejoin="miter"
-        />
-        <circle cx="29" cy="5" r="2.8" fill="#2A5D9C" />
+        <g transform={`translate(${-SPREAD},${DROP}) rotate(${-TILT})`}>
+          <path d={OUTER_PATH} fill={outerFill} />
+        </g>
+        <path d={CENTER_PATH} fill="#2A5D9C" />
+        <g transform={`translate(${SPREAD},${DROP}) rotate(${TILT})`}>
+          <path d={OUTER_PATH} fill={outerFill} />
+        </g>
       </svg>
 
       {/* ── Wordmark — Elan ITC Black ── */}
       <span
         style={{
-          // Tries the CSS variable first (if configured via next/font),
-          // then falls back to the direct font-family name.
-          fontFamily:
-            "var(--font-geist-sans, system-ui, sans-serif)",
+          fontFamily: "var(--font-geist-sans, system-ui, sans-serif)",
           fontSize: s,
           fontWeight: 900,
           color: ink,
