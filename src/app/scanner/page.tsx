@@ -231,7 +231,13 @@ function HomeInner() {
   );
   const platformConfig = getPlatformById(platform);
 
-  useEffect(() => { setRowSlips({}); setExpanded(null); setSlipLegKeys([]); }, [platform]);
+  const [prevPlatform, setPrevPlatform] = useState(platform);
+  if (prevPlatform !== platform) {
+    setPrevPlatform(platform);
+    setRowSlips({});
+    setExpanded(null);
+    setSlipLegKeys([]);
+  }
 
   useEffect(() => {
     fetch("/opportunities.json")

@@ -135,7 +135,11 @@ function BoardInner() {
   );
   const platformConfig = getPlatformById(platform);
 
-  useEffect(() => { setShowAltLines(false); }, [platform]);
+  const [prevPlatform, setPrevPlatform] = useState(platform);
+  if (prevPlatform !== platform) {
+    setPrevPlatform(platform);
+    setShowAltLines(false);
+  }
 
   useEffect(() => {
     fetch("/opportunities.json")

@@ -6,8 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useQueryState, parseAsStringLiteral } from "nuqs";
 import { usePathname } from "next/navigation";
-import { ArrowDown, ArrowUp, ArrowUpDown, Check, ChevronDown, ChevronRight, ChevronUp, Command as CommandIcon, ListPlus, Plus, RefreshCw, Search, SlidersHorizontal, X } from "lucide-react";
-import Link from "next/link";
+import { ArrowDown, ArrowUp, ArrowUpDown, Check, ChevronDown, ChevronRight, Command as CommandIcon, ListPlus, Plus, RefreshCw, Search, SlidersHorizontal, X } from "lucide-react";
 import { BookLogo } from "@/components/book-logo";
 import { SlipBuilder, type SlipLeg } from "@/components/slip-builder";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -597,8 +596,14 @@ function BoardInner() {
   );
   const platformConfig = getPlatformById(platform);
 
-  useEffect(() => { setShowAltLines(false); }, [platform]);
-  useEffect(() => { setSelectedMarket(null); }, [selectedSport, platform]);
+  // Reset dependent state during render when platform/sport change
+  // (React's documented alternative to a setState-in-effect).
+  const [prevSel, setPrevSel] = useState({ platform, selectedSport });
+  if (prevSel.platform !== platform || prevSel.selectedSport !== selectedSport) {
+    setPrevSel({ platform, selectedSport });
+    setSelectedMarket(null);
+    if (prevSel.platform !== platform) setShowAltLines(false);
+  }
 
   useEffect(() => {
     fetch("/opportunities.json?r=" + refreshKey)
@@ -609,7 +614,7 @@ function BoardInner() {
         setMarkets(rows); setUpdatedAt(updated); setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, []);
+  }, [refreshKey]);
 
   const activePlatformBooks = useMemo(
     () => showAltLines ? platformConfig.books : platformConfig.primaryBooks,

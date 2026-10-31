@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import {
   Sheet,
   SheetContent,
@@ -88,24 +88,30 @@ export function SlipBuilder({
   const [slipId, setSlipId] = useState<string>("");
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    if (legs.length === 0) return;
-    const match =
-      SLIP_TYPES.find(
-        (s) =>
-          s.platform === platform.slipPlatform &&
-          s.picks === legs.length &&
-          s.recommended &&
-          s.available
-      ) ??
-      SLIP_TYPES.find(
-        (s) =>
-          s.platform === platform.slipPlatform &&
-          s.picks === legs.length &&
-          s.available
-      );
-    if (match) setSlipId(match.id);
-  }, [legs.length, platform.slipPlatform]);
+  // Pick the default slip type when the leg count or platform changes.
+  // Done during render rather than in an effect (no extra render pass).
+  const slipKey = `${legs.length}|${platform.slipPlatform}`;
+  const [prevSlipKey, setPrevSlipKey] = useState<string | null>(null);
+  if (prevSlipKey !== slipKey) {
+    setPrevSlipKey(slipKey);
+    if (legs.length > 0) {
+      const match =
+        SLIP_TYPES.find(
+          (s) =>
+            s.platform === platform.slipPlatform &&
+            s.picks === legs.length &&
+            s.recommended &&
+            s.available
+        ) ??
+        SLIP_TYPES.find(
+          (s) =>
+            s.platform === platform.slipPlatform &&
+            s.picks === legs.length &&
+            s.available
+        );
+      if (match) setSlipId(match.id);
+    }
+  }
 
   const slip = useMemo(() => (slipId ? getSlipById(slipId) : null), [slipId]);
 
