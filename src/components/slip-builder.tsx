@@ -16,6 +16,7 @@ import {
   legBreakEvenProbability,
 } from "@/lib/slip-types";
 import { computeHeterogeneousSlipEV } from "@/lib/slip-math";
+import { correlatedGroups } from "@/lib/correlation";
 import type { Platform } from "@/lib/platforms";
 
 export type SlipLeg = {
@@ -25,6 +26,8 @@ export type SlipLeg = {
   line: number;
   side: "Over" | "Under";
   fairProb: number;
+  matchup?: string;
+  gameTime?: string;
 };
 
 const MARKET_ABBREV: Record<string, string> = {
@@ -132,6 +135,7 @@ export function SlipBuilder({
   }, [legs, slip]);
 
   const breakEven = slip ? legBreakEvenProbability(slip) : null;
+  const correlated = useMemo(() => correlatedGroups(legs), [legs]);
 
   const handleCopy = async () => {
     if (legs.length === 0) return;
@@ -394,6 +398,19 @@ export function SlipBuilder({
                 <p className="text-[10px] text-muted-foreground/40 mt-1.5 leading-relaxed">
                   Assumes leg independence. Contribution = P(outcome) × payout as % of stake.
                 </p>
+                {correlated.length > 0 && (
+                  <div className="mt-3 rounded-md border border-yellow-500/30 bg-yellow-500/5 px-3 py-2 text-[11px] leading-relaxed text-yellow-200/90">
+                    {correlated.map((c) => (
+                      <p key={`${c.kind}-${c.legIndexes.join("-")}`}>
+                        Legs {c.legIndexes.map((i) => i + 1).join(" & ")}{" "}
+                        {c.kind === "same-player" ? `are both ${c.label}` : `share a game (${c.label})`}.
+                      </p>
+                    ))}
+                    <p className="mt-1 text-yellow-200/60">
+                      Correlated legs break the independence assumption, so the EV above can be too high or too low.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           )}

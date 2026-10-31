@@ -331,7 +331,7 @@ function HomeInner() {
     slipLegKeys
       .map((key) => playsWithSlipEv.find((p) => p.key === key))
       .filter((p): p is NonNullable<typeof p> => p != null)
-      .map((p) => ({ key: p.key, player: p.player, market: p.market, line: p.line, side: p.side, fairProb: p.fairProb })),
+      .map((p) => ({ key: p.key, player: p.player, market: p.market, line: p.line, side: p.side, fairProb: p.fairProb, matchup: p.matchup })),
     [slipLegKeys, playsWithSlipEv],
   );
 

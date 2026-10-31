@@ -688,10 +688,10 @@ function BoardInner() {
   const slipFull = slipLegKeys.length >= 6;
 
   const slipLegs = useMemo((): SlipLeg[] =>
-    slipLegKeys.map((key) => {
+    slipLegKeys.map((key): SlipLeg | null => {
       const prop = allProps.find((p) => p.key === key);
       if (!prop) return null;
-      return { key, player: prop.player, market: prop.market, line: prop.line, side: prop.side, fairProb: prop.fairProb };
+      return { key, player: prop.player, market: prop.market, line: prop.line, side: prop.side, fairProb: prop.fairProb, matchup: prop.matchup || undefined, gameTime: prop.gameTime };
     }).filter((l): l is SlipLeg => l !== null),
     [slipLegKeys, allProps],
   );
