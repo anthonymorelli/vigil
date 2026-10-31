@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 patch_opportunities.py  — Vigil mock data variance
-Run from prop-screen-web/:  python3 patch_opportunities.py
+Run from repo root:  python3 scripts/patch_opportunities.py
 
 Varies Novig / ProphetX / DraftKings / FanDuel / Fliff odds so the
 board shows the full hit-cell.ts color spectrum instead of one flat
