@@ -68,6 +68,24 @@ describe("consensusFairProb", () => {
     expect(r.fairOver).toBeCloseTo((3 * 0.5 + 0.579832) / 4, 5);
   });
 
+  it("ignores reference books priced on a different line", () => {
+    const r = consensusFairProb(
+      {
+        Pinnacle: { over: -110, under: -110, line: 30.5 },
+        Novig: { over: -150, under: 130, line: 31.5 },
+      },
+      weights,
+      30.5,
+    );
+    expect(r.fairOver).toBeCloseTo(0.5, 10);
+    expect(r.contributingBooks).toEqual(["Pinnacle"]);
+  });
+
+  it("returns null rather than borrowing another line's price", () => {
+    const r = consensusFairProb({ Novig: { over: -150, under: 130, line: 31.5 } }, weights, 30.5);
+    expect(r.fairOver).toBeNull();
+  });
+
   it("returns null when nothing is eligible", () => {
     expect(consensusFairProb({}, weights).fairOver).toBeNull();
   });

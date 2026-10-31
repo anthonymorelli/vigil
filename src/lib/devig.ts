@@ -79,8 +79,9 @@ export type ConsensusResult = {
 
 /**
  * Weighted-average fair Over probability across all enabled reference
- * books that have both sides priced. Books missing a side are skipped.
- * Returns null fairOver if no eligible book contributed.
+ * books that have both sides priced on the anchor line. Books missing a
+ * side, or priced on a different line, are skipped. Returns null fairOver
+ * if no eligible book contributed.
  */
 export function consensusFairProb(
   offerings: MarketOfferings,
@@ -91,7 +92,9 @@ export function consensusFairProb(
   let totalWeight = 0;
   const contributing: string[] = [];
 
-  // First pass: same-line books only (preferred — apples-to-apples)
+  // Same-line books only. A price on a different line is a different market:
+  // the Over on 31.5 understates the Over on 30.5, so cross-line books never
+  // contribute to fair value (they are still shown as reference prices).
   for (const [bookId, offering] of Object.entries(offerings)) {
     if (!isReferenceBook(bookId)) continue;
     const w = weights[bookId];
@@ -102,21 +105,6 @@ export function consensusFairProb(
     weightedSum += fairO * w.weight;
     totalWeight += w.weight;
     contributing.push(bookId);
-  }
-
-  // Fallback: if no same-line books contributed, use all two-sided books
-  // (cross-line reference better than no fair value — subscripts show context)
-  if (totalWeight === 0) {
-    for (const [bookId, offering] of Object.entries(offerings)) {
-      if (!isReferenceBook(bookId)) continue;
-      const w = weights[bookId];
-      if (!w?.enabled || w.weight <= 0) continue;
-      const fairO = devigBookOver(offering);
-      if (fairO == null) continue;
-      weightedSum += fairO * w.weight;
-      totalWeight += w.weight;
-      contributing.push(bookId + "*");
-    }
   }
 
   if (totalWeight === 0) {
