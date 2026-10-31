@@ -42,7 +42,7 @@ EV(p) = Σ_k C(n,k) · p^k · (1 − p)^(n−k) · payout[k]   →   solve EV(p)
 
 **Slip EV.** In the slip builder, a slip with different fair probabilities per leg is enumerated over all 2^N outcomes (`src/lib/slip-math.ts`). No binomial shortcut, because legs differ.
 
-**Known limits.** Legs are assumed independent, so same-game correlation is not modelled. PrizePicks ties and DNPs reduce a lineup a level and are not modelled. Underdog payouts assume standard 1.0x picks, and PrizePicks Goblin/Demon lines carry altered payouts that are not modelled. Pick6 pays a per-entry base multiplier plus pool winnings, so its slips are marked unavailable. Betr Perfect Play has no published grid and is disabled. Payout grids were checked against the platforms on Oct 30, 2026 and change without notice.
+**Known limits.** Legs are assumed independent. The slip builder flags legs that share a game or a player (`src/lib/correlation.ts`), but does not estimate the correlation, so EV on those slips can be off in either direction. PrizePicks ties and DNPs reduce a lineup a level and are not modelled. Underdog payouts assume standard 1.0x picks, and PrizePicks Goblin/Demon lines carry altered payouts that are not modelled. Pick6 pays a per-entry base multiplier plus pool winnings, so its slips are marked unavailable. Betr Perfect Play has no published grid and is disabled. Payout grids were checked against the platforms on Oct 30, 2026 and change without notice.
 
 ## Stack
 
