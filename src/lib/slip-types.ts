@@ -30,7 +30,7 @@ export type SlipType = {
 };
 
 // ============================================================================
-// PrizePicks — verified May 2026
+// PrizePicks — verified Oct 30 2026 against prizepicks.com/help-center/payouts (updated Oct 19 2026)
 // Power Play: all picks must be correct to win
 // Flex Play: lineups can still win with 1–2 incorrect picks
 // ============================================================================
@@ -42,20 +42,21 @@ const PP_POWER = (picks: number, allHitMult: number): number[] => {
 };
 
 // Flex grids — index = hits, value = multiplier
+const PP_FLEX_2: number[] = [0, 0.5, 2];             // 1/2→0.5x, 2/2→2x — break-even ~61.8%, worst PP slip
 const PP_FLEX_3: number[] = [0, 0, 1, 3];           // 2/3→1x, 3/3→3x
 const PP_FLEX_4: number[] = [0, 0, 0, 1.5, 6];      // 3/4→1.5x, 4/4→6x
 const PP_FLEX_5: number[] = [0, 0, 0, 0.4, 2, 10];  // 3/5→0.4x, 4/5→2x, 5/5→10x — break-even ~54.3%
 const PP_FLEX_6: number[] = [0, 0, 0, 0, 0.4, 2, 25]; // 4/6→0.4x, 5/6→2x, 6/6→25x — break-even ~54.3%
 
 // ============================================================================
-// Underdog Fantasy — verified May 2026
+// Underdog Fantasy — verified Oct 30 2026 (Underdog help center via secondary sources; 4-pick Standard is 12x)
 // Standard = all-or-nothing. Flex = partial payouts on 1–2 losses.
 // Base multipliers assume 1.0x difficulty per pick.
 // Picks with difficulty ≠ 1.0x (e.g. 0.7x anchor, 1.5x boost) scale payouts.
 // ============================================================================
 
 // Standard grids (all-or-nothing)
-// 2: 3.5x | 3: 6.5x | 4: 10x | 5: 20x | 6: 35x | 7: 65x | 8: 120x
+// 2: 3.5x | 3: 6.5x | 4: 12x | 5: 20x | 6: 35x | 7: 65x | 8: 120x
 
 // Flex grids — index = hits
 const UD_FLEX_3: number[] = [0, 0, 1.09, 3.25];                  // 2/3→1.09x, 3/3→3.25x
@@ -66,7 +67,7 @@ const UD_FLEX_7: number[] = [0, 0, 0, 0, 0, 0.5, 2.75, 40];      // 5/7→0.5x, 
 const UD_FLEX_8: number[] = [0, 0, 0, 0, 0, 0, 1, 3, 80];        // 6/8→1x, 7/8→3x, 8/8→80x
 
 // ============================================================================
-// Betr Flex Play — verified February 2026
+// Betr Flex Play — verified Oct 30 2026 against help.betr.app "Flex Play Breakdown"
 // Perfect Play = all-or-nothing, grid pending confirmation.
 // Special picks (Edge Picks, Boosts, Anchors, Edge Combos) alter multipliers.
 // ============================================================================
@@ -94,6 +95,7 @@ export const SLIP_TYPES: SlipType[] = [
   { id: "pp_power_6", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Power", picks: 6, payoutGrid: PP_POWER(6, 37.5), available: true }, // verified May 2026
 
   // ── PrizePicks Flex ─────────────────────────────────────────────────────
+  { id: "pp_flex_2", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Flex", picks: 2, payoutGrid: PP_FLEX_2, available: true },
   { id: "pp_flex_3", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Flex", picks: 3, payoutGrid: PP_FLEX_3, available: true },
   { id: "pp_flex_4", platform: "prizepicks", platformLabel: "PrizePicks", variant: "Flex", picks: 4, payoutGrid: PP_FLEX_4, available: true },
   {
@@ -105,7 +107,7 @@ export const SLIP_TYPES: SlipType[] = [
     payoutGrid: PP_FLEX_5,
     available: true,
     recommended: true,
-    notes: "Best PP slip — insurance softens per-leg target. Break-even ~54.3%. Verified May 2026",
+    notes: "Break-even ~54.25% (-119). Flex 6 is marginally lower (54.21%) with more variance. Verified Oct 30 2026",
   },
   {
     id: "pp_flex_6",
@@ -115,13 +117,13 @@ export const SLIP_TYPES: SlipType[] = [
     picks: 6,
     payoutGrid: PP_FLEX_6,
     available: true,
-    notes: "6/6→25x, 5/6→2x, 4/6→0.4x. Break-even ~54.3%. Verified May 2026",
+    notes: "6/6→25x, 5/6→2x, 4/6→0.4x. Break-even ~54.21% (-118). Verified Oct 30 2026",
   },
 
   // ── Underdog Standard (all-or-nothing) ──────────────────────────────────
   { id: "ud_std_2", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 2, payoutGrid: [0, 0, 3.5],                  available: true },
   { id: "ud_std_3", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 3, payoutGrid: [0, 0, 0, 6.5],                available: true },
-  { id: "ud_std_4", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 4, payoutGrid: [0, 0, 0, 0, 10],              available: true },
+  { id: "ud_std_4", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 4, payoutGrid: [0, 0, 0, 0, 12],              available: true },
   { id: "ud_std_5", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 5, payoutGrid: [0, 0, 0, 0, 0, 20],           available: true },
   { id: "ud_std_6", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 6, payoutGrid: [0, 0, 0, 0, 0, 0, 35],        available: true },
   { id: "ud_std_7", platform: "underdog", platformLabel: "Underdog", variant: "Standard", picks: 7, payoutGrid: [0, 0, 0, 0, 0, 0, 0, 65],     available: true },
@@ -140,7 +142,7 @@ export const SLIP_TYPES: SlipType[] = [
     payoutGrid: UD_FLEX_6,
     available: true,
     recommended: true,
-    notes: "Best UD slip — break-even ~53.9% (~-116 effective), better than PP Flex 5. Verified May 2026",
+    notes: "Break-even ~53.8% (-117). Best UD Flex; UD 2-pick Standard is lower (53.45%) with more variance. Verified Oct 30 2026",
   },
   { id: "ud_flex_7", platform: "underdog", platformLabel: "Underdog", variant: "Flex", picks: 7, payoutGrid: UD_FLEX_7, available: true },
   { id: "ud_flex_8", platform: "underdog", platformLabel: "Underdog", variant: "Flex", picks: 8, payoutGrid: UD_FLEX_8, available: true },
@@ -157,7 +159,7 @@ export const SLIP_TYPES: SlipType[] = [
     payoutGrid: BETR_FLEX_5,
     available: true,
     recommended: true,
-    notes: "Best Betr slip — identical grid to PP Flex 5. Break-even ~54.3%. Verified February 2026",
+    notes: "Same grid as PP Flex 5. Break-even ~54.25%. Betr Flex 8 and 10 are lower (~54.1%). Verified Oct 30 2026",
   },
   { id: "betr_flex_6",  platform: "betr", platformLabel: "Betr", variant: "Flex", picks: 6,  payoutGrid: BETR_FLEX_6,  available: true },
   { id: "betr_flex_7",  platform: "betr", platformLabel: "Betr", variant: "Flex", picks: 7,  payoutGrid: BETR_FLEX_7,  available: true },
