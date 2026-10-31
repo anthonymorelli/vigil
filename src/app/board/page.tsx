@@ -174,8 +174,8 @@ function SlipBreakdown({ fairProb, platformSlipPlatform, platformLabel }: {
   const totalHidden = showAll ? 0 : Math.max(0, qualifying.length - SLIP_VISIBLE_DEFAULT) + nonQualifying.length;
   return (
     <div className="min-w-[180px]">
-      <div className="flex items-center justify-between mb-2.5">
-        <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/50">Break-even</p>
+      <div className="flex items-center justify-between gap-4 mb-2.5">
+        <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/50">Fair vs break-even</p>
         <span className="font-mono text-sm font-semibold" style={{ color: "#5A9AE0" }}>{fairPct.toFixed(1)}%</span>
       </div>
       {qualifying.length === 0 ? (
@@ -264,7 +264,9 @@ function PropCard({ prop, platformConfig, defaultSlip, targetPct, referenceBookC
   const sportMeta = SPORT_BADGE[prop.sport] ?? { label: prop.sport.toUpperCase(), color: "text-muted-foreground/50" };
 
   const bestBook = referenceBookColumns.reduce<{ book: string; odds: number } | null>((best, book) => {
-    const odds = prop.side === "Over" ? prop.offerings[book]?.over : prop.offerings[book]?.under;
+    const offering = prop.offerings[book];
+    if (offering?.line != null && offering.line !== prop.line) return best; // different line, not comparable
+    const odds = prop.side === "Over" ? offering?.over : offering?.under;
     if (odds == null) return best;
     if (best === null || odds > best.odds) return { book, odds };
     return best;
@@ -334,10 +336,10 @@ function PropCard({ prop, platformConfig, defaultSlip, targetPct, referenceBookC
           </div>
         </div>
 
-        {/* Slip EV */}
+        {/* Leg edge vs break-even */}
         <div className="pl-[76px] mt-2">
           <span className={`text-xs font-mono font-semibold ${slipEv >= 0 ? "text-blue-400" : "text-muted-foreground/50"}`}>
-            Slip EV {slipEv > 0 ? "+" : ""}{slipEv.toFixed(2)}%
+            Edge {slipEv > 0 ? "+" : ""}{slipEv.toFixed(2)} pp
           </span>
         </div>
       </div>
@@ -384,7 +386,7 @@ function PropCard({ prop, platformConfig, defaultSlip, targetPct, referenceBookC
                   <span className="text-[9px] font-semibold uppercase text-blue-400">playing</span>
                   <span className="font-mono text-sm font-semibold">{formatOdds(legTargetAmerican(defaultSlip))}</span>
                   <span className={`font-mono text-xs font-semibold ${slipEv >= 0 ? "text-blue-400" : "text-muted-foreground/50"}`}>
-                    {slipEv > 0 ? "+" : ""}{slipEv.toFixed(1)}%
+                    {slipEv > 0 ? "+" : ""}{slipEv.toFixed(1)} pp
                   </span>
                 </div>
                 {/* Reference book chips */}
@@ -574,6 +576,7 @@ function BoardInner() {
   const [markets, setMarkets] = useState<MarketRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [updatedAt, setUpdatedAt] = useState<string | null>(null);
+  const [dataSource, setDataSource] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSport, setSelectedSport] = useState<string | null>(null);
   const [selectedMarket, setSelectedMarket] = useState<string | null>(null);
@@ -611,7 +614,8 @@ function BoardInner() {
       .then((data: PipelinePayload | unknown[]) => {
         const rows = Array.isArray(data) ? [] : ((data as PipelinePayload).markets ?? []);
         const updated = Array.isArray(data) ? null : (data as PipelinePayload).updated ?? null;
-        setMarkets(rows); setUpdatedAt(updated); setLoading(false);
+        const source = Array.isArray(data) ? null : (data as PipelinePayload).source ?? null;
+        setMarkets(rows); setUpdatedAt(updated); setDataSource(source); setLoading(false);
       })
       .catch(() => setLoading(false));
   }, [refreshKey]);
@@ -905,7 +909,9 @@ function BoardInner() {
           <div className="mt-auto border-t border-border">
             {updatedAt && (
               <div className="px-4 py-3">
-                <p className="text-[10px] text-muted-foreground/40">Sample data · Apr 18</p>
+                <p className="text-[10px] text-muted-foreground/40">
+                  {dataSource === "mock" ? "Sample data" : "Updated"} · {new Date(updatedAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                </p>
               </div>
             )}
           </div>
@@ -1020,7 +1026,9 @@ function BoardInner() {
                     const sportMeta = SPORT_BADGE[prop.sport] ?? { label: prop.sport.toUpperCase(), color: "text-muted-foreground/50" };
                     const bestBook = referenceBookColumns.reduce<{ book: string; odds: number } | null>(
                       (best, book) => {
-                        const odds = prop.side === "Over" ? prop.offerings[book]?.over : prop.offerings[book]?.under;
+                        const offering = prop.offerings[book];
+                        if (offering?.line != null && offering.line !== prop.line) return best; // different line, not comparable
+                        const odds = prop.side === "Over" ? offering?.over : offering?.under;
                         if (odds == null) return best;
                         if (best === null || odds > best.odds) return { book, odds };
                         return best;
@@ -1124,15 +1132,15 @@ function BoardInner() {
                                       <TooltipProvider>
                                         <Tooltip>
                                           <TooltipTrigger asChild>
-                                            <p className="text-[10px] text-muted-foreground/50 uppercase tracking-wider mb-1 cursor-default">Slip EV</p>
+                                            <p className="text-[10px] text-muted-foreground/50 uppercase tracking-wider mb-1 cursor-default">Edge</p>
                                           </TooltipTrigger>
                                           <TooltipContent side="top" className="max-w-[240px] text-xs">
-                                            Edge vs. {defaultSlip.picks}-pick {defaultSlip.variant} break-even ({(legBreakEvenProbability(defaultSlip) * 100).toFixed(1)}%). Positive = profitable leg.
+                                            Fair probability minus the per-leg break-even for a {defaultSlip.picks}-pick {defaultSlip.variant} ({(legBreakEvenProbability(defaultSlip) * 100).toFixed(1)}%), in percentage points. Positive means this leg clears break-even; slip EV depends on every leg.
                                           </TooltipContent>
                                         </Tooltip>
                                       </TooltipProvider>
                                       <p className={`font-mono text-sm font-semibold ${slipEv >= 0 ? "text-blue-400" : "text-muted-foreground"}`}>
-                                        {slipEv > 0 ? "+" : ""}{slipEv.toFixed(2)}%
+                                        {slipEv > 0 ? "+" : ""}{slipEv.toFixed(2)} pp
                                       </p>
                                     </div>
                                   </div>
@@ -1144,16 +1152,17 @@ function BoardInner() {
                                         <span className="text-[9px] font-semibold uppercase text-blue-400">playing</span>
                                         <span className="font-mono text-sm font-semibold">{formatOdds(legTargetAmerican(defaultSlip))}</span>
                                         <span className={`font-mono text-xs font-semibold ${slipEv >= 0 ? "text-blue-400" : "text-muted-foreground/50"}`}>
-                                          {slipEv > 0 ? "+" : ""}{slipEv.toFixed(1)}%
+                                          {slipEv > 0 ? "+" : ""}{slipEv.toFixed(1)} pp
                                         </span>
                                       </div>
                                       {referenceBookColumns.map((book) => {
                                         const offering = prop.offerings[book];
                                         const odds = prop.side === "Over" ? offering?.over : offering?.under;
                                         if (odds == null) return null;
-                                        const ev = evPct(prop.fairProb, odds);
-                                        const isPositive = ev >= 0;
                                         const altLine = offering?.line != null && offering.line !== prop.line ? offering.line : null;
+                                        // EV vs fair only means something on the same line; alt-line prices are shown for reference.
+                                        const ev = altLine == null ? evPct(prop.fairProb, odds) : null;
+                                        const isPositive = ev != null && ev >= 0;
                                         return (
                                           <div key={book} className="flex-1 flex items-center justify-center gap-2.5 px-3 py-3 border-l border-border"
                                             style={isPositive ? { backgroundColor: "rgba(58, 120, 200, 0.22)", borderLeft: "1px solid rgba(90, 154, 224, 0.40)" } : undefined}
@@ -1164,7 +1173,7 @@ function BoardInner() {
                                               {altLine != null && <span className="text-[10px] text-white/90 font-mono font-medium bg-white/25 rounded px-1.5 py-1 leading-none mt-1.5">{altLine}</span>}
                                             </div>
                                             <span className={`font-mono text-xs font-bold ${isPositive ? "text-[#B0C8E0]" : "text-muted-foreground/50"}`}>
-                                              {ev > 0 ? "+" : ""}{ev.toFixed(1)}%
+                                              {ev == null ? "alt line" : `${ev > 0 ? "+" : ""}${ev.toFixed(1)}%`}
                                             </span>
                                           </div>
                                         );

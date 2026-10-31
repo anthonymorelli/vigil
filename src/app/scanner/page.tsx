@@ -181,9 +181,9 @@ function SlipPicker({ selectedSlipId, onSelect, fairProb, platformFilter }: {
             <span className="font-mono">{(targetProb * 100).toFixed(1)}% / {(fairProb * 100).toFixed(1)}%</span>
           </div>
           <div className="flex items-center justify-between text-xs mt-1">
-            <span className="text-muted-foreground">Slip EV</span>
+            <span className="text-muted-foreground">Edge vs break-even</span>
             <span className={`font-mono font-semibold ${evColor(ev)}`}>
-              {ev >= 0 ? "+" : ""}{ev.toFixed(2)}%
+              {ev >= 0 ? "+" : ""}{ev.toFixed(2)} pp
             </span>
           </div>
         </div>
@@ -506,7 +506,7 @@ function HomeInner() {
             <p className="text-sm text-muted-foreground tabular-nums">
               Showing <span className="text-foreground font-medium">{displayed.length}</span>
               <span className="mx-1.5 text-muted-foreground/30">·</span>
-              {positiveCount} +EV
+              {positiveCount} above break-even
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -749,9 +749,9 @@ function HomeInner() {
                                   <p className="font-mono">{play.fairPct.toFixed(1)}% / {formatOdds(play.fairOdds)}</p>
                                 </div>
                                 <div>
-                                  <p className="text-muted-foreground uppercase tracking-wider mb-1">Slip EV</p>
+                                  <p className="text-muted-foreground uppercase tracking-wider mb-1">Edge</p>
                                   <p className={`font-mono font-semibold ${evColor(play.slipEv!)}`}>
-                                    {play.slipEv! > 0 ? "+" : ""}{play.slipEv!.toFixed(2)}%
+                                    {play.slipEv! > 0 ? "+" : ""}{play.slipEv!.toFixed(2)} pp
                                   </p>
                                 </div>
                               </div>
@@ -776,7 +776,7 @@ function HomeInner() {
                                         <span className={`text-[9px] font-semibold uppercase tracking-wide ${accentText}`}>playing</span>
                                         <span className="font-mono text-sm font-semibold text-foreground">{formatOdds(play.platformOdds)}</span>
                                         <span className={`font-mono text-xs font-bold ${evColor(play.slipEv!)}`}>
-                                          {play.slipEv! > 0 ? "+" : ""}{play.slipEv!.toFixed(1)}%
+                                          {play.slipEv! > 0 ? "+" : ""}{play.slipEv!.toFixed(1)} pp
                                         </span>
                                       </div>
                                       {priced.map(({ book, odds: refOdds }) => {
