@@ -1,94 +1,90 @@
 # Vigil
 
-**+EV DFS prop scanner.** Ingests player prop lines from PrizePicks, Underdog Fantasy, Pick6, and Betr, deviggs against sharp sportsbook and exchange references, and surfaces plays ranked by statistical edge on a real-time decision dashboard.
+A +EV scanner for DFS player props. It compares prop lines on PrizePicks, Underdog, Pick6 and Betr against a weighted consensus of sportsbook and exchange prices, strips the vig, and ranks plays by edge over the break-even probability of the slip you are building.
 
-Live at **[prop-screen-web.vercel.app](https://prop-screen-web.vercel.app/board)**
+**Demo:** [prop-screen-web.vercel.app/board](https://prop-screen-web.vercel.app/board)
 
-![Vigil Board](https://prop-screen-web.vercel.app/board)
+> **Status:** the deployed demo runs on a static **mock** snapshot (`public/opportunities.json`, `"source": "mock"`). The math and UI are real; the odds are synthetic. Live data needs the Python pipeline and an Odds API key, which are not connected to this deployment.
 
----
+<!-- [FILL] Add a screenshot at docs/board.png, then replace this comment with: ![Vigil board](docs/board.png) -->
 
 ## What it does
 
-- Fetches prop lines across DFS platforms (PrizePicks, Underdog, Pick6, Betr)
-- Cross-references against sharp reference books (Novig, ProphetX, Pinnacle) and removes bookmaker margin via a devigging model
-- Computes a consensus fair probability weighted across reference books
-- Calculates break-even thresholds per slip type (PrizePicks Flex 5/6, Power, Underdog Flex, etc.) using exact payout grid math
-- Ranks every prop by edge above break-even and displays a tiered signal system — glow intensity maps directly to +EV magnitude
-- Flags cross-line discrepancies when a reference book prices a different line than the DFS anchor
-- Multi-sport: NBA, MLB, NHL, WNBA, Esports
+- Reads a market snapshot (player, line, and per-book Over/Under prices) and shows it as a sortable board.
+- Removes each book's vig, then averages the fair Over probability across the reference books you enable, with adjustable weights.
+- Computes the break-even probability per leg for the active slip type from the platform's actual payout grid, and the EV of a slip built from your legs.
+- Marks each line by how far fair probability sits above break-even. Glow means a play; dimness means lower probability.
+- Flags lines where a reference book prices a different number than the DFS anchor.
+- Sports in the demo data: NBA, MLB, NHL, esports.
 
----
+## How the math works
+
+**Devig.** Per book, with both sides priced, fair Over = `pO / (pO + pU)` where `p` is the American-odds implied probability (proportional devig). Books missing a side are skipped. The consensus is the weighted average across enabled reference books (`src/lib/devig.ts`). Weight presets (Prop, All Equal, Sharp Only, Exchanges Only) live in `src/lib/book-weights.ts`; you can edit weights in the UI and they persist in your browser.
+
+**Break-even.** For each slip type, the per-leg probability `p` where expected return equals the stake is solved numerically against the payout grid (`src/lib/slip-types.ts`):
+
+```
+EV(p) = Σ_k C(n,k) · p^k · (1 − p)^(n−k) · payout[k]   →   solve EV(p) = 1
+```
+
+| Slip | Break-even per leg |
+|---|---|
+| PrizePicks Power 5 (20x) | 54.93 % |
+| PrizePicks Power 6 (37.5x) | 54.66 % |
+| PrizePicks Flex 5 | 54.25 % |
+| PrizePicks Flex 6 | 54.21 % |
+| Underdog Flex 6 | 53.82 % |
+
+**Slip EV.** A slip with different fair probabilities per leg is enumerated over all 2^N outcomes (`src/lib/slip-math.ts`). No binomial shortcut, because legs differ.
+
+**Known limits.** Legs are assumed independent, so same-game correlation is not modelled. PrizePicks ties and DNPs reduce a lineup a level and are not modelled. Underdog payouts assume standard 1.0x picks. Pick6 pays from pools, so it is marked unavailable. Payout grids were checked against the platforms in May 2026 and change without notice.
 
 ## Stack
 
-| Layer | Tech |
-|---|---|
-| Frontend | Next.js 16 · TypeScript · Tailwind v4 · shadcn/ui |
-| Data pipeline | Python 3.11 · pandas |
-| Deployment | Vercel |
-| Fonts | Geist Sans / Geist Mono |
-
----
+Next.js 16 · React 19 · TypeScript · Tailwind v4 · shadcn/ui · Geist Sans and Mono, Barlow Condensed. Pipeline: Python · pandas. Deployed on Vercel.
 
 ## Architecture
 
 ```
-prop-screen/ (Python pipeline)
-  pipeline.py         → fetches odds, normalizes, deviggs, writes JSON
-  
-prop-screen-web/ (this repo)
-  src/app/board/      → main decision dashboard
-  src/lib/devig.ts    → devig math, weighted consensus fair probability
-  src/lib/slip-types.ts → break-even math per slip type via payout grids
-  src/lib/hit-cell.ts → tiered color system (glow = edge signal)
-  public/opportunities.json → pipeline output consumed by the frontend
+prop-screen/         Python pipeline: fetch odds, normalize, write JSON
+prop-screen-web/     this repo
+  src/app/board/       main board
+  src/app/scanner/     scanner view
+  src/lib/devig.ts       devig and weighted consensus
+  src/lib/slip-types.ts  payout grids per slip type
+  src/lib/slip-math.ts   exact slip EV
+  src/lib/hit-cell.ts    edge-to-color mapping
+  public/opportunities.json   snapshot the frontend reads
 ```
 
-The pipeline runs locally and writes `opportunities.json` to `public/`. The Next.js frontend fetches it statically. The planned architecture converts the pipeline to a FastAPI server that the frontend polls.
+The pipeline writes `opportunities.json` and the frontend reads it statically. The planned change serves the same shape from a FastAPI endpoint the frontend polls.
 
----
-
-## Running locally
+## Run locally
 
 ```bash
-# Frontend
+git clone https://github.com/anthonymorelli/prop-screen-web
 cd prop-screen-web
 npm install
-npm run dev
-# → localhost:3000/board
+npm run dev        # http://localhost:3000/board
 ```
+
+The mock snapshot ships with the repo, so no keys are needed. `scripts/patch_opportunities.py` regenerates varied mock odds (`python3 scripts/patch_opportunities.py`).
+
+To use live data, run the pipeline (needs `ODDS_API_KEY`; [The Odds API](https://the-odds-api.com) `us_dfs` covers PrizePicks, Underdog, Pick6 and Betr):
 
 ```bash
-# Pipeline (requires ODDS_API_KEY in .env)
-cd prop-screen
-source venv/bin/activate
-python3 pipeline.py
-# writes → prop-screen-web/public/opportunities.json
+cd prop-screen && source venv/bin/activate && python3 pipeline.py
+# writes prop-screen-web/public/opportunities.json
 ```
 
----
+## Roadmap
 
-## Devig model
+Tests for the devig and slip math, CI, a book selector, game context per row, market filters, player search, correlation flags, backtesting, FastAPI data source.
 
-Fair probability is computed via the [power method](https://www.medicine.mcgill.ca/epidemiology/hanley/bios601/Likelihood/devig.pdf) across a weighted consensus of reference books. Exchanges (Novig, ProphetX) are treated as zero-vig reference points and weighted above sportsbooks. The resulting `fairPct` is compared against the break-even probability for the active slip type to produce the EV delta.
+## Disclaimer
 
-Break-even per slip is solved numerically: given a payout grid `[0, 0, 0, ..., multiplier]` at each hit count, find the leg probability `p` where `E[slip] = 1`. This means break-even shifts with slip type — Flex 5 (54.25%) vs Flex 6 (58.98%) vs Power 5 (54.93%).
+Research and portfolio project, not betting advice. Mock data in the demo is invented, including player lines. Real lines and payouts change and can be wrong; verify at the platform before you stake. DFS availability varies by state.
 
----
+## Author
 
-## Kelly sizing
-
-Standard Kelly per leg. Never exceed 2–3% of bankroll per leg on DFS slips given parlayed variance.
-
----
-
-## Data source
-
-Current deployment runs on a static snapshot. Live data requires a valid [The Odds API](https://the-odds-api.com) key (`us_dfs` region covers PrizePicks, Underdog Fantasy, Pick6, Betr with Demons/Goblins via `_alternate` markets).
-
----
-
-## Pikkit
-
-Verified Top 10% NBA bettor · [@puffersnoopy](https://pikkit.com)
+Anthony Morelli · Verified Top 10 % NBA bettor on Pikkit ([@puffersnoopy](https://pikkit.com)) · anthony@anthonymorelli.dev
