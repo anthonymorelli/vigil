@@ -1,6 +1,6 @@
-# prop-screen
+# Vigil pipeline
 
-Python data pipeline for [Vigil](https://github.com/anthonymorelli/prop-screen-web) — a +EV NBA prop betting scanner.
+Python data pipeline for [Vigil](../README.md) — a +EV NBA prop betting scanner.
 
 Fetches live player prop odds from [The Odds API](https://the-odds-api.com), normalizes across sportsbooks and DFS platforms, and writes `opportunities.json` for the Next.js frontend to consume.
 
@@ -10,9 +10,9 @@ Fetches live player prop odds from [The Odds API](https://the-odds-api.com), nor
 2. For each event, pulls player prop markets across 18 books and DFS platforms — PrizePicks, Underdog, Betr, Pick6, Pinnacle, DraftKings, FanDuel, and more
 3. Normalizes odds into a unified `(player, market, line)` structure with per-book over/under prices
 4. Classifies PrizePicks alternate lines as goblins (−137, easier line) or demons (+100, harder line)
-5. Writes `opportunities.json` to the frontend's `public/` directory
+5. Writes `opportunities.json` to Vigil's `public/` directory
 
-The frontend devig logic (in `prop-screen-web`) then computes fair value probabilities using a weighted consensus across sharp and exchange books (Pinnacle, Novig, ProphetX), calculates +EV against each DFS platform's implied break-even, and surfaces the best plays ranked by edge.
+The frontend devig logic (in `src/lib/devig.ts`) then computes fair value probabilities using a weighted consensus across sharp and exchange books (Pinnacle, Novig, ProphetX), calculates +EV against each DFS platform's implied break-even, and surfaces the best plays ranked by edge.
 
 ## Stack
 
@@ -43,7 +43,7 @@ Get a key at [the-odds-api.com](https://the-odds-api.com). The `$119/mo` tier (5
 python3 pipeline.py
 ```
 
-Output is written to `../prop-screen-web/public/opportunities.json` by default. Override with:
+Output is written to `public/opportunities.json` at the repo root by default, from any working directory. Override with:
 
 ```python
 from pipeline import main
@@ -87,4 +87,4 @@ NBA player props: Points, Rebounds, Assists, Threes, Blocks, Steals, Blks+Stls, 
 
 ## Related
 
-[prop-screen-web](https://github.com/anthonymorelli/prop-screen-web) — the Next.js frontend (Vigil)
+The Next.js frontend lives at the repo root ([README](../README.md)).

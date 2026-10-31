@@ -3,7 +3,7 @@ generate_esports_mock.py
 Generates mock esports markets (LOL, Valorant, CS2, Dota 2) and merges them
 into the existing opportunities.json.
 
-Run from the prop-screen-web directory:
+Run from anywhere (writes to vigil/public/opportunities.json):
     python3 generate_esports_mock.py
 
 Or from the pipeline directory pointing to the right path.
@@ -13,7 +13,7 @@ import json
 import random
 from pathlib import Path
 
-OUT_PATH = Path("../prop-screen-web/public/opportunities.json")
+OUT_PATH = Path(__file__).resolve().parent.parent / "public" / "opportunities.json"  # vigil/public
 
 # ── Matchups ──────────────────────────────────────────────────────────────
 
@@ -213,7 +213,7 @@ def generate_markets() -> list:
 
 def main():
     if not OUT_PATH.exists():
-        print(f"Could not find {OUT_PATH}. Run from prop-screen-web root or adjust OUT_PATH.")
+        print(f"Could not find {OUT_PATH}. Expected it at vigil/public/opportunities.json.")
         return
 
     with open(OUT_PATH) as f:

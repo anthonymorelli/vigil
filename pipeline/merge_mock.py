@@ -1,12 +1,14 @@
 """
 Merges mock MLB/NHL markets into existing opportunities.json.
-Run from prop-screen-web directory or adjust paths.
+Usage: python3 pipeline/merge_mock.py path/to/mock_mlb_nhl.json
 """
 import json
+import sys
 from pathlib import Path
 from datetime import datetime, timezone
 
-OPPS_PATH = Path("/home/claude/vigil/mock_mlb_nhl.json")
+HERE = Path(__file__).resolve().parent
+OPPS_PATH = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE / "mock_mlb_nhl.json"
 mock_markets = json.loads(OPPS_PATH.read_text())
 
 # Build a minimal valid payload — frontend expects { updated, source, markets }
@@ -14,7 +16,7 @@ mock_markets = json.loads(OPPS_PATH.read_text())
 # When you run pipeline.py for real it will overwrite — mock is for dev only.
 
 # Try to load existing opportunities.json if it exists
-existing_path = Path("../prop-screen-web/public/opportunities.json")
+existing_path = HERE.parent / "public" / "opportunities.json"
 if existing_path.exists():
     existing = json.loads(existing_path.read_text())
     existing_markets = existing.get("markets", [])

@@ -1,7 +1,7 @@
 """
 Prop Screen Pipeline — The Odds API
 Fetches live player props from The Odds API and writes opportunities.json
-for Vigil (prop-screen-web) to consume.
+for the Vigil frontend (../public/opportunities.json) to consume.
 """
 
 import os
@@ -21,7 +21,7 @@ load_dotenv()
 
 API_KEY   = os.getenv("ODDS_API_KEY")
 BASE_URL  = "https://api.the-odds-api.com/v4"
-OUT_PATH  = Path("../prop-screen-web/public/opportunities.json")
+OUT_PATH  = Path(__file__).resolve().parent.parent / "public" / "opportunities.json"  # vigil/public
 
 SPORTS = [
     "basketball_nba",

@@ -51,8 +51,7 @@ Next.js 16 · React 19 · TypeScript · Tailwind v4 · shadcn/ui · Geist Sans a
 ## Architecture
 
 ```
-prop-screen/         Python pipeline: fetch odds, normalize, write JSON
-prop-screen-web/     this repo
+pipeline/            Python pipeline: fetch odds, normalize, write public/opportunities.json
   src/app/board/       main board
   src/app/scanner/     scanner view
   src/lib/devig.ts       devig and weighted consensus
@@ -67,8 +66,8 @@ The pipeline writes `opportunities.json` and the frontend reads it statically. T
 ## Run locally
 
 ```bash
-git clone https://github.com/anthonymorelli/prop-screen-web
-cd prop-screen-web
+git clone https://github.com/anthonymorelli/vigil
+cd vigil
 npm install
 npm run dev        # http://localhost:3000/board
 ```
@@ -78,13 +77,15 @@ The mock snapshot ships with the repo, so no keys are needed. `scripts/patch_opp
 To use live data, run the pipeline (needs `ODDS_API_KEY`; [The Odds API](https://the-odds-api.com) `us_dfs` covers PrizePicks, Underdog, Pick6 and Betr):
 
 ```bash
-cd prop-screen && source venv/bin/activate && python3 pipeline.py
-# writes prop-screen-web/public/opportunities.json
+cd pipeline && python3 -m venv venv && source venv/bin/activate
+pip install requests python-dotenv
+cp .env.example .env    # add ODDS_API_KEY
+python3 pipeline.py     # writes public/opportunities.json
 ```
 
 ## Roadmap
 
-Tests for the devig and slip math, CI, a book selector, game context per row, market filters, player search, correlation flags, backtesting, FastAPI data source.
+A live data snapshot from the pipeline, SQL analysis of line movement and book disagreement, estimated (not just flagged) same-game correlation, backtesting, FastAPI data source.
 
 ## Disclaimer
 
