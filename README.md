@@ -19,7 +19,7 @@ A +EV scanner for DFS player props. It compares prop lines on PrizePicks, Underd
 
 ## How the math works
 
-**Devig.** Per book, with both sides priced, fair Over = `pO / (pO + pU)` where `p` is the American-odds implied probability (proportional devig). Books missing a side are skipped. The consensus is the weighted average across enabled reference books (`src/lib/devig.ts`). Weight presets (Prop, All Equal, Sharp Only, Exchanges Only) live in `src/lib/book-weights.ts`; you can edit weights in the UI and they persist in your browser.
+**Devig.** Per book, with both sides priced, fair Over = `pO / (pO + pU)` where `p` is the American-odds implied probability (proportional devig). Books missing a side, or priced on a different line from the DFS line, are skipped; a 31.5 price is a different market from 30.5, so it is shown for reference but never enters fair value. The consensus is the weighted average across enabled reference books (`src/lib/devig.ts`). Weight presets (Prop, All Equal, Sharp Only, Exchanges Only) live in `src/lib/book-weights.ts`; you can edit weights in the UI and they persist in your browser.
 
 **Break-even.** For each slip type, the per-leg probability `p` where expected return equals the stake is solved numerically against the payout grid (`src/lib/slip-types.ts`):
 
@@ -34,10 +34,15 @@ EV(p) = Σ_k C(n,k) · p^k · (1 − p)^(n−k) · payout[k]   →   solve EV(p)
 | PrizePicks Flex 5 | 54.25 % |
 | PrizePicks Flex 6 | 54.21 % |
 | Underdog Flex 6 | 53.82 % |
+| Underdog Standard 2 (3.5x) | 53.45 % |
+| Underdog Standard 4 (12x) | 53.73 % |
+| Betr Flex 8 | 54.08 % |
 
-**Slip EV.** A slip with different fair probabilities per leg is enumerated over all 2^N outcomes (`src/lib/slip-math.ts`). No binomial shortcut, because legs differ.
+**Leg edge.** On the board, a leg's edge is its fair probability minus the slip's per-leg break-even, in percentage points (pp). It says whether the leg clears the bar; it is not the slip's EV.
 
-**Known limits.** Legs are assumed independent, so same-game correlation is not modelled. PrizePicks ties and DNPs reduce a lineup a level and are not modelled. Underdog payouts assume standard 1.0x picks. Pick6 pays from pools, so it is marked unavailable. Payout grids were checked against the platforms in May 2026 and change without notice.
+**Slip EV.** In the slip builder, a slip with different fair probabilities per leg is enumerated over all 2^N outcomes (`src/lib/slip-math.ts`). No binomial shortcut, because legs differ.
+
+**Known limits.** Legs are assumed independent, so same-game correlation is not modelled. PrizePicks ties and DNPs reduce a lineup a level and are not modelled. Underdog payouts assume standard 1.0x picks, and PrizePicks Goblin/Demon lines carry altered payouts that are not modelled. Pick6 pays a per-entry base multiplier plus pool winnings, so its slips are marked unavailable. Betr Perfect Play has no published grid and is disabled. Payout grids were checked against the platforms on Oct 30, 2026 and change without notice.
 
 ## Stack
 
